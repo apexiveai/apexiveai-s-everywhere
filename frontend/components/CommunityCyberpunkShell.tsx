@@ -14,11 +14,13 @@ import {
   Users,
   Waves,
 } from "lucide-react";
+import { externalModules } from "../lib/community";
 
 type NavItem = {
   label: string;
   href: string;
   icon: ReactNode;
+  external?: boolean;
 };
 
 const mainNavigation: NavItem[] = [
@@ -56,6 +58,19 @@ const mainNavigation: NavItem[] = [
     label: "Search",
     href: "/search",
     icon: <Search size={17} strokeWidth={1.7} />,
+  },
+];
+
+const productNavigation: NavItem[] = [
+  {
+    ...externalModules.trademark,
+    icon: <ShieldCheck size={17} strokeWidth={1.7} />,
+    external: true,
+  },
+  {
+    ...externalModules.rpa,
+    icon: <Activity size={17} strokeWidth={1.7} />,
+    external: true,
   },
 ];
 
@@ -189,6 +204,26 @@ export default function CommunityCyberpunkShell({
                 </Link>
               );
             })}
+          </nav>
+
+          <p className="ac-section-label ac-product-section-label">
+            APEXIVE PRODUCTS
+          </p>
+
+          <nav className="ac-nav ac-product-nav" aria-label="Apexive products">
+            {productNavigation.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="ac-nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="ac-nav-icon">{item.icon}</span>
+                <span className="ac-nav-label">{item.label}</span>
+                <span className="ac-nav-arrow">↗</span>
+              </a>
+            ))}
           </nav>
 
           <div className="ac-sidebar-bottom">

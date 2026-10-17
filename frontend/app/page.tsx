@@ -25,6 +25,7 @@ import {
   X,
   Zap,
 } from "lucide-react";
+import { externalModules } from "../lib/community";
 
 const FONT = {
   brand: "ᴀᴘᴇxɪᴠᴇ ᴀɪ",
@@ -45,18 +46,20 @@ const products = [
     subtitle: "ᴠɪsᴜᴀʟ ᴍᴀᴛᴄʜɪɴɢ · ᴄᴏɴꜰʟɪᴄᴛ ᴀɴᴀʟʏsɪs",
     description:
       "Compare trademark documents and logos with an AI-assisted review workflow.",
-    href: "/trademark-intelligence",
+    href: externalModules.trademark.href,
+    external: true,
     icon: ShieldCheck,
     tag: "AI INTELLIGENCE",
     color: "cyan",
   },
   {
     id: "02",
-    name: "Autonomous Workforce",
-    subtitle: "ᴀɢᴇɴᴛs · ᴡᴏʀᴋꜰʟᴏᴡ · ᴠᴇʀɪꜰɪᴄᴀᴛɪᴏɴ",
+    name: "RPA Automation",
+    subtitle: "ʀᴏʙᴏᴛɪᴄ ᴘʀᴏᴄᴇss ᴀᴜᴛᴏᴍᴀᴛɪᴏɴ",
     description:
-      "Coordinate enterprise tasks through planned, executed, and verified workflows.",
-    href: "/workforce",
+      "Automate repetitive business processes with intelligent workflows.",
+    href: externalModules.rpa.href,
+    external: true,
     icon: BrainCircuit,
     tag: "AUTONOMOUS AI",
     color: "purple",
@@ -565,10 +568,22 @@ export default function HomePage() {
                   <p>{product.description}</p>
                 </div>
 
-                <Link href={product.href} className="product-link">
-                  <span>ᴏᴘᴇɴ ᴍᴏᴅᴜʟᴇ</span>
-                  <ArrowUpRight size={17} />
-                </Link>
+                {product.external ? (
+                  <a
+                    href={product.href}
+                    className="product-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span>ᴏᴘᴇɴ ᴍᴏᴅᴜʟᴇ</span>
+                    <ArrowUpRight size={17} />
+                  </a>
+                ) : (
+                  <Link href={product.href} className="product-link">
+                    <span>ᴏᴘᴇɴ ᴍᴏᴅᴜʟᴇ</span>
+                    <ArrowUpRight size={17} />
+                  </Link>
+                )}
 
                 <div className="product-card-glow" />
               </article>
