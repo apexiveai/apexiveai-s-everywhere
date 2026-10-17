@@ -12,7 +12,6 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
-  Waves,
 } from "lucide-react";
 import { externalModules } from "../lib/community";
 
@@ -82,12 +81,16 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function CommunityCyberpunkShell({
+export default function CommunityShell({
   children,
 }: {
   children: ReactNode;
 }) {
   const pathname = usePathname() || "/";
+
+  if (pathname === "/") {
+    return children;
+  }
 
   const activeItem =
     mainNavigation.find((item) => isActivePath(pathname, item.href))?.label ||
@@ -95,70 +98,6 @@ export default function CommunityCyberpunkShell({
 
   return (
     <div className="ac-app">
-      <div className="ac-city-background" aria-hidden="true">
-        <div className="ac-city-haze ac-city-haze-one" />
-        <div className="ac-city-haze ac-city-haze-two" />
-
-        <div className="ac-city-sun" />
-
-        <div className="ac-city-orbit ac-city-orbit-one" />
-        <div className="ac-city-orbit ac-city-orbit-two" />
-
-        <div className="ac-city-buildings ac-buildings-back">
-          {Array.from({ length: 18 }, (_, index) => (
-            <span
-              key={index}
-              style={{
-                height: `${55 + ((index * 37) % 130)}px`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="ac-city-buildings ac-buildings-front">
-          {Array.from({ length: 12 }, (_, index) => (
-            <span
-              key={index}
-              style={{
-                height: `${90 + ((index * 53) % 180)}px`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="ac-city-tower ac-tower-left">
-          <div className="ac-tower-cap" />
-          <div className="ac-tower-body" />
-          <div className="ac-tower-beacon" />
-        </div>
-
-        <div className="ac-city-tower ac-tower-right">
-          <div className="ac-tower-cap" />
-          <div className="ac-tower-body" />
-          <div className="ac-tower-beacon" />
-        </div>
-
-        <div className="ac-pagoda">
-          <div className="ac-pagoda-spire" />
-          <div className="ac-pagoda-top" />
-          <div className="ac-pagoda-level ac-pagoda-level-one" />
-          <div className="ac-pagoda-level ac-pagoda-level-two" />
-          <div className="ac-pagoda-level ac-pagoda-level-three" />
-          <div className="ac-pagoda-base" />
-          <div className="ac-pagoda-platform" />
-        </div>
-
-        <div className="ac-city-road">
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
-
-        <div className="ac-city-horizon" />
-        <div className="ac-city-vignette" />
-      </div>
-
       <div className="ac-layout">
         <aside className="ac-sidebar">
           <Link href="/dashboard" className="ac-brand">
@@ -175,11 +114,11 @@ export default function CommunityCyberpunkShell({
 
           <div className="ac-sidebar-system">
             <span className="ac-system-light" />
-            <span>NEURAL NETWORK</span>
-            <strong>ONLINE</strong>
+            <span>COMMUNITY</span>
+            <strong>ACTIVE</strong>
           </div>
 
-          <p className="ac-section-label">MAIN INTERFACE</p>
+          <p className="ac-section-label">COMMUNITY</p>
 
           <nav className="ac-nav" aria-label="Main navigation">
             {mainNavigation.map((item) => {
@@ -207,7 +146,7 @@ export default function CommunityCyberpunkShell({
           </nav>
 
           <p className="ac-section-label ac-product-section-label">
-            APEXIVE PRODUCTS
+            OUR PRODUCTS
           </p>
 
           <nav className="ac-nav ac-product-nav" aria-label="Apexive products">
@@ -230,8 +169,8 @@ export default function CommunityCyberpunkShell({
             <div className="ac-city-card">
               <div className="ac-city-card-top">
                 <span>
-                  <Waves size={14} />
-                  CITY NODE
+                  <Activity size={14} />
+                  COMMUNITY STATUS
                 </span>
 
                 <span className="ac-live-pill">
@@ -240,8 +179,8 @@ export default function CommunityCyberpunkShell({
                 </span>
               </div>
 
-              <strong>TOKYO</strong>
-              <span>JAPAN / 35.6762° N</span>
+              <strong>GLOBAL</strong>
+              <span>Open to the world</span>
 
               <div className="ac-city-bars">
                 {Array.from({ length: 12 }, (_, index) => (
@@ -268,15 +207,15 @@ export default function CommunityCyberpunkShell({
               <b>/</b>
               <span>COMMUNITY</span>
               <b>/</b>
-              <strong>{activeItem.toUpperCase()}</strong>
+              <strong>{activeItem}</strong>
             </div>
 
             <div className="ac-top-actions">
               <div className="ac-network-status">
                 <span />
                 <div>
-                  <small>NETWORK</small>
-                  <strong>STABLE</strong>
+                  <small>STATUS</small>
+                  <strong>Active</strong>
                 </div>
               </div>
 
@@ -299,11 +238,11 @@ export default function CommunityCyberpunkShell({
               <span>APEXIVE AI</span>
             </div>
 
-            <span>TOKYO CYBER CITY · COMMUNITY NETWORK</span>
+            <span>A GLOBAL COMMUNITY FOR BUILDERS</span>
 
             <span className="ac-footer-online">
               <Activity size={12} />
-              SYSTEM OPERATIONAL
+              All systems operational
             </span>
           </footer>
         </main>

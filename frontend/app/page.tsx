@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   ArrowDownRight,
@@ -28,238 +28,86 @@ import {
 import { externalModules } from "../lib/community";
 
 const FONT = {
-  brand: "ᴀᴘᴇxɪᴠᴇ ᴀɪ",
-  home: "ʜᴏᴍᴇ",
-  dashboard: "ᴅᴀsʜʙᴏᴀʀᴅ",
-  forums: "ꜰᴏʀᴜᴍs",
-  articles: "ᴀʀᴛɪᴄʟᴇs",
-  projects: "ᴘʀᴏᴊᴇᴄᴛs",
-  resources: "ʀᴇsᴏᴜʀᴄᴇs",
-  signIn: "sɪɢɴ ɪɴ",
-  getStarted: "ɢᴇᴛ sᴛᴀʀᴛᴇᴅ",
+  brand: "Apexive AI",
+  home: "Home",
+  dashboard: "Dashboard",
+  forums: "Forums",
+  articles: "Articles",
+  projects: "Projects",
+  resources: "Resources",
+  signIn: "Sign in",
+  getStarted: "Get started",
 };
 
 const products = [
   {
     id: "01",
     name: "Trademark Intelligence",
-    subtitle: "ᴠɪsᴜᴀʟ ᴍᴀᴛᴄʜɪɴɢ · ᴄᴏɴꜰʟɪᴄᴛ ᴀɴᴀʟʏsɪs",
+    subtitle: "Visual matching · Conflict analysis",
     description:
       "Compare trademark documents and logos with an AI-assisted review workflow.",
     href: externalModules.trademark.href,
     external: true,
     icon: ShieldCheck,
-    tag: "AI INTELLIGENCE",
+    tag: "AI intelligence",
     color: "cyan",
   },
   {
     id: "02",
     name: "RPA Automation",
-    subtitle: "ʀᴏʙᴏᴛɪᴄ ᴘʀᴏᴄᴇss ᴀᴜᴛᴏᴍᴀᴛɪᴏɴ",
+    subtitle: "Robotic process automation",
     description:
       "Automate repetitive business processes with intelligent workflows.",
     href: externalModules.rpa.href,
     external: true,
     icon: BrainCircuit,
-    tag: "AUTONOMOUS AI",
+    tag: "Autonomous AI",
     color: "purple",
   },
   {
     id: "03",
     name: "Apexive Community",
-    subtitle: "ᴅɪsᴄᴏᴠᴇʀ · sʜᴀʀᴇ · ʙᴜɪʟᴅ",
+    subtitle: "Discover · Share · Build",
     description:
       "Connect with builders, explore projects, and share ideas across the network.",
     href: "/forums",
     icon: Network,
-    tag: "COMMUNITY NETWORK",
+    tag: "Community network",
     color: "pink",
   },
 ];
 
-function MatrixRain() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-    let width = 0;
-    let height = 0;
-    let columns = 0;
-    let drops: number[] = [];
-    let animationFrame = 0;
-    let lastFrame = 0;
-
-    const fontSize = 14;
-    const characters =
-      "01アイウエオカキクケコサシスセソタチツテトABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      columns = Math.ceil(width / fontSize);
-      drops = Array.from(
-        { length: columns },
-        () => Math.random() * (height / fontSize)
-      );
-    };
-
-    const draw = (timestamp: number) => {
-      if (timestamp - lastFrame < 65) {
-        animationFrame = window.requestAnimationFrame(draw);
-        return;
-      }
-
-      lastFrame = timestamp;
-
-      ctx.fillStyle = "rgba(3, 8, 18, 0.12)";
-      ctx.fillRect(0, 0, width, height);
-      ctx.font = `${fontSize}px monospace`;
-
-      for (let i = 0; i < drops.length; i++) {
-        const char = characters.charAt(
-          Math.floor(Math.random() * characters.length)
-        );
-
-        ctx.fillStyle =
-          Math.random() > 0.985
-            ? "rgba(130, 255, 244, 0.8)"
-            : "rgba(28, 230, 190, 0.24)";
-
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-
-        if (
-          drops[i] * fontSize > height &&
-          Math.random() > 0.975
-        ) {
-          drops[i] = 0;
-        }
-
-        drops[i] += 0.45 + Math.random() * 0.35;
-      }
-
-      animationFrame = window.requestAnimationFrame(draw);
-    };
-
-    resize();
-
-    if (!reducedMotion) {
-      animationFrame = window.requestAnimationFrame(draw);
-    } else {
-      ctx.clearRect(0, 0, width, height);
-    }
-
-    window.addEventListener("resize", resize);
-
-    return () => {
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="matrix-canvas" aria-hidden="true" />;
-}
-
-function TokyoCity() {
+function EcosystemPreview() {
   return (
-    <div className="city-scene" aria-label="Neon Tokyo city at night">
-      <div className="city-sky-glow" />
-      <div className="city-moon" />
-      <div className="city-orbit city-orbit-one" />
-      <div className="city-orbit city-orbit-two" />
-
-      <div className="city-distant city-distant-one">
-        {Array.from({ length: 15 }, (_, i) => (
-          <span key={i} />
-        ))}
+    <div className="product-preview" aria-label="Apexive AI platform overview">
+      <div className="preview-glow" aria-hidden="true" />
+      <div className="preview-orbit preview-orbit-one" aria-hidden="true" />
+      <div className="preview-orbit preview-orbit-two" aria-hidden="true" />
+      <div className="preview-center-mark">
+        <Layers3 size={42} strokeWidth={1.4} />
       </div>
-
-      <div className="city-distant city-distant-two">
-        {Array.from({ length: 12 }, (_, i) => (
-          <span key={i} />
-        ))}
-      </div>
-
-      <div className="city-tower tower-left">
-        <div className="tower-roof" />
-        <div className="tower-lights" />
-      </div>
-
-      <div className="city-tower tower-right">
-        <div className="tower-roof" />
-        <div className="tower-lights" />
-      </div>
-
-      <div className="city-tower tower-center-left">
-        <div className="tower-roof" />
-        <div className="tower-lights" />
-      </div>
-
-      <div className="city-tower tower-center-right">
-        <div className="tower-roof" />
-        <div className="tower-lights" />
-      </div>
-
-      <div className="pagoda">
-        <div className="pagoda-spire" />
-        <div className="pagoda-top" />
-        <div className="pagoda-level pagoda-level-one" />
-        <div className="pagoda-level pagoda-level-two" />
-        <div className="pagoda-level pagoda-level-three" />
-        <div className="pagoda-base" />
-        <div className="pagoda-platform" />
-        <div className="pagoda-glow" />
-      </div>
-
-      <div className="city-road">
-        <span />
-        <span />
-        <span />
-        <span />
-      </div>
-
-      <div className="city-scanline" />
-
-      <div className="city-hud hud-left">
-        <span className="hud-label">ᴊᴘ / ᴛᴏᴋʏᴏ</span>
-        <strong>35.6762° N</strong>
-        <strong>139.6503° E</strong>
-        <span className="hud-divider" />
-        <span>ɴᴇᴛᴡᴏʀᴋ ᴏɴʟɪɴᴇ</span>
-      </div>
-
-      <div className="city-hud hud-right">
-        <span className="hud-label">ᴄɪᴛʏ ᴍᴏᴅᴇ</span>
-        <strong>CYBER / 07</strong>
-        <span className="hud-bars">
-          {Array.from({ length: 14 }, (_, i) => (
-            <i key={i} />
-          ))}
+      <div className="preview-module preview-module-trademark">
+        <ShieldCheck size={17} />
+        <span>
+          <strong>Trademark intelligence</strong>
+          <small>Visual matching &amp; analysis</small>
         </span>
-        <span>ꜱʏsᴛᴇᴍ ɴᴏʀᴍᴀʟ</span>
       </div>
-
-      <div className="city-bottom-label">
-        <span className="city-bottom-dot" />
-        TOKYO // JAPAN
+      <div className="preview-module preview-module-automation">
+        <BrainCircuit size={17} />
+        <span>
+          <strong>Intelligent workflows</strong>
+          <small>Automation that moves work forward</small>
+        </span>
       </div>
+      <div className="preview-module preview-module-community">
+        <Network size={17} />
+        <span>
+          <strong>A connected community</strong>
+          <small>Ideas, people, and projects</small>
+        </span>
+      </div>
+      <span className="preview-caption">Technology designed around people</span>
     </div>
   );
 }
@@ -274,7 +122,6 @@ function LiveClock() {
 
       setClock(
         new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Tokyo",
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
@@ -284,7 +131,6 @@ function LiveClock() {
 
       setDate(
         new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Tokyo",
           day: "2-digit",
           month: "short",
           year: "numeric",
@@ -305,7 +151,7 @@ function LiveClock() {
       <span className="clock-indicator" />
       <div>
         <strong>{clock}</strong>
-        <small>{date} · MMT</small>
+        <small>{date}</small>
       </div>
     </div>
   );
@@ -343,12 +189,7 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="cyber-home">
-      <MatrixRain />
-      <div className="ambient-grid" />
-      <div className="ambient-glow ambient-glow-one" />
-      <div className="ambient-glow ambient-glow-two" />
-
+    <main className="home-page">
       <header className="site-header">
         <Link href="/" className="brand" aria-label="Apexive AI home">
           <span className="brand-symbol">
@@ -358,7 +199,7 @@ export default function HomePage() {
 
           <span className="brand-copy">
             <strong>{FONT.brand}</strong>
-            <small>ᴛʜᴇ ᴀᴜᴛᴏɴᴏᴍᴏᴜs ɴᴇᴛᴡᴏʀᴋ</small>
+            <small>Intelligence, thoughtfully connected</small>
           </span>
         </Link>
 
@@ -402,7 +243,7 @@ export default function HomePage() {
         <div className="hero-copy">
           <div className="eyebrow">
             <span className="eyebrow-pulse" />
-            <span>ᴛʜᴇ ɴᴇxᴛ ᴇʀᴀ ᴏꜰ ᴀɪ ɪs ʜᴇʀᴇ</span>
+            <span>A more thoughtful way to work with AI</span>
             <span className="eyebrow-line" />
           </div>
 
@@ -420,13 +261,13 @@ export default function HomePage() {
           <div className="hero-actions">
             <Link href="/register" className="primary-button">
               <Sparkles size={17} />
-              ᴇɴᴛᴇʀ ᴛʜᴇ ɴᴇᴛᴡᴏʀᴋ
+              Explore Apexive
               <ArrowRight size={17} />
             </Link>
 
             <Link href="/projects" className="secondary-button">
               <Terminal size={17} />
-              ᴇxᴘʟᴏʀᴇ ᴘʀᴏᴊᴇᴄᴛs
+              Explore projects
             </Link>
           </div>
 
@@ -434,9 +275,9 @@ export default function HomePage() {
             <div className="trust-icon">
               <ShieldCheck size={16} />
             </div>
-            <span>ᴇɴᴛᴇʀᴘʀɪsᴇ-ꜰᴏᴄᴜsᴇᴅ ᴀɪ</span>
+            <span>Enterprise-ready AI</span>
             <span className="trust-separator">/</span>
-            <span>ᴍᴏᴅᴜʟᴀʀ ᴘʟᴀᴛꜰᴏʀᴍ</span>
+            <span>One connected platform</span>
           </div>
         </div>
 
@@ -444,16 +285,16 @@ export default function HomePage() {
           <div className="visual-topline">
             <span>
               <CircleDot size={12} />
-              ᴠɪsᴜᴀʟ ᴇɴᴠɪʀᴏɴᴍᴇɴᴛ
+              The Apexive ecosystem
             </span>
-            <span>RNG / 001</span>
+            <span>One platform, many possibilities</span>
           </div>
 
-          <TokyoCity />
+          <EcosystemPreview />
 
           <div className="visual-bottomline">
-            <span>ᴛᴏᴋʏᴏ ᴅɪɢɪᴛᴀʟ ꜰʀᴏɴᴛɪᴇʀ</span>
-            <span className="visual-coordinates">139° 39&apos; 01.1&quot; E</span>
+            <span>Designed for clarity. Built to scale.</span>
+            <span className="visual-coordinates">Apexive AI</span>
           </div>
         </div>
       </section>
@@ -461,30 +302,30 @@ export default function HomePage() {
       <section className="system-strip" aria-label="Platform information">
         <div className="system-strip-heading">
           <span className="status-dot" />
-          <span>ᴘʟᴀᴛꜰᴏʀᴍ sᴛᴀᴛᴜs</span>
+          <span>Platform overview</span>
         </div>
 
         <div className="system-item">
           <Activity size={16} />
           <div>
-            <span>ɴᴇᴛᴡᴏʀᴋ</span>
-            <strong>ᴏɴʟɪɴᴇ ᴍᴏᴅᴇ</strong>
+            <span>Community</span>
+            <strong>Open to everyone</strong>
           </div>
         </div>
 
         <div className="system-item">
           <Cpu size={16} />
           <div>
-            <span>ᴀɪ ᴇɴɢɪɴᴇ</span>
-            <strong>ᴍᴏᴅᴜʟᴀʀ ᴀʀᴄʜɪᴛᴇᴄᴛᴜʀᴇ</strong>
+            <span>AI platform</span>
+            <strong>Modular architecture</strong>
           </div>
         </div>
 
         <div className="system-item">
           <Globe2 size={16} />
           <div>
-            <span>ʀᴇɢɪᴏɴ</span>
-            <strong>ᴛᴏᴋʏᴏ · ᴊᴘ</strong>
+            <span>Built for</span>
+            <strong>Global teams</strong>
           </div>
         </div>
 
@@ -498,18 +339,18 @@ export default function HomePage() {
           <div>
             <div className="section-kicker">
               <span>01</span>
-              <span>ᴛʜᴇ ᴇᴄᴏsʏsᴛᴇᴍ</span>
+              <span>              The ecosystem</span>
             </div>
 
             <h2>
-              ONE NETWORK.
+              ONE ECOSYSTEM.
               <br />
-              <span>ENDLESS POSSIBILITIES.</span>
+              BUILT AROUND YOU.
             </h2>
 
             <p>
-              Explore the intelligence, automation, and people powering the
-              Apexive digital ecosystem.
+              Explore the intelligence, automation, and people that make the
+              Apexive ecosystem useful.
             </p>
           </div>
 
@@ -518,8 +359,8 @@ export default function HomePage() {
               <Zap size={18} />
             </span>
             <span>
-              <strong>ᴅᴇsɪɢɴᴇᴅ ꜰᴏʀ ᴡʜᴀᴛ&apos;s ɴᴇxᴛ</strong>
-              <small>ᴍᴏᴅᴜʟᴀʀ · ᴇxᴘᴀɴᴅᴀʙʟᴇ · ᴀɪ-ʀᴇᴀᴅʏ</small>
+              <strong>Designed for what&apos;s next</strong>
+              <small>Modular · Expandable · AI-ready</small>
             </span>
           </div>
         </div>
@@ -527,14 +368,14 @@ export default function HomePage() {
         <div className="product-toolbar">
           <div className="toolbar-label">
             <Code2 size={15} />
-            <span>ᴘʟᴀᴛꜰᴏʀᴍ ᴍᴏᴅᴜʟᴇs</span>
+            <span>Platform modules</span>
           </div>
 
           <label className="product-search">
             <Search size={16} />
             <input
               type="search"
-              placeholder="ᴛʏᴘᴇ sᴏᴍᴇᴛʜɪɴɢ ᴛᴏ sᴛᴀʀᴛ..."
+              placeholder="Search platform modules..."
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               aria-label="Search platform modules"
@@ -575,12 +416,12 @@ export default function HomePage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span>ᴏᴘᴇɴ ᴍᴏᴅᴜʟᴇ</span>
+                    <span>Open module</span>
                     <ArrowUpRight size={17} />
                   </a>
                 ) : (
                   <Link href={product.href} className="product-link">
-                    <span>ᴏᴘᴇɴ ᴍᴏᴅᴜʟᴇ</span>
+                    <span>Open module</span>
                     <ArrowUpRight size={17} />
                   </Link>
                 )}
@@ -594,8 +435,8 @@ export default function HomePage() {
         {filteredProducts.length === 0 && (
           <div className="empty-search">
             <Search size={24} />
-            <strong>ɴᴏ ᴍᴀᴛᴄʜɪɴɢ ᴍᴏᴅᴜʟᴇs</strong>
-            <span>ᴛʀʏ ᴀ ᴅɪꜰꜰᴇʀᴇɴᴛ sᴇᴀʀᴄʜ ᴛᴇʀᴍ.</span>
+            <strong>No matching modules</strong>
+            <span>Try a different search term.</span>
           </div>
         )}
       </section>
@@ -611,7 +452,7 @@ export default function HomePage() {
         <div className="community-banner-copy">
           <span className="section-kicker">
             <span>02</span>
-            <span>ᴛʜᴇ ᴄᴏᴍᴍᴜɴɪᴛʏ</span>
+            <span>The community</span>
           </span>
 
           <h2>
@@ -627,7 +468,7 @@ export default function HomePage() {
         </div>
 
         <Link href="/forums" className="community-cta">
-          ᴇxᴘʟᴏʀᴇ ᴛʜᴇ ᴄᴏᴍᴍᴜɴɪᴛʏ
+          Explore the community
           <ArrowUpRight size={17} />
         </Link>
 
@@ -644,16 +485,16 @@ export default function HomePage() {
 
             <span className="brand-copy">
               <strong>{FONT.brand}</strong>
-              <small>ᴛʜᴇ ᴀᴜᴛᴏɴᴏᴍᴏᴜs ɴᴇᴛᴡᴏʀᴋ</small>
+              <small>Intelligence, thoughtfully connected</small>
             </span>
           </Link>
 
           <p>
-            ʙᴜɪʟᴅɪɴɢ ᴛʜᴇ ɴᴇxᴛ ɢᴇɴᴇʀᴀᴛɪᴏɴ ᴏꜰ ᴅɪɢɪᴛᴀʟ ɪɴᴛᴇʟʟɪɢᴇɴᴄᴇ.
+            Building the next generation of digital intelligence.
           </p>
 
           <Link href="/projects" className="footer-explore">
-            ᴇxᴘʟᴏʀᴇ ᴀᴘᴇxɪᴠᴇ
+            Explore Apexive
             <ChevronDown size={14} />
           </Link>
         </div>
@@ -662,9 +503,9 @@ export default function HomePage() {
           <span>© APEXIVE AI</span>
           <span className="footer-status">
             <span className="status-dot" />
-            ᴅɪɢɪᴛᴀʟ ꜰʀᴏɴᴛɪᴇʀ · ᴛᴏᴋʏᴏ
+            Thoughtful technology for everyone
           </span>
-          <Link href="/privacy">ᴘʀɪᴠᴀᴄʏ</Link>
+          <Link href="/privacy">Privacy</Link>
         </div>
       </footer>
     </main>

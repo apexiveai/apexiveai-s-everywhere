@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import CommunityCyberpunkShell from "../components/CommunityCyberpunkShell";
+import CommunityShell from "../components/CommunityShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Apexive Community",
   description:
-    "A premium AI-powered cyber city community network by Apexive AI.",
+    "A thoughtful AI-powered platform for intelligence, automation, and community by Apexive AI.",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body>
-        <CommunityCyberpunkShell>{children}</CommunityCyberpunkShell>
+        <CommunityShell>{children}</CommunityShell>
       </body>
     </html>
   );

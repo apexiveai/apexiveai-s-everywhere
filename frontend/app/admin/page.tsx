@@ -338,7 +338,7 @@ export default function AdminPage() {
               SUPER <span className="text-cyan-300">ADMIN</span>
             </h1>
             <p className="mt-2 text-sm text-slate-400">
-              Tokyo Digital Operations · Tenant & License Management
+              Apexive operations · Tenant & License Management
             </p>
           </div>
 
