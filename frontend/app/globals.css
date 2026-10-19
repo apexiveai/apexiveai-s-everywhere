@@ -2372,7 +2372,7 @@ button {
   --home-panel: rgba(6, 13, 27, 0.78);
   position: relative;
   isolation: isolate;
-  width: min(100%, 1440px);
+  width: 100%;
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 clamp(20px, 5vw, 76px);
@@ -4372,7 +4372,7 @@ button {
 .home-page {
   --home-line: #e5e5ea;
   --home-panel: rgba(255, 255, 255, 0.78);
-  max-width: 1440px;
+  max-width: none;
 }
 
 .site-header {
@@ -5184,6 +5184,11 @@ button {
   border-radius: 9px;
   background: #fff;
   color: #1d1d1f;
+}
+
+.account-form input[autocomplete="username"] {
+  font-variant-caps: normal;
+  text-transform: none;
 }
 
 .account-form button,
