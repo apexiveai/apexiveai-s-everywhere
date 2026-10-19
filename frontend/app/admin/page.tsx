@@ -836,19 +836,14 @@ export default function AdminPage() {
                       required={key !== "contact_phone"}
 
                       type={
-
                         key === "admin_email"
-
                           ? "email"
-
                           : key === "temporary_password"
-
                             ? "password"
-
                             : "text"
-
                       }
-
+                      autoCapitalize={key === "temporary_password" ? "none" : undefined}
+                      autoCorrect={key === "temporary_password" ? "off" : undefined}
                       minLength={key === "temporary_password" ? 12 : undefined}
 
                       value={company[key]}
