@@ -26,6 +26,10 @@ class Settings(BaseSettings):
         "http://localhost:3000,"
         "http://127.0.0.1:3000"
     )
+    CORS_ORIGIN_REGEX: str = (
+        r"^https://apexiveai-s-everywhere-[a-z0-9-]+-apexiveais-projects"
+        r"\.vercel\.app$"
+    )
 
     REDIS_URL: str = "redis://localhost:6379/0"
 

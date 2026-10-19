@@ -33,6 +33,16 @@ services to validate a tenant grant. Independently hosted product applications
 must call this endpoint (or enforce the same entitlement check server-side) to
 prevent direct-URL access outside this community dashboard.
 
+## Vercel frontend and Railway API
+
+Set the Vercel frontend's `NEXT_PUBLIC_API_URL` to
+`https://commu-api.apexiveai.com/api` for Production and Preview, then redeploy
+so the value is included in the frontend build. The Railway backend allows the
+production origins `https://www.apexiveai.com` and `https://apexiveai.com`, as
+well as preview deployments matching this project's Vercel URL pattern. If the
+Vercel project or team slug changes, update `CORS_ORIGIN_REGEX` in the Railway
+service to match the new preview URL pattern.
+
 Backend API service down
 
 Render / Railway / Vercel backend service run မနေခြင်း
