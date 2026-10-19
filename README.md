@@ -1,5 +1,5 @@
 "# apexiveai-s-everywhere
-
+# node .\node_modules\next\dist\bin\next dev
 ## Backend database migrations
 
 Before starting the backend on an existing PostgreSQL database, apply the
@@ -30,3 +30,26 @@ The backend exposes `GET /api/auth/solutions/{solution_code}/access` for product
 services to validate a tenant grant. Independently hosted product applications
 must call this endpoint (or enforce the same entitlement check server-side) to
 prevent direct-URL access outside this community dashboard.
+
+Backend API service down
+
+Render / Railway / Vercel backend service run မနေခြင်း
+Server crash ဖြစ်နေခြင်း
+
+API URL မှားနေခြင်း
+
+Frontend environment variable (API_URL, NEXT_PUBLIC_API_URL) မှားနေခြင်း
+Production URL ကို localhost ကိုညွှန်နေခြင်း
+
+CORS issue
+
+https://www.apexiveai.com ကနေ API domain ကို access လုပ်တဲ့အခါ CORS block ဖြစ်ခြင်း
+
+SSL / HTTPS issue
+
+HTTPS page က HTTP API ကို ခေါ်နေတာ
+Certificate error ရှိနေတာ
+
+DNS issue
+
+API subdomain DNS record မမှန်သေးခြင်း
