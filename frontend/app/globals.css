@@ -5186,7 +5186,8 @@ button {
   color: #1d1d1f;
 }
 
-.account-form input[autocomplete="username"] {
+.account-form input[autocomplete="username"],
+input[type="password"] {
   font-variant-caps: normal;
   text-transform: none;
 }
