@@ -1,5 +1,7 @@
 "# apexiveai-s-everywhere
 # node .\node_modules\next\dist\bin\next dev
+python -c "import secrets; print(secrets.token_hex(32))"
+
 ## Backend database migrations
 
 Before starting the backend on an existing PostgreSQL database, apply the
