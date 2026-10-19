@@ -34,6 +34,7 @@ html {
   min-height: 100%;
   scroll-behavior: smooth;
   background: var(--ac-bg);
+  font-variant-caps: all-small-caps;
 }
 
 body {
@@ -4972,5 +4973,1000 @@ button {
 
   .community-banner {
     border-radius: 20px;
+  }
+}
+
+.ac-layout {
+  display: block;
+  min-height: 100vh;
+}
+
+.ac-global-header {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  display: flex;
+  min-height: 74px;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  padding: 10px clamp(16px, 3vw, 44px);
+  border-bottom: 1px solid #e5e5ea;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
+}
+
+.ac-global-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.ac-global-brand .ac-brand-mark {
+  width: 38px;
+  height: 38px;
+  border-color: rgba(0, 122, 255, 0.25);
+  background: #f0f7ff;
+  color: #007aff;
+}
+
+.ac-global-brand .ac-brand-copy strong {
+  color: #1d1d1f;
+  font-size: 16px;
+}
+
+.ac-global-brand .ac-brand-copy small {
+  color: #6e6e73;
+}
+
+.ac-global-nav {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  overflow: visible;
+}
+
+.ac-global-link {
+  flex: 0 0 auto;
+  padding: 9px 10px;
+  border-radius: 9px;
+  color: #515158;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ac-global-link:hover,
+.ac-global-link.is-active {
+  background: #f0f7ff;
+  color: #0066d6;
+}
+
+.ac-header-account {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.ac-header-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid #d2d2d7;
+  border-radius: 9px;
+  background: #fff;
+  color: #303036;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ac-menu-toggle {
+  display: none;
+}
+
+.ac-main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px clamp(16px, 3vw, 44px) 40px;
+}
+
+.ac-page-content {
+  width: 100%;
+  max-width: none;
+}
+
+.ac-footer {
+  width: 100%;
+  align-items: center;
+  color: #6e6e73;
+  font-family: var(--ac-font-body);
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.ac-footer-copy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ac-copyright-art {
+  width: 86px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.ac-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ac-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.home-copyright-art {
+  width: 118px;
+  height: 79px;
+  object-fit: contain;
+}
+
+.account-page {
+  display: grid;
+  min-height: min(75vh, 760px);
+  place-items: center;
+  padding: 40px 16px;
+}
+
+.account-card {
+  width: min(100%, 460px);
+  padding: 34px;
+  border: 1px solid #e5e5ea;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(29, 29, 31, 0.07);
+}
+
+.account-card h1,
+.billing-page h1,
+.workspace-page h1,
+.communications-page h1,
+.notifications-page h1,
+.history-page h1 {
+  margin: 10px 0;
+  color: #1d1d1f;
+  font-size: clamp(28px, 4vw, 42px);
+}
+
+.account-card > p,
+.billing-heading p,
+.workspace-page > p,
+.communications-page > p,
+.notifications-page p,
+.history-page > p {
+  color: #6e6e73;
+  line-height: 1.65;
+}
+
+.account-form {
+  display: grid;
+  gap: 15px;
+  margin: 24px 0;
+}
+
+.account-form label,
+.transfer-form label,
+.admin-review-note {
+  display: grid;
+  gap: 7px;
+  color: #4b4b52;
+  font-size: 13px;
+}
+
+.account-form input,
+.account-form select,
+.account-form textarea,
+.account-form select,
+.transfer-form input,
+.message-compose textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d2d2d7;
+  border-radius: 9px;
+  background: #fff;
+  color: #1d1d1f;
+}
+
+.account-form button,
+.transfer-form button,
+.workspace-product button,
+.message-compose button,
+.admin-invoice-form > button,
+.admin-review-actions button:first-child {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 9px;
+  background: #007aff;
+  color: #fff;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.account-form button:disabled,
+.transfer-form button:disabled,
+.workspace-product button:disabled,
+.message-compose button:disabled,
+.admin-invoice-form button:disabled,
+.admin-review-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.account-error,
+.billing-alert.is-error {
+  color: #b42318;
+}
+
+.billing-page,
+.workspace-page,
+.communications-page,
+.notifications-page,
+.history-page,
+.admin-history,
+.admin-invoice-workspace {
+  width: 100%;
+  max-width: none;
+  color: #1d1d1f;
+}
+
+.billing-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.billing-refresh {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 13px;
+  border: 1px solid #d2d2d7;
+  border-radius: 10px;
+  background: #fff;
+  color: #303036;
+  cursor: pointer;
+}
+
+.billing-gateway-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #f0d7a1;
+  border-radius: 13px;
+  background: #fff9eb;
+  color: #5c4a25;
+}
+
+.billing-gateway-notice p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.billing-transfer-note,
+.billing-alert {
+  margin: 16px 0;
+  padding: 12px 14px;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #55555c;
+}
+
+.invoice-grid,
+.workspace-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.invoice-card,
+.workspace-product {
+  padding: 20px;
+  border: 1px solid #e5e5ea;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.035);
+}
+
+.invoice-card > header,
+.admin-invoice-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.invoice-type,
+.invoice-status {
+  color: #6e6e73;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.invoice-status {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #f2f2f7;
+  letter-spacing: 0;
+}
+
+.status-paid {
+  background: #e8f7ee;
+  color: #177245;
+}
+
+.status-payment-reported {
+  background: #fff4d6;
+  color: #87600b;
+}
+
+.status-rejected {
+  background: #fff0ef;
+  color: #b42318;
+}
+
+.invoice-card h2 {
+  margin: 18px 0 8px;
+  font-size: 18px;
+}
+
+.invoice-description,
+.invoice-meta,
+.invoice-pending,
+.invoice-review-note,
+.invoice-success {
+  color: #66666d;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.invoice-amount {
+  display: block;
+  margin: 18px 0;
+  color: #0066d6;
+  font-size: 26px;
+}
+
+.transfer-instructions {
+  margin: 16px 0;
+  padding: 13px;
+  border-radius: 10px;
+  background: #f5f5f7;
+  white-space: pre-wrap;
+}
+
+.transfer-instructions p {
+  margin: 7px 0 0;
+  color: #55555c;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.transfer-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.invoice-success {
+  color: #177245;
+}
+
+.invoice-empty,
+.billing-loading {
+  display: flex;
+  min-height: 150px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 22px;
+  padding: 24px;
+  border: 1px dashed #d2d2d7;
+  border-radius: 14px;
+  color: #6e6e73;
+  text-align: center;
+}
+
+.billing-loading {
+  flex-direction: row;
+  border-style: solid;
+}
+
+.workspace-page > p {
+  max-width: 850px;
+}
+
+.workspace-product > svg {
+  color: #007aff;
+}
+
+.workspace-product h2 {
+  margin: 14px 0 8px;
+}
+
+.workspace-product p,
+.workspace-product small {
+  color: #6e6e73;
+  line-height: 1.6;
+}
+
+.workspace-product button {
+  margin-top: 12px;
+}
+
+.message-workspace {
+  display: grid;
+  min-height: 560px;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #e5e5ea;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.thread-list {
+  padding: 18px;
+  border-right: 1px solid #e5e5ea;
+}
+
+.thread-list h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+
+.thread-list > button {
+  display: grid;
+  width: 100%;
+  gap: 5px;
+  margin: 7px 0;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #f5f5f7;
+  text-align: left;
+  cursor: pointer;
+}
+
+.thread-list > button.is-active {
+  border-color: #b8d7ff;
+  background: #f0f7ff;
+}
+
+.thread-list > button span,
+.thread-list > button small {
+  overflow: hidden;
+  color: #6e6e73;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.message-history {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.message-history article {
+  max-width: min(82%, 720px);
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f2f2f7;
+}
+
+.message-history article.is-mine {
+  align-self: flex-end;
+  background: #eaf3ff;
+}
+
+.message-history article p {
+  margin: 7px 0;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.message-history article small {
+  color: #6e6e73;
+  font-size: 10px;
+}
+
+.message-compose {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #e5e5ea;
+}
+
+.message-compose button {
+  flex: 0 0 auto;
+}
+
+.new-message {
+  width: min(100%, 620px);
+  margin: auto;
+  padding: 24px;
+}
+
+.new-message > svg {
+  color: #007aff;
+}
+
+.notification-list,
+.history-list {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notification-list article,
+.history-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #e5e5ea;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.notification-list article.is-unread {
+  border-color: #b8d7ff;
+  background: #f7fbff;
+}
+
+.notification-bell,
+.history-list li > svg {
+  color: #007aff;
+}
+
+.notification-list p,
+.history-list p {
+  margin: 6px 0;
+  color: #55555c;
+}
+
+.notification-list small,
+.history-list small {
+  color: #6e6e73;
+}
+
+.notification-list article button {
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.history-list p {
+  overflow-wrap: anywhere;
+}
+
+.history-tenant-picker {
+  display: grid;
+  width: min(100%, 420px);
+  gap: 7px;
+  margin: 20px 0;
+}
+
+.history-tenant-picker select {
+  padding: 10px;
+  border: 1px solid #d2d2d7;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.admin-invoice-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-invoice-form,
+.admin-invoice-list {
+  margin-top: 22px;
+  padding: 20px;
+  border: 1px solid #e5e5ea;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.admin-invoice-form h3,
+.admin-invoice-list h3 {
+  margin: 0 0 16px;
+  font-size: 19px;
+}
+
+.admin-invoice-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.admin-invoice-fields label {
+  display: grid;
+  gap: 7px;
+  color: #4b4b52;
+  font-size: 13px;
+}
+
+.admin-invoice-wide {
+  grid-column: 1 / -1;
+}
+
+.admin-invoice-form > button {
+  margin-top: 16px;
+}
+
+.admin-invoice-row {
+  padding: 16px 0;
+  border-top: 1px solid #e5e5ea;
+}
+
+.admin-invoice-row-top small {
+  display: block;
+  margin-top: 5px;
+  color: #6e6e73;
+}
+
+.admin-invoice-row > p {
+  color: #55555c;
+  font-size: 13px;
+}
+
+.admin-review-note {
+  max-width: 540px;
+}
+
+.admin-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 12px 0;
+}
+
+.admin-review-actions button:last-child {
+  padding: 10px 14px;
+  border: 1px solid #e1aaaa;
+  border-radius: 9px;
+  background: #fff5f5;
+  color: #a22929;
+  cursor: pointer;
+}
+
+.product-assistant {
+  position: fixed;
+  right: 22px;
+  bottom: 20px;
+  z-index: 120;
+}
+
+.assistant-launcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 17px;
+  border: 0;
+  border-radius: 999px;
+  background: #007aff;
+  color: white;
+  box-shadow: 0 10px 28px rgba(0, 122, 255, 0.28);
+  cursor: pointer;
+}
+
+.assistant-panel {
+  display: flex;
+  width: min(420px, calc(100vw - 28px));
+  height: min(620px, calc(100vh - 36px));
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e5e5ea;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 18px 65px rgba(29, 29, 31, 0.2);
+}
+
+.assistant-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-bottom: 1px solid #e5e5ea;
+}
+
+.assistant-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 10px;
+  background: #eef6ff;
+  color: #007aff;
+}
+
+.assistant-header > span:nth-child(2) {
+  display: grid;
+  flex: 1;
+  gap: 3px;
+}
+
+.assistant-header small,
+.assistant-disclaimer {
+  color: #6e6e73;
+  font-size: 10px;
+}
+
+.assistant-header button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: #f5f5f7;
+  cursor: pointer;
+}
+
+.assistant-messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.assistant-message {
+  max-width: 92%;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: #f2f2f7;
+}
+
+.assistant-message.is-user {
+  align-self: flex-end;
+  background: #eaf3ff;
+}
+
+.assistant-message p {
+  margin: 0;
+  color: #303036;
+  font-size: 13px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.assistant-message small {
+  display: block;
+  margin-top: 7px;
+  color: #777780;
+  font-size: 9px;
+}
+
+.assistant-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px 9px;
+}
+
+.assistant-suggestions button {
+  padding: 7px 9px;
+  border: 1px solid #d2d2d7;
+  border-radius: 999px;
+  background: #fff;
+  color: #4b4b52;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.assistant-form {
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid #e5e5ea;
+}
+
+.assistant-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 11px;
+  border: 1px solid #d2d2d7;
+  border-radius: 9px;
+}
+
+.assistant-form button {
+  display: grid;
+  width: 42px;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  background: #007aff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.assistant-form button:disabled {
+  opacity: 0.45;
+}
+
+.assistant-disclaimer {
+  margin: 0;
+  padding: 0 12px 10px;
+  line-height: 1.4;
+}
+
+.assistant-catalog-warning {
+  margin: 0;
+  padding: 10px;
+  border-radius: 9px;
+  background: #fff4d6;
+  color: #765b1c;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (max-width: 1000px) {
+  .ac-global-header {
+    gap: 9px;
+  }
+
+  .ac-global-nav {
+    gap: 0;
+  }
+
+  .ac-global-link {
+    padding: 8px 7px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 760px) {
+  .ac-global-header {
+    min-height: 64px;
+    justify-content: space-between;
+    padding: 9px 14px;
+  }
+
+  .ac-menu-toggle {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 8px 11px;
+    border: 1px solid #d2d2d7;
+    border-radius: 8px;
+    background: #fff;
+    color: #303036;
+  }
+
+  .ac-global-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: none;
+    max-height: calc(100vh - 66px);
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    padding: 8px 14px 14px;
+    border-bottom: 1px solid #e5e5ea;
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  .ac-global-nav.is-open {
+    display: flex;
+  }
+
+  .ac-global-link {
+    padding: 12px 10px;
+    font-size: 13px;
+  }
+
+  .ac-header-account {
+    margin-left: 0;
+  }
+
+  .ac-header-action {
+    padding: 8px;
+    font-size: 0;
+  }
+
+  .ac-main {
+    padding: 19px 14px 30px;
+  }
+
+  .ac-footer {
+    justify-content: flex-start;
+  }
+
+  .ac-footer-copy {
+    width: 100%;
+  }
+
+  .billing-heading,
+  .admin-invoice-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .message-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .thread-list {
+    max-height: 230px;
+    overflow-y: auto;
+    border-right: 0;
+    border-bottom: 1px solid #e5e5ea;
+  }
+
+  .message-panel {
+    min-height: 420px;
+  }
+
+  .admin-invoice-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-invoice-wide {
+    grid-column: auto;
+  }
+
+  .product-assistant {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .assistant-launcher {
+    padding: 12px;
+  }
+
+  .assistant-launcher span {
+    font-size: 12px;
   }
 }

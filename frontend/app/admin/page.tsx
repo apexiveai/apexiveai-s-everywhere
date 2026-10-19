@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { apiRequest, type PaginatedResponse } from "@/lib/api";
 import TenantOperations from "./TenantOperations";
+import AdminInvoices from "./AdminInvoices";
+import AdminHistory from "./AdminHistory";
 
 type Overview = {
   tenants: number;
@@ -52,7 +54,7 @@ type Solution = {
   is_active: boolean;
 };
 
-type Tab = "Overview" | "Companies" | "Plans" | "Solutions" | "Operations";
+type Tab = "Overview" | "Companies" | "Plans" | "Solutions" | "Operations" | "Invoices" | "History";
 
 function PaginationControls({
   page,
@@ -328,7 +330,7 @@ export default function AdminPage() {
     <main className="admin-console min-h-screen text-slate-100">
       <div className="pointer-events-none fixed inset-0 opacity-30 [background-image:linear-gradient(rgba(0,229,255,.06)_1px,transparent_1px),linear-gradient(90deg,rgba(0,229,255,.06)_1px,transparent_1px)] [background-size:38px_38px]" />
 
-      <div className="relative mx-auto max-w-[1500px] p-4 md:p-8">
+      <div className="relative w-full p-4 md:p-8">
         <header className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-cyan-400/20 pb-6">
           <div>
             <div className="mb-2 flex items-center gap-2 text-xs tracking-[0.3em] text-cyan-300">
@@ -351,7 +353,7 @@ export default function AdminPage() {
         </header>
 
         <nav className="mb-8 flex flex-wrap gap-2">
-          {(["Overview", "Companies", "Plans", "Solutions"] as Tab[]).map(
+          {(["Overview", "Companies", "Plans", "Solutions", "Operations", "Invoices", "History"] as Tab[]).map(
             (item) => (
               <button
                 key={item}
@@ -746,6 +748,8 @@ export default function AdminPage() {
             )}
             
             {tab === "Operations" && <TenantOperations />}
+            {tab === "Invoices" && <AdminInvoices />}
+            {tab === "History" && <AdminHistory />}
 
           </>
 

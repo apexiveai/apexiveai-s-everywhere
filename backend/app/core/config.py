@@ -22,7 +22,9 @@ class Settings(BaseSettings):
 
     CORS_ORIGINS: str = (
         "https://www.apexiveai.com,"
-        "https://apexiveai.com"
+        "https://apexiveai.com,"
+        "http://localhost:3000,"
+        "http://127.0.0.1:3000"
     )
 
     REDIS_URL: str = "redis://localhost:6379/0"

@@ -2,6 +2,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
@@ -25,7 +26,6 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { externalModules } from "../lib/community";
 
 const FONT = {
   brand: "Apexive AI",
@@ -36,7 +36,7 @@ const FONT = {
   projects: "Projects",
   resources: "Resources",
   signIn: "Sign in",
-  getStarted: "Get started",
+  getStarted: "Tenant sign in",
 };
 
 const products = [
@@ -46,8 +46,8 @@ const products = [
     subtitle: "Visual matching · Conflict analysis",
     description:
       "Compare trademark documents and logos with an AI-assisted review workflow.",
-    href: externalModules.trademark.href,
-    external: true,
+    href: "/workspace",
+    external: false,
     icon: ShieldCheck,
     tag: "AI intelligence",
     color: "cyan",
@@ -58,8 +58,8 @@ const products = [
     subtitle: "Robotic process automation",
     description:
       "Automate repetitive business processes with intelligent workflows.",
-    href: externalModules.rpa.href,
-    external: true,
+    href: "/workspace",
+    external: false,
     icon: BrainCircuit,
     tag: "Autonomous AI",
     color: "purple",
@@ -222,7 +222,7 @@ export default function HomePage() {
             <ArrowUpRight size={14} />
           </Link>
 
-          <Link href="/register" className="header-cta">
+          <Link href="/login" className="header-cta">
             {FONT.getStarted}
             <ArrowRight size={15} />
           </Link>
@@ -259,7 +259,7 @@ export default function HomePage() {
           </p>
 
           <div className="hero-actions">
-            <Link href="/register" className="primary-button">
+            <Link href="/login" className="primary-button">
               <Sparkles size={17} />
               Explore Apexive
               <ArrowRight size={17} />
@@ -492,6 +492,14 @@ export default function HomePage() {
           <p>
             Building the next generation of digital intelligence.
           </p>
+
+          <Image
+            src="/copyright-bhone-htet-naing.png"
+            alt="Copyright — Bhone Htet Naing. All rights reserved."
+            width={144}
+            height={96}
+            className="home-copyright-art"
+          />
 
           <Link href="/projects" className="footer-explore">
             Explore Apexive

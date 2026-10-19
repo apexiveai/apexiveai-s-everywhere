@@ -9,6 +9,8 @@ from app.core.security import create_access_token, verify_password
 from app.database import get_db
 from app.models import User
 from app.schemas.auth import LoginRequest, LoginResponse, UserResponse
+from app.services.entitlements import require_solution_access
+from app.services.audit import record_audit
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -57,6 +59,15 @@ def login(
         role=user.role,
         tenant_id=user.tenant_id,
     )
+    record_audit(
+        db,
+        actor_id=user.id,
+        tenant_id=user.tenant_id,
+        action="LOGIN_SUCCEEDED",
+        entity_type="user",
+        entity_id=user.id,
+    )
+    db.commit()
 
     return LoginResponse(
         access_token=token,
@@ -69,3 +80,32 @@ def get_me(
     user: Annotated[User, Depends(get_current_user)],
 ):
     return user
+
+
+@router.get("/solutions/{solution_code}/access")
+def check_solution_access(
+    solution_code: str,
+    user: Annotated[User, Depends(get_current_user)],
+    db: Annotated[Session, Depends(get_db)],
+):
+    if user.role != "TENANT_ADMIN" or user.tenant_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tenant account required.",
+        )
+    solution = require_solution_access(db, user.tenant_id, solution_code)
+    record_audit(
+        db,
+        actor_id=user.id,
+        tenant_id=user.tenant_id,
+        action="PRODUCT_ACCESS_CHECKED",
+        entity_type="solution",
+        entity_id=solution.id,
+    )
+    db.commit()
+    return {
+        "authorized": True,
+        "solution_code": solution.code,
+        "solution_name": solution.name,
+        "url": solution.api_url,
+    }

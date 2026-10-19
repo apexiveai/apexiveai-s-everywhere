@@ -19,6 +19,7 @@ from app.models import (
     TenantSolution,
     User,
 )
+from app.services.audit import create_notification, record_audit
 
 router = APIRouter(prefix="/admin", tags=["Super Admin"])
 
@@ -212,6 +213,22 @@ def create_tenant(
             is_active=True,
         )
         db.add(tenant_admin)
+        record_audit(
+            db,
+            actor_id=admin.id,
+            tenant_id=tenant.id,
+            action="TENANT_ACCOUNT_CREATED",
+            entity_type="tenant",
+            entity_id=tenant.id,
+            details={"company_name": tenant.company_name},
+        )
+        create_notification(
+            db,
+            tenant_id=tenant.id,
+            notification_type="ACCOUNT_CREATED",
+            title="Tenant account created",
+            body="Your account is ready. Sign in to view invoices and messages.",
+        )
         db.commit()
         db.refresh(tenant)
         db.refresh(tenant_admin)
@@ -250,6 +267,22 @@ def update_tenant_status(
     for user in users:
         user.is_active = payload.status == "ACTIVE"
 
+    record_audit(
+        db,
+        actor_id=admin.id,
+        tenant_id=tenant_id,
+        action="TENANT_STATUS_CHANGED",
+        entity_type="tenant",
+        entity_id=tenant_id,
+        details={"status": tenant.status},
+    )
+    create_notification(
+        db,
+        tenant_id=tenant_id,
+        notification_type="ACCOUNT_STATUS",
+        title="Tenant account status changed",
+        body=f"Your account status is now {tenant.status}.",
+    )
     db.commit()
     return {
         "message": "Tenant status updated",
@@ -500,7 +533,16 @@ def assign_subscription(
     )
 
     db.add(subscription)
-
+    db.flush()
+    record_audit(
+        db,
+        actor_id=admin.id,
+        tenant_id=tenant_id,
+        action="SUBSCRIPTION_ASSIGNED",
+        entity_type="subscription",
+        entity_id=subscription.id,
+        details={"plan_id": plan.id},
+    )
     db.commit()
 
     db.refresh(subscription)
@@ -568,7 +610,16 @@ def issue_license(
     )
 
     db.add(license_record)
-
+    db.flush()
+    record_audit(
+        db,
+        actor_id=admin.id,
+        tenant_id=tenant_id,
+        action="LICENSE_ISSUED",
+        entity_type="license",
+        entity_id=license_record.id,
+        details={"expires_at": str(payload.expires_at)},
+    )
     db.commit()
 
     db.refresh(license_record)
@@ -647,13 +698,28 @@ def set_solution_access(
         db.add(access)
 
     else:
-
         access.granted = payload.granted
 
         access.granted_by = admin.id
 
         access.expires_at = payload.expires_at
 
+    record_audit(
+        db,
+        actor_id=admin.id,
+        tenant_id=tenant_id,
+        action="SOLUTION_ACCESS_GRANTED" if payload.granted else "SOLUTION_ACCESS_REVOKED",
+        entity_type="solution",
+        entity_id=solution_id,
+        details={"solution_code": solution.code},
+    )
+    create_notification(
+        db,
+        tenant_id=tenant_id,
+        notification_type="PRODUCT_ACCESS",
+        title=f"Product access {'granted' if payload.granted else 'revoked'}",
+        body=f"{solution.name} access was {'granted' if payload.granted else 'revoked'} by your SuperAdmin.",
+    )
     db.commit()
 
     db.refresh(access)
