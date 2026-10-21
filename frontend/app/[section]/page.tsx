@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CommunitySectionPage from "../../components/CommunitySectionPage";
 import {
@@ -23,6 +24,23 @@ export default async function Page({
   }
 
   return <CommunitySectionPage section={section} />;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ section: string }>;
+}): Promise<Metadata> {
+  const { section } = await params;
+  if (!isCommunitySection(section)) {
+    return {};
+  }
+
+  const content = communitySections[section];
+  return {
+    title: `${content.title} | Apexive AI`,
+    description: content.description,
+  };
 }
 
 export function generateStaticParams() {

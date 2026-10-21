@@ -326,6 +326,77 @@ export const communitySections = {
       },
     ],
   },
+  security: {
+    title: "Security & Trust",
+    eyebrow: "Security controls and deployment guidance",
+    description:
+      "Apexive မှာ code ဖြင့်ကာကွယ်ထားသည့်အချက်များနှင့် production server တွင် သီးခြားပြင်ဆင်ရမည့် security checklist ကို ဖော်ပြထားပါသည်။",
+    groups: [
+      {
+        title: "Python backend security",
+        description: "Backend API နှင့် database layer တွင် အသုံးပြုထားသော ကာကွယ်မှုများ။",
+        items: [
+          {
+            title: "ORM & parameterized queries",
+            description:
+              "Database access တွင် SQLAlchemy ORM နှင့် bound parameters ကို အသုံးပြုထားပါသည်။ User input ကို SQL string ထဲ တိုက်ရိုက်ပေါင်းမထည့်ပါနှင့်။",
+          },
+          {
+            title: "CORS configuration",
+            description:
+              "FastAPI တွင် ခွင့်ပြုထားသော origin များကို config ဖြင့်သတ်မှတ်ထားပါသည်။ Production domain များကိုသာ allowlist လုပ်ပါ။ CORS သည် login/authentication ကို အစားမထိုးပါ။",
+          },
+          {
+            title: "Pydantic input validation",
+            description:
+              "Pydantic request schema များက type၊ စာလုံးအရေအတွက်နှင့် ဈေးနှုန်းအကွာအဝေးများကို server ပေါ်တွင် စစ်ဆေးပါသည်။ Browser validation သည် အဆင်ပြေစေရန်သာ ဖြစ်သည်။",
+          },
+          {
+            title: "Password hashing",
+            description:
+              "Account password များကို Passlib မှတစ်ဆင့် bcrypt ဖြင့် hash လုပ်ထားပါသည်။ မူရင်း password ကို သိမ်းဆည်းခြင်း၊ log ထဲရေးခြင်း မလုပ်ပါနှင့်။",
+          },
+        ],
+      },
+      {
+        title: "Frontend security",
+        description: "Browser တွင် data ပြသမှု၊ token နှင့် environment variable များအတွက် အချက်များ။",
+        items: [
+          {
+            title: "XSS protection",
+            description:
+              "React သည် text အဖြစ်ထည့်သွင်းထားသော data များကို ပုံမှန်အားဖြင့် escape လုပ်ပါသည်။ မယုံကြည်ရသော HTML ကို တိုက်ရိုက်မပြသပါနှင့်၊ server ပေါ်တွင်လည်း ပြန်စစ်ပါ။",
+          },
+          {
+            title: "Token & cookie management",
+            description:
+              "လက်ရှိ access token ကို browser localStorage ထဲတွင် သိမ်းထားပြီး HttpOnly cookie မဟုတ်သေးပါ။ ပိုမိုလုံခြုံရန် Secure၊ HttpOnly၊ SameSite cookie နှင့် CSRF ကာကွယ်မှုသို့ ပြောင်းရန်လိုပါသည်။",
+          },
+          {
+            title: "Environment variable protection",
+            description:
+              "Database credential နှင့် signing key များကို server ဘက်တွင်သာထားပါ။ NEXT_PUBLIC_ variable များကို browser သို့ပို့သည်။ Secret များကို ထိုနေရာတွင်မထားပါနှင့်၊ .env file များကို source control ထဲမတင်ပါနှင့်။",
+          },
+        ],
+      },
+      {
+        title: "Infrastructure & transport security",
+        description: "Production hosting တွင် သီးခြားစစ်ဆေးပြီး configure လုပ်ရမည့်အချက်များ။",
+        items: [
+          {
+            title: "HTTPS / TLS everywhere",
+            description:
+              "Website နှင့် API traffic အားလုံးကို HTTPS/TLS ဖြင့်ပို့ပါ။ Hosting သို့မဟုတ် proxy အဆင့်တွင် HTTP မှ HTTPS သို့ redirect နှင့် HSTS ကို configure လုပ်ပါ။",
+          },
+          {
+            title: "Reverse proxy & WAF",
+            description:
+              "FastAPI ရှေ့တွင် Nginx သို့မဟုတ် Cloudflare WAF ထားပြီး origin server ကို တိုက်ရိုက်ဝင်ရောက်မှုကန့်သတ်ပါ။ Rate limit နှင့် ယုံကြည်ရသော proxy header များကို သတ်မှတ်ပါ။ DDoS ကာကွယ်မှုသည် အန္တရာယ်ကိုလျှော့ချခြင်းသာဖြစ်ပြီး အပြည့်အဝတားဆီးနိုင်မည်ဟု အာမမခံနိုင်ပါ။",
+          },
+        ],
+      },
+    ],
+  },
   "clone-detector": {
     title: "Clone Detector",
     eyebrow: "Protect what makes your brand yours",
@@ -519,6 +590,12 @@ export const searchDirectory = [
     description: "Find API references and integration documentation.",
     category: "resources",
     href: "/resources",
+  },
+  {
+    title: "Security & Trust",
+    description: "Review backend, frontend, and infrastructure security guidance.",
+    category: "resources",
+    href: "/security",
   },
   {
     title: "Knowledge Base",

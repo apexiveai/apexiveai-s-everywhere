@@ -20,6 +20,17 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Auctions
+
+The `/auctions` page lets anyone browse listings. Only active tenant accounts
+created by a SuperAdmin can post auctions or bid. This MVP supports USD and MMK
+bids; checkout, payment processing, and delivery are not included. Apply the
+backend migrations before using the auction API.
+
+The `/security` page summarizes implemented backend controls and deployment
+guidance. It also documents that browser access tokens currently use
+`localStorage`; Secure, HttpOnly cookie sessions are not yet enabled.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

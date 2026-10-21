@@ -77,6 +77,7 @@ export default function CommunitySectionPage({
           {section === "projects" && <FolderKanban />}
           {section === "resources" && <Sparkles />}
           {section === "clone-detector" && <ShieldCheck />}
+          {section === "security" && <ShieldCheck />}
           {section === "search" && <Search />}
         </div>
       </section>
@@ -205,7 +206,7 @@ export default function CommunitySectionPage({
             >
               <div className="ac-feature-group-heading">
                 <span className="ac-feature-group-icon">
-                  {section === "clone-detector" ? (
+                  {section === "clone-detector" || section === "security" ? (
                     <ShieldCheck size={18} />
                   ) : (
                     <Icon size={18} />
@@ -228,7 +229,7 @@ export default function CommunitySectionPage({
                   <article className="ac-feature-card" key={item.title}>
                     <div className="ac-feature-card-top">
                       <span className="ac-feature-card-icon">
-                        {section === "clone-detector" ? (
+                        {section === "clone-detector" || section === "security" ? (
                           <ShieldCheck size={17} />
                         ) : section === "forums" ? (
                           <MessageSquare size={17} />
@@ -254,6 +255,8 @@ export default function CommunitySectionPage({
                           <span className="ac-service-dot" />
                           Service required
                         </>
+                      ) : section === "security" ? (
+                        "Security guidance"
                       ) : (
                         <>
                           Explore feature <ArrowRight size={13} />

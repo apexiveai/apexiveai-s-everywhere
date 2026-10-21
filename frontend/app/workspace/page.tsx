@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { ExternalLink, LoaderCircle, ShieldCheck } from "lucide-react";
-import { apiRequest } from "@/lib/api";
+import { apiRequest, getToken } from "@/lib/api";
 
 type Product = {
   code: string;
@@ -40,7 +40,17 @@ export default function WorkspacePage() {
         `/auth/solutions/${encodeURIComponent(product.code)}/access`,
       );
       if (authorization.authorized && authorization.url) {
-        window.location.assign(authorization.url);
+        const launchUrl = new URL(authorization.url);
+        if (product.code === "trademark-conflict-detector") {
+          const communityToken = getToken();
+          if (!communityToken) {
+            throw new Error("Your Community session has expired. Sign in again before opening a product.");
+          }
+          launchUrl.hash = new URLSearchParams({
+            community_token: communityToken,
+          }).toString();
+        }
+        window.location.assign(launchUrl.toString());
       } else {
         setError("The product is authorized but has no launch URL configured.");
       }

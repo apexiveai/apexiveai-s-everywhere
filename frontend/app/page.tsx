@@ -15,6 +15,7 @@ import {
   Code2,
   Cpu,
   Globe2,
+  Gavel,
   Layers3,
   Menu,
   MessageSquare,
@@ -22,7 +23,6 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
-  Terminal,
   X,
   Zap,
 } from "lucide-react";
@@ -31,9 +31,6 @@ const FONT = {
   brand: "Apexive AI",
   home: "Home",
   dashboard: "Dashboard",
-  forums: "Forums",
-  articles: "Articles",
-  projects: "Projects",
   resources: "Resources",
   signIn: "Sign in",
   getStarted: "Tenant sign in",
@@ -179,12 +176,20 @@ export default function HomePage() {
     );
   }, [query]);
 
-  const navItems = [
+  const navItemsBeforeExplore = [
     { label: FONT.home, href: "/" },
     { label: FONT.dashboard, href: "/dashboard" },
-    { label: FONT.forums, href: "/forums" },
-    { label: FONT.articles, href: "/articles" },
-    { label: FONT.projects, href: "/projects" },
+  ];
+
+  const exploreNavItems = [
+    { label: "Forums", href: "/forums" },
+    { label: "Articles", href: "/articles" },
+    { label: "Projects", href: "/projects" },
+    { label: "Auctions", href: "/auctions" },
+    { label: "Security", href: "/security" },
+  ];
+
+  const navItemsAfterExplore = [
     { label: FONT.resources, href: "/resources" },
   ];
 
@@ -204,12 +209,39 @@ export default function HomePage() {
         </Link>
 
         <nav className={`main-nav ${mobileMenuOpen ? "nav-open" : ""}`}>
-          {navItems.map((item) => (
+          {navItemsBeforeExplore.map((item) => (
             <Link
               href={item.href}
               key={item.href}
               onClick={() => setMobileMenuOpen(false)}
               className={item.href === "/" ? "nav-link active" : "nav-link"}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <details className="home-nav-group">
+            <summary className="nav-link">
+              Explore <ChevronDown size={13} />
+            </summary>
+            <div className="home-nav-menu">
+              {exploreNavItems.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="nav-link"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </details>
+          {navItemsAfterExplore.map((item) => (
+            <Link
+              href={item.href}
+              key={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="nav-link"
             >
               {item.label}
             </Link>
@@ -265,9 +297,9 @@ export default function HomePage() {
               <ArrowRight size={17} />
             </Link>
 
-            <Link href="/projects" className="secondary-button">
-              <Terminal size={17} />
-              Explore projects
+            <Link href="/auctions" className="secondary-button">
+              <Gavel size={17} />
+              Explore auctions
             </Link>
           </div>
 
@@ -296,6 +328,28 @@ export default function HomePage() {
             <span>Designed for clarity. Built to scale.</span>
             <span className="visual-coordinates">Apexive AI</span>
           </div>
+        </div>
+      </section>
+
+      <section className="auction-intro" aria-labelledby="auction-intro-title">
+        <div className="auction-intro-icon">
+          <Gavel size={25} />
+        </div>
+        <div className="auction-intro-copy">
+          <span className="auction-intro-kicker">APEXIVE AUCTIONS · ONLINE MARKETPLACE</span>
+          <h2 id="auction-intro-title">လေလံတင်ပါ။ လေလံဆွဲပါ။</h2>
+          <p>
+            eBay ဟာ ကမ္ဘာတစ်ဝန်း လူသိများတဲ့ online auction marketplace တစ်ခုပါ။
+            Apexive မှာလည်း ပစ္စည်းတွေကို လေလံတင်ပြီး community နဲ့အတူ လေလံဝင်ဆွဲနိုင်ပါပြီ။
+          </p>
+        </div>
+        <div className="auction-intro-actions">
+          <Link href="/auctions" className="auction-intro-primary">
+            လေလံများကြည့်ရန် <ArrowRight size={16} />
+          </Link>
+          <Link href="/auctions#create-auction" className="auction-intro-secondary">
+            ပစ္စည်းတင်ရန် <ArrowUpRight size={15} />
+          </Link>
         </div>
       </section>
 

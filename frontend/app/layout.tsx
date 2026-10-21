@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Apexive Community",
+  title: "Apexive AI | Community & Auctions",
   description:
-    "A thoughtful AI-powered platform for intelligence, automation, and community by Apexive AI.",
+    "Discover Apexive AI products, community resources, security guidance, and an online auction marketplace.",
 };
 
 export default function RootLayout({

@@ -7,6 +7,7 @@ from app.models.invoice import Invoice
 from app.models.audit_log import AuditLog
 from app.models.notification import Notification
 from app.models.message import Message, MessageThread
+from app.models.auction import Auction, AuctionBid
 
 __all__ = [
     "User",
@@ -21,4 +22,6 @@ __all__ = [
     "Notification",
     "Message",
     "MessageThread",
+    "Auction",
+    "AuctionBid",
 ]

@@ -34,7 +34,15 @@ export default function LoginPage() {
       });
       localStorage.setItem("apexive_token", result.access_token);
       localStorage.setItem("apexive_user", JSON.stringify(result.user));
-      router.replace(result.user.role === "SUPER_ADMIN" ? "/admin" : "/billing");
+      const requestedPath = new URLSearchParams(window.location.search).get("next");
+      const requestedUrl = requestedPath
+        ? new URL(requestedPath, window.location.origin)
+        : null;
+      const returnPath =
+        requestedUrl?.origin === window.location.origin
+          ? `${requestedUrl.pathname}${requestedUrl.search}${requestedUrl.hash}`
+          : null;
+      router.replace(returnPath || (result.user.role === "SUPER_ADMIN" ? "/admin" : "/billing"));
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Unable to sign in.");
     } finally {

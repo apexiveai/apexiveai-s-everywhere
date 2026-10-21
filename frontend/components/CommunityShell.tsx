@@ -12,18 +12,33 @@ import {
   LogOut,
   ShieldCheck,
   BriefcaseBusiness,
+  ChevronDown,
 } from "lucide-react";
 
-type NavItem = {
+type NavLinkItem = {
   label: string;
   href: string;
 };
 
-const mainNavigation: NavItem[] = [
+type NavGroupItem = {
+  label: string;
+  items: NavLinkItem[];
+};
+
+type NavigationItem = NavLinkItem | NavGroupItem;
+
+const mainNavigation: NavigationItem[] = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Forums", href: "/forums" },
-  { label: "Articles", href: "/articles" },
-  { label: "Projects", href: "/projects" },
+  {
+    label: "Explore",
+    items: [
+      { label: "Forums", href: "/forums" },
+      { label: "Articles", href: "/articles" },
+      { label: "Projects", href: "/projects" },
+      { label: "Auctions", href: "/auctions" },
+      { label: "Security", href: "/security" },
+    ],
+  },
   { label: "Resources", href: "/resources" },
   { label: "Clone Detector", href: "/clone-detector" },
   { label: "Search", href: "/search" },
@@ -91,6 +106,39 @@ export default function CommunityShell({
         </button>
         <nav className={`ac-global-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation">
           {mainNavigation.map((item) => {
+            if ("items" in item) {
+              const active = item.items.some((link) =>
+                isActivePath(pathname, link.href),
+              );
+              return (
+                <details
+                  className="ac-global-menu"
+                  key={`${item.label}-${pathname}`}
+                >
+                  <summary className={`ac-global-link${active ? " is-active" : ""}`}>
+                    {item.label}
+                    <ChevronDown size={13} />
+                  </summary>
+                  <div className="ac-global-menu-items">
+                    {item.items.map((link) => {
+                      const linkActive = isActivePath(pathname, link.href);
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setMenuOpen(false)}
+                          className={`ac-global-menu-item${linkActive ? " is-active" : ""}`}
+                          aria-current={linkActive ? "page" : undefined}
+                        >
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </details>
+              );
+            }
+
             const active = isActivePath(pathname, item.href);
             return (
               <Link
