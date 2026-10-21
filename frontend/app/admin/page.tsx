@@ -19,6 +19,7 @@ import { apiRequest, type PaginatedResponse } from "@/lib/api";
 import TenantOperations from "./TenantOperations";
 import AdminInvoices from "./AdminInvoices";
 import AdminHistory from "./AdminHistory";
+import MarketplaceAccounts from "./MarketplaceAccounts";
 
 type Overview = {
   tenants: number;
@@ -54,7 +55,7 @@ type Solution = {
   is_active: boolean;
 };
 
-type Tab = "Overview" | "Companies" | "Plans" | "Solutions" | "Operations" | "Invoices" | "History";
+type Tab = "Overview" | "Companies" | "Plans" | "Solutions" | "Operations" | "Marketplace Accounts" | "Invoices" | "History";
 
 function PaginationControls({
   page,
@@ -353,7 +354,7 @@ export default function AdminPage() {
         </header>
 
         <nav className="mb-8 flex flex-wrap gap-2">
-          {(["Overview", "Companies", "Plans", "Solutions", "Operations", "Invoices", "History"] as Tab[]).map(
+          {(["Overview", "Companies", "Plans", "Solutions", "Operations", "Marketplace Accounts", "Invoices", "History"] as Tab[]).map(
             (item) => (
               <button
                 key={item}
@@ -748,6 +749,7 @@ export default function AdminPage() {
             )}
             
             {tab === "Operations" && <TenantOperations />}
+            {tab === "Marketplace Accounts" && <MarketplaceAccounts />}
             {tab === "Invoices" && <AdminInvoices />}
             {tab === "History" && <AdminHistory />}
 

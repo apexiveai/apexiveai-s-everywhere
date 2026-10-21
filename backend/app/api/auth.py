@@ -37,13 +37,18 @@ def login(
             detail="Account is disabled.",
         )
 
-    if user.role not in {"SUPER_ADMIN", "TENANT_ADMIN"}:
+    if user.role not in {
+        "SUPER_ADMIN",
+        "TENANT_ADMIN",
+        "SELLER",
+        "BUYER",
+    }:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid account role.",
         )
 
-    if user.role == "TENANT_ADMIN":
+    if user.role in {"TENANT_ADMIN", "SELLER", "BUYER"}:
         from app.models import Tenant
 
         tenant = db.get(Tenant, user.tenant_id) if user.tenant_id else None

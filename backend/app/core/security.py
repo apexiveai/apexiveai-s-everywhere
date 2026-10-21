@@ -19,6 +19,7 @@ def create_access_token(
         "sub": str(user_id),
         "role": role,
         "tenant_id": tenant_id,
+        "iss": settings.JWT_ISSUER,
         "iat": now,
         "exp": now + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES

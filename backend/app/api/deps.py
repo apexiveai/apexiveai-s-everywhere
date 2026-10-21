@@ -44,7 +44,7 @@ def get_current_user(
     if not user or not user.is_active:
         raise credentials_error
 
-    if user.role == "TENANT_ADMIN":
+    if user.role in {"TENANT_ADMIN", "SELLER", "BUYER"}:
         tenant = db.get(Tenant, user.tenant_id) if user.tenant_id else None
 
         if not tenant or tenant.status != "ACTIVE":

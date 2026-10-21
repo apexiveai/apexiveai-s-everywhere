@@ -4,8 +4,9 @@ python -c "import secrets; print(secrets.token_hex(32))"
 
 ## Backend database migrations
 
-Before starting the backend on an existing PostgreSQL database, apply the
-additive invoice, audit-history, messaging, and notification schemas:
+The backend Procfile applies pending SQL migrations before starting the API.
+This includes the auction tables required by the marketplace. For a one-time
+manual migration or an existing deployment, run:
 
 ```powershell
 Set-Location backend
@@ -14,6 +15,9 @@ python -m app.migrate
 
 The migration runner records applied SQL files in `schema_migrations` and does
 not reapply them. Back up the database before applying migrations in production.
+Redeploy/restart the backend after updating its start command so the auction
+migration is applied; the live API currently returns HTTP 500 for the auctions
+list endpoint even though its health endpoint is available.
 
 ## Billing and access workflow
 
@@ -32,6 +36,21 @@ The backend exposes `GET /api/auth/solutions/{solution_code}/access` for product
 services to validate a tenant grant. Independently hosted product applications
 must call this endpoint (or enforce the same entitlement check server-side) to
 prevent direct-URL access outside this community dashboard.
+
+## Marketplace accounts
+
+Register the `MULTI_VENDOR_MARKETPLACE` solution with its Marketplace API URL.
+From the Super Admin console, use **Marketplace Accounts** to create a seller or
+buyer for an active company. The account is created in Community, and the
+Marketplace profile is linked automatically; if the Marketplace API is
+temporarily unavailable, retry profile setup from the same screen.
+
+Set Marketplace `COMMUNITY_JWT_SECRET` to the same strong secret as Community
+`JWT_SECRET_KEY`, and keep `COMMUNITY_JWT_ISSUER` aligned with Community
+`JWT_ISSUER` (`ApexiveAI` by default). Add the deployed Marketplace frontend
+origin to Community's `CORS_ORIGINS` and Marketplace's `CORS_ORIGINS`. Seller
+and buyer credentials are Community credentials and are used on the
+Marketplace sign-in page.
 
 ## Vercel frontend and Railway API
 

@@ -3,6 +3,9 @@ from fastapi import FastAPI
 from app.api.auth import router as auth_router
 from app.core.config import settings
 from app.api.admin.routes import router as admin_router
+from app.api.admin.marketplace_accounts import (
+    router as marketplace_accounts_router,
+)
 from app.api.admin.invoices import router as admin_invoices_router
 from app.api.catalog import router as catalog_router
 from app.api.invoices import router as invoices_router
@@ -38,6 +41,7 @@ app.include_router(
     prefix=settings.API_PREFIX,
 )
 app.include_router(admin_router, prefix="/api")
+app.include_router(marketplace_accounts_router, prefix="/api")
 app.include_router(admin_invoices_router, prefix="/api")
 app.include_router(catalog_router, prefix="/api")
 app.include_router(invoices_router, prefix="/api")
