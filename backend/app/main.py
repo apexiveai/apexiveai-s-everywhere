@@ -1,3 +1,6 @@
+import logging
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
 from app.api.auth import router as auth_router
@@ -17,11 +20,28 @@ from app.api.auctions import router as auctions_router
 from app.api.marketplace import router as marketplace_router
 from fastapi.middleware.cors import CORSMiddleware
 
+logger = logging.getLogger("uvicorn.error")
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # Idempotent: applies only SQL files not yet recorded in schema_migrations,
+    # so deployments that skip the Procfile migrate step still get new tables.
+    try:
+        from app.migrate import main as run_migrations
+
+        run_migrations()
+    except Exception:
+        logger.exception("Database migration failed during startup")
+    yield
+
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     docs_url="/docs" if settings.ENVIRONMENT != "production" else None,
     redoc_url=None,
+    lifespan=lifespan,
 )
 
 app.add_middleware(
