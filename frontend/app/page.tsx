@@ -23,6 +23,8 @@ import {
   Search,
   ShieldCheck,
   Sparkles,
+  Store,
+  Workflow,
   X,
   Zap,
 } from "lucide-react";
@@ -35,6 +37,19 @@ const FONT = {
   signIn: "Sign in",
   getStarted: "Tenant sign in",
 };
+
+function getExternalProductUrl(value: string | undefined): string | null {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:"
+      ? url.toString()
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 const products = [
   {
@@ -70,6 +85,42 @@ const products = [
     href: "/forums",
     icon: Network,
     tag: "Community network",
+    color: "pink",
+  },
+  {
+    id: "04",
+    name: "ApexiveAI RPA Platform",
+    subtitle: "Robotic process automation",
+    description:
+      "Design and run intelligent workflows with the ApexiveAI RPA Platform.",
+    href: getExternalProductUrl(process.env.NEXT_PUBLIC_RPA_PLATFORM_URL),
+    external: true,
+    icon: BrainCircuit,
+    tag: "Workflow automation",
+    color: "purple",
+  },
+  {
+    id: "05",
+    name: "ApexiveAI Cyclone RPA",
+    subtitle: "Cyclone automation studio",
+    description:
+      "Build and manage automation workflows with the Cyclone RPA studio.",
+    href: getExternalProductUrl(process.env.NEXT_PUBLIC_CYCLONE_RPA_URL),
+    external: true,
+    icon: Workflow,
+    tag: "RPA studio",
+    color: "cyan",
+  },
+  {
+    id: "06",
+    name: "ApexiveAI MultiVendor Marketplace",
+    subtitle: "Multi-vendor commerce",
+    description:
+      "Explore a multi-vendor marketplace for products, sellers, and buyers.",
+    href: getExternalProductUrl(process.env.NEXT_PUBLIC_MULTIVENDOR_MARKETPLACE_URL),
+    external: true,
+    icon: Store,
+    tag: "Marketplace",
     color: "pink",
   },
 ];
@@ -464,20 +515,36 @@ export default function HomePage() {
                 </div>
 
                 {product.external ? (
-                  <a
-                    href={product.href}
-                    className="product-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>Open module</span>
-                    <ArrowUpRight size={17} />
-                  </a>
-                ) : (
+                  product.href ? (
+                    <a
+                      href={product.href}
+                      className="product-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>Open module</span>
+                      <ArrowUpRight size={17} />
+                    </a>
+                  ) : (
+                    <span
+                      className="product-link product-link-unavailable"
+                      aria-disabled="true"
+                    >
+                      Launch URL not configured
+                    </span>
+                  )
+                ) : product.href ? (
                   <Link href={product.href} className="product-link">
                     <span>Open module</span>
                     <ArrowUpRight size={17} />
                   </Link>
+                ) : (
+                  <span
+                    className="product-link product-link-unavailable"
+                    aria-disabled="true"
+                  >
+                    Module URL not configured
+                  </span>
                 )}
 
                 <div className="product-card-glow" />

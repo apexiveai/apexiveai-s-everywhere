@@ -14,6 +14,7 @@ from app.api.notifications import router as notifications_router
 from app.api.history import router as history_router
 from app.api.admin.history import router as admin_history_router
 from app.api.auctions import router as auctions_router
+from app.api.marketplace import router as marketplace_router
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -50,6 +51,7 @@ app.include_router(notifications_router, prefix="/api")
 app.include_router(history_router, prefix="/api")
 app.include_router(admin_history_router, prefix="/api")
 app.include_router(auctions_router, prefix="/api")
+app.include_router(marketplace_router, prefix="/api")
 
 @app.get("/health", include_in_schema=False)
 def health():

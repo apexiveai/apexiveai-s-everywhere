@@ -8,6 +8,11 @@ from app.models.audit_log import AuditLog
 from app.models.notification import Notification
 from app.models.message import Message, MessageThread
 from app.models.auction import Auction, AuctionBid
+from app.models.marketplace import (
+    MarketplaceOrder,
+    MarketplaceOrderItem,
+    MarketplaceProduct,
+)
 
 __all__ = [
     "User",
@@ -24,4 +29,7 @@ __all__ = [
     "MessageThread",
     "Auction",
     "AuctionBid",
+    "MarketplaceProduct",
+    "MarketplaceOrder",
+    "MarketplaceOrderItem",
 ]
