@@ -6740,7 +6740,6 @@ input[type="password"] {
       grid-row: auto;
     }
   }
-}
 
 .marketplace-page {
   width: 100%;
@@ -7662,3 +7661,4 @@ input[type="password"] {
   .marketplace-order-actions button {
     flex: 1;
   }
+}
