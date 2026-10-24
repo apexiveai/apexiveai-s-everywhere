@@ -13,12 +13,17 @@ import {
   ArrowRight,
   Check,
   ClipboardList,
+  Gem,
+  House,
   Package,
   Plus,
   RefreshCw,
   Search,
+  Shirt,
   ShoppingBag,
   ShoppingCart,
+  Smartphone,
+  Sparkles,
   Store,
   Trash2,
   X,
@@ -84,6 +89,45 @@ const EMPTY_PRODUCT: ProductDraft = {
   stock: "1",
 };
 
+const MARKETPLACE_CATEGORIES = [
+  {
+    name: "Electronics",
+    description: "Phones, gadgets and accessories",
+    icon: Smartphone,
+    keywords: ["electronics", "electronic", "phone", "gadget", "technology"],
+  },
+  {
+    name: "Fashion",
+    description: "Clothing, shoes and accessories",
+    icon: Shirt,
+    keywords: ["fashion", "clothing", "apparel", "shoes", "clothes"],
+  },
+  {
+    name: "Home & Living",
+    description: "Furniture and everyday essentials",
+    icon: House,
+    keywords: ["home", "living", "furniture", "household"],
+  },
+  {
+    name: "Beauty",
+    description: "Beauty and personal care",
+    icon: Sparkles,
+    keywords: ["beauty", "cosmetics", "skincare", "personal care"],
+  },
+  {
+    name: "Jewelry",
+    description: "Jewelry and special pieces",
+    icon: Gem,
+    keywords: ["jewelry", "jewellery", "gold", "diamond"],
+  },
+  {
+    name: "Other Products",
+    description: "Explore more community listings",
+    icon: Package,
+    keywords: ["other", "general", "miscellaneous"],
+  },
+];
+
 function subscribeToAccountChanges(onChange: () => void) {
   window.addEventListener("storage", onChange);
   return () => window.removeEventListener("storage", onChange);
@@ -148,6 +192,7 @@ export default function MarketplaceClient() {
   const [showSellForm, setShowSellForm] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [showOrders, setShowOrders] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const loadProducts = useCallback(async () => {
     setLoading(true);
@@ -178,6 +223,30 @@ export default function MarketplaceClient() {
       setError(cause instanceof Error ? cause.message : "Unable to load orders.");
     }
   }, []);
+
+  function selectMarketplaceCategory(
+    categoryName: string,
+    keywords: string[],
+  ) {
+    const matchedCategory = categories.find((item) => {
+      const value = item.toLowerCase();
+      return (
+        value === categoryName.toLowerCase() ||
+        keywords.some(
+          (keyword) =>
+            value.includes(keyword) || keyword.includes(value),
+        )
+      );
+    });
+
+    setCategory(matchedCategory ?? "");
+    setSearch(matchedCategory ? "" : keywords[0]);
+    setShowCart(false);
+
+    document
+      .getElementById("marketplace-products")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   useEffect(() => {
     void Promise.resolve().then(loadProducts);
@@ -359,53 +428,268 @@ export default function MarketplaceClient() {
 
   return (
     <main className="marketplace-page">
-      <section className="marketplace-hero">
-        <div className="marketplace-hero-copy">
-          <span className="ac-eyebrow">APEXIVE COMMUNITY MARKETPLACE</span>
+      <header className="mp-header">
+        <a className="mp-brand" href="/marketplace" aria-label="Apexive Marketplace home">
+          <span className="mp-brand-mark">
+            <ShoppingBag size={22} />
+          </span>
+          <span className="mp-brand-copy">
+            <strong>APEXIVE</strong>
+            <span>MARKETPLACE</span>
+          </span>
+        </a>
+
+        <label className="mp-header-search">
+          <Search size={18} aria-hidden="true" />
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search products, brands, and sellers..."
+            aria-label="Search products, brands, and sellers"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => setSearch("")}
+              aria-label="Clear search"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </label>
+
+        <div className="mp-header-actions">
+          <button type="button" onClick={() => void openOrders()}>
+            <ClipboardList size={17} />
+            <span>Orders</span>
+          </button>
+          <button
+            type="button"
+            className="mp-header-cart"
+            onClick={() => setShowCart((open) => !open)}
+          >
+            <ShoppingCart size={17} />
+            <span>Cart</span>
+            <span className="mp-cart-count">{cartItems.length}</span>
+          </button>
+        </div>
+
+        <nav className="mp-navigation" aria-label="Marketplace navigation">
+          <a href="#marketplace-categories">All Categories</a>
+          <a href="#marketplace-featured">Popular</a>
+          <a href="#marketplace-products">New Listings</a>
+          <button
+            type="button"
+            onClick={() => {
+              if (canSell) {
+                setShowSellForm(true);
+                document
+                  .getElementById("marketplace-seller")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              } else if (!userId) {
+                router.push("/login?next=%2Fmarketplace");
+              } else {
+                setNotice(
+                  "Seller access is not enabled for this account. Please contact your tenant administrator.",
+                );
+                setError("");
+              }
+            }}
+          >
+            For Sellers <ArrowRight size={15} />
+          </button>
+        </nav>
+      </header>
+
+      <section className="mp-hero">
+        <div className="mp-hero-copy">
+          <span className="mp-eyebrow">
+            <span className="mp-eyebrow-dot" />
+            YOUR COMMUNITY MARKETPLACE
+          </span>
           <h1>
-            Good finds, <span>closer to home.</span>
+            Discover products
+            <br />
+            <span>in one place.</span>
           </h1>
-          <p lang="my">
-            အသိုင်းအဝိုင်းထဲက ပစ္စည်းတွေကို ရှာဖွေဝယ်ယူပါ၊ ကိုယ့်ပစ္စည်းတွေကိုလည်း
-            ရောင်းချနိုင်ပါတယ်။
+          <p>
+            Explore products across categories and discover sellers.
+            Find your next favorite item in the Apexive community.
           </p>
-          <div className="marketplace-hero-note">
+          <button
+            type="button"
+            className="mp-primary-button"
+            onClick={() =>
+              document
+                .getElementById("marketplace-products")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Browse All Products <ArrowRight size={18} />
+          </button>
+          <div className="mp-hero-trust">
             <Check size={16} />
-            Browse freely · Order securely · Arrange payment and delivery directly
+            Browse freely · Connect with sellers · Arrange delivery directly
           </div>
         </div>
-        <div className="marketplace-hero-art" aria-hidden="true">
-          <ShoppingBag size={54} />
-          <span><Package size={24} /></span>
+
+        <div className="mp-hero-visual" aria-hidden="true">
+          <div className="mp-visual-orbit mp-orbit-one" />
+          <div className="mp-visual-orbit mp-orbit-two" />
+          <div className="mp-visual-card mp-visual-card-back">
+            <Gem size={32} />
+          </div>
+          <div className="mp-visual-card mp-visual-card-main">
+            <ShoppingBag size={58} />
+            <span>Discover something new</span>
+          </div>
+          <div className="mp-visual-card mp-visual-card-small">
+            <Package size={25} />
+          </div>
         </div>
       </section>
 
-      <div className="marketplace-toolbar">
+      <section
+        id="marketplace-categories"
+        className="mp-section"
+        aria-labelledby="mp-categories-title"
+      >
+        <div className="mp-section-heading">
+          <div>
+            <span className="mp-eyebrow">EXPLORE THE STORE</span>
+            <h2 id="mp-categories-title">Shop by Category</h2>
+            <p>Find what you are looking for.</p>
+          </div>
+        </div>
+
+        <div className="mp-category-grid">
+          {MARKETPLACE_CATEGORIES.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <button
+                type="button"
+                key={item.name}
+                className={`mp-category-card mp-category-${index + 1}`}
+                onClick={() =>
+                  selectMarketplaceCategory(item.name, item.keywords)
+                }
+              >
+                <span className="mp-category-icon">
+                  <Icon size={25} strokeWidth={1.8} />
+                </span>
+                <span className="mp-category-copy">
+                  <strong>{item.name}</strong>
+                  <small>{item.description}</small>
+                  <span className="mp-category-link">
+                    View Listings <ArrowRight size={14} />
+                  </span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section
+        id="marketplace-featured"
+        className="mp-section"
+        aria-labelledby="mp-featured-title"
+      >
+        <div className="mp-section-heading mp-featured-heading">
+          <div>
+            <span className="mp-eyebrow">COMMUNITY PICKS</span>
+            <h2 id="mp-featured-title">Featured Products</h2>
+            <p>Explore available products from community sellers.</p>
+          </div>
+          <button
+            type="button"
+            className="mp-text-link"
+            onClick={() =>
+              document
+                .getElementById("marketplace-products")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            View all products <ArrowRight size={16} />
+          </button>
+        </div>
+
+        {loading ? (
+          <div className="mp-featured-empty">
+            <RefreshCw size={21} className="marketplace-spin" />
+            Loading products...
+          </div>
+        ) : products.length ? (
+          <div className="mp-featured-grid">
+            {products.slice(0, 4).map((product, index) => (
+              <article className="mp-featured-card" key={product.id}>
+                <button
+                  type="button"
+                  className={`mp-featured-image mp-featured-image-${index % 4}`}
+                  onClick={() => setSelectedProduct(product)}
+                  aria-label={`View details for ${product.name}`}
+                >
+                  <Package size={43} strokeWidth={1.4} />
+                  <span className="mp-image-view">View details</span>
+                </button>
+
+                <div className="mp-featured-copy">
+                  <span className="mp-featured-category">{product.category}</span>
+                  <h3>{product.name}</h3>
+                  <p className="mp-featured-seller">
+                    <Store size={13} /> {product.seller_name}
+                  </p>
+                  <div className="mp-featured-footer">
+                    <strong>
+                      {formatMoney(product.price, product.currency)}
+                    </strong>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProduct(product)}
+                    >
+                      View Details <ArrowRight size={14} />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="mp-featured-empty">
+            <Package size={26} />
+            <strong>No featured products yet</strong>
+            <span>Available products will appear here when sellers publish listings.</span>
+          </div>
+        )}
+      </section>
+
+      <div className="marketplace-toolbar mp-toolbar">
         <label className="marketplace-search">
           <Search size={17} aria-hidden="true" />
           <input
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search products"
+            placeholder="Search products, brands, and sellers..."
             aria-label="Search products"
           />
         </label>
+
         <label className="marketplace-category">
           <span className="visually-hidden">Filter by category</span>
-          <select value={category} onChange={(event) => setCategory(event.target.value)}>
+          <select
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
             <option value="">All categories</option>
-            {categories.map((item) => <option key={item} value={item}>{item}</option>)}
+            {categories.map((item) => (
+              <option key={item} value={item}>{item}</option>
+            ))}
           </select>
         </label>
+
         <div className="marketplace-toolbar-actions">
-          <button
-            className={`marketplace-action${showOrders ? " is-active" : ""}`}
-            type="button"
-            onClick={() => void openOrders()}
-          >
-            <ClipboardList size={16} /> My orders
-          </button>
           {canSell && (
             <button
               className={`marketplace-action${showSellForm ? " is-active" : ""}`}
@@ -419,7 +703,7 @@ export default function MarketplaceClient() {
             className={`marketplace-cart-button${showCart ? " is-active" : ""}`}
             type="button"
             onClick={() => setShowCart((open) => !open)}
-            aria-label={`Open cart, ${cartItems.length} items`}
+            aria-label={`Open cart, ${cartItems.length} different products`}
           >
             <ShoppingCart size={17} /> Cart <span>{cartItems.length}</span>
           </button>
@@ -432,7 +716,11 @@ export default function MarketplaceClient() {
       {notice && <p className="marketplace-alert is-success" role="status">{notice}</p>}
 
       {showSellForm && (
-        <section className="marketplace-sell-panel" aria-labelledby="marketplace-sell-title">
+        <section
+          id="marketplace-seller"
+          className="marketplace-sell-panel"
+          aria-labelledby="marketplace-sell-title"
+        >
           <div className="marketplace-panel-heading">
             <div><span className="ac-eyebrow">SELL WITH THE COMMUNITY</span><h2 id="marketplace-sell-title">List a product</h2></div>
             <button type="button" className="marketplace-icon-button" onClick={() => setShowSellForm(false)} aria-label="Close listing form"><X size={18} /></button>
@@ -490,7 +778,11 @@ export default function MarketplaceClient() {
       )}
 
       <div className={`marketplace-content${showCart ? " has-open-cart" : ""}`}>
-        <section className="marketplace-catalog" aria-labelledby="marketplace-catalog-title">
+        <section
+          id="marketplace-products"
+          className="marketplace-catalog"
+          aria-labelledby="marketplace-catalog-title"
+        >
           <div className="marketplace-section-heading">
             <div><span className="ac-eyebrow">COMMUNITY FINDS</span><h2 id="marketplace-catalog-title">Shop products</h2><p>{products.length} {products.length === 1 ? "item" : "items"} available</p></div>
             <button className="marketplace-icon-button" type="button" onClick={() => void loadProducts()} disabled={loading} aria-label="Refresh products"><RefreshCw size={17} className={loading ? "marketplace-spin" : ""} /></button>
@@ -577,6 +869,83 @@ export default function MarketplaceClient() {
           </aside>
         )}
       </div>
+
+      {selectedProduct && (
+        <div
+          className="mp-modal-backdrop"
+          onClick={() => setSelectedProduct(null)}
+        >
+          <section
+            className="mp-product-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mp-product-modal-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="mp-modal-close"
+              onClick={() => setSelectedProduct(null)}
+              aria-label="Close product details"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="mp-modal-image">
+              <Package size={58} strokeWidth={1.4} />
+            </div>
+
+            <span className="mp-featured-category">
+              {selectedProduct.category}
+            </span>
+            <h2 id="mp-product-modal-title">{selectedProduct.name}</h2>
+            <p className="mp-modal-description">
+              {selectedProduct.description}
+            </p>
+
+            <div className="mp-modal-seller">
+              <Store size={16} />
+              <span>Seller</span>
+              <strong>{selectedProduct.seller_name}</strong>
+            </div>
+
+            <div className="mp-modal-price-row">
+              <strong>
+                {formatMoney(selectedProduct.price, selectedProduct.currency)}
+              </strong>
+              <span>{selectedProduct.stock} available</span>
+            </div>
+
+            <button
+              type="button"
+              className="mp-primary-button mp-modal-add"
+              disabled={
+                selectedProduct.stock < 1 ||
+                selectedProduct.seller_id === userId ||
+                (cartCurrency !== undefined &&
+                  cartCurrency !== selectedProduct.currency)
+              }
+              onClick={() => {
+                addToCart(selectedProduct);
+                setSelectedProduct(null);
+              }}
+            >
+              <ShoppingCart size={17} /> Add to Cart
+            </button>
+
+            {selectedProduct.seller_id === userId && (
+              <p className="mp-modal-hint">You cannot order your own listing.</p>
+            )}
+          </section>
+        </div>
+      )}
+
+      <footer className="mp-footer">
+        <a className="mp-footer-brand" href="/marketplace">
+          <ShoppingBag size={17} /> APEXIVE MARKETPLACE
+        </a>
+        <span>Illustrative homepage layout for the ecommerce platform.</span>
+      </footer>
     </main>
   );
 }
