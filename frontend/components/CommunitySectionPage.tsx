@@ -225,46 +225,71 @@ export default function CommunitySectionPage({
               </div>
 
               <div className="ac-feature-grid">
-                {group.items.map((item, itemIndex) => (
-                  <article className="ac-feature-card" key={item.title}>
-                    <div className="ac-feature-card-top">
-                      <span className="ac-feature-card-icon">
-                        {section === "clone-detector" || section === "security" ? (
-                          <ShieldCheck size={17} />
-                        ) : section === "forums" ? (
-                          <MessageSquare size={17} />
-                        ) : section === "articles" ? (
-                          <BookOpen size={17} />
-                        ) : section === "projects" ? (
-                          <FolderKanban size={17} />
-                        ) : section === "search" ? (
-                          <Search size={17} />
+                {group.items.map((item, itemIndex) => {
+                  const href = "href" in item ? item.href : null;
+                  const cardContent = (
+                    <>
+                      <div className="ac-feature-card-top">
+                        <span className="ac-feature-card-icon">
+                          {section === "clone-detector" || section === "security" ? (
+                            <ShieldCheck size={17} />
+                          ) : section === "forums" ? (
+                            <MessageSquare size={17} />
+                          ) : section === "articles" ? (
+                            <BookOpen size={17} />
+                          ) : section === "projects" ? (
+                            <FolderKanban size={17} />
+                          ) : section === "search" ? (
+                            <Search size={17} />
+                          ) : (
+                            <Sparkles size={17} />
+                          )}
+                        </span>
+                        <span className="ac-feature-number">
+                          {String(itemIndex + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <h3>{item.title}</h3>
+                      <p>{item.description}</p>
+                      <span className="ac-feature-card-foot">
+                        {href ? (
+                          <>
+                            Open product <ArrowUpRight size={13} />
+                          </>
+                        ) : section === "clone-detector" ? (
+                          <>
+                            <span className="ac-service-dot" />
+                            Service required
+                          </>
+                        ) : section === "security" ? (
+                          "Security guidance"
+                        ) : section === "dashboard" && group.title === "Connected Products" ? (
+                          "Product URL not configured"
                         ) : (
-                          <Sparkles size={17} />
+                          <>
+                            Explore feature <ArrowRight size={13} />
+                          </>
                         )}
                       </span>
-                      <span className="ac-feature-number">
-                        {String(itemIndex + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                    <span className="ac-feature-card-foot">
-                      {section === "clone-detector" ? (
-                        <>
-                          <span className="ac-service-dot" />
-                          Service required
-                        </>
-                      ) : section === "security" ? (
-                        "Security guidance"
-                      ) : (
-                        <>
-                          Explore feature <ArrowRight size={13} />
-                        </>
-                      )}
-                    </span>
-                  </article>
-                ))}
+                    </>
+                  );
+
+                  return href ? (
+                    <a
+                      className="ac-feature-card"
+                      href={href}
+                      key={item.title}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {cardContent}
+                    </a>
+                  ) : (
+                    <article className="ac-feature-card" key={item.title}>
+                      {cardContent}
+                    </article>
+                  );
+                })}
               </div>
             </section>
           );

@@ -4,6 +4,7 @@ export type CommunityGroup = {
   items: {
     title: string;
     description: string;
+    href?: string | null;
   }[];
 };
 
@@ -24,6 +25,19 @@ export const externalModules = {
     href: "https://apexiveai-jzjrzr3il-apexiveais-projects.vercel.app/",
   },
 } as const;
+
+export function getExternalProductUrl(value: string | undefined): string | null {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:"
+      ? url.toString()
+      : null;
+  } catch {
+    return null;
+  }
+}
 
 export const communitySections = {
   dashboard: {
@@ -89,6 +103,28 @@ export const communitySections = {
           {
             title: "AI Insights",
             description: "Surface useful patterns from your business data.",
+          },
+        ],
+      },
+      {
+        title: "Connected Products",
+        description: "Open your connected ApexiveAI business applications.",
+        items: [
+          {
+            title: "ApexiveAI Workforce Payroll SaaS",
+            description:
+              "Manage workforce operations and payroll in the connected SaaS application.",
+            href: getExternalProductUrl(
+              process.env.NEXT_PUBLIC_WORKFORCE_PAYROLL_URL,
+            ),
+          },
+          {
+            title: "ApexiveAI MultiVendor Marketplace",
+            description:
+              "Open the multi-vendor commerce platform for sellers and buyers.",
+            href: getExternalProductUrl(
+              process.env.NEXT_PUBLIC_MULTIVENDOR_MARKETPLACE_URL,
+            ),
           },
         ],
       },
