@@ -11,7 +11,6 @@ import {
 import { useRouter } from "next/navigation";
 import {
   ArrowRight,
-  Check,
   ClipboardList,
   Gem,
   House,
@@ -92,37 +91,37 @@ const EMPTY_PRODUCT: ProductDraft = {
 const MARKETPLACE_CATEGORIES = [
   {
     name: "Electronics",
-    description: "Phones, gadgets and accessories",
+    description: "View Products",
     icon: Smartphone,
     keywords: ["electronics", "electronic", "phone", "gadget", "technology"],
   },
   {
     name: "Fashion",
-    description: "Clothing, shoes and accessories",
+    description: "View Products",
     icon: Shirt,
     keywords: ["fashion", "clothing", "apparel", "shoes", "clothes"],
   },
   {
     name: "Home & Living",
-    description: "Furniture and everyday essentials",
+    description: "View Products",
     icon: House,
     keywords: ["home", "living", "furniture", "household"],
   },
   {
     name: "Beauty",
-    description: "Beauty and personal care",
+    description: "View Products",
     icon: Sparkles,
     keywords: ["beauty", "cosmetics", "skincare", "personal care"],
   },
   {
     name: "Jewelry",
-    description: "Jewelry and special pieces",
+    description: "View Listings",
     icon: Gem,
     keywords: ["jewelry", "jewellery", "gold", "diamond"],
   },
   {
     name: "Other Products",
-    description: "Explore more community listings",
+    description: "View Products",
     icon: Package,
     keywords: ["other", "general", "miscellaneous"],
   },
@@ -426,16 +425,31 @@ export default function MarketplaceClient() {
     await loadOrders();
   }
 
+  function handleSellerAction() {
+    if (canSell) {
+      setShowSellForm(true);
+      document
+        .getElementById("marketplace-seller")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else if (!userId) {
+      router.push("/login?next=%2Fmarketplace");
+    } else {
+      setNotice(
+        "Seller access is not enabled for this account. Please contact your tenant administrator.",
+      );
+      setError("");
+    }
+  }
+
   return (
     <main className="marketplace-page">
       <header className="mp-header">
         <a className="mp-brand" href="/marketplace" aria-label="Apexive Marketplace home">
           <span className="mp-brand-mark">
-            <ShoppingBag size={22} />
+            <ShoppingBag size={14} />
           </span>
           <span className="mp-brand-copy">
-            <strong>APEXIVE</strong>
-            <span>MARKETPLACE</span>
+            <strong>MARKETPLACE</strong>
           </span>
         </a>
 
@@ -459,63 +473,24 @@ export default function MarketplaceClient() {
           )}
         </label>
 
-        <div className="mp-header-actions">
-          <button type="button" onClick={() => void openOrders()}>
-            <ClipboardList size={17} />
-            <span>Orders</span>
-          </button>
-          <button
-            type="button"
-            className="mp-header-cart"
-            onClick={() => setShowCart((open) => !open)}
-          >
-            <ShoppingCart size={17} />
-            <span>Cart</span>
-            <span className="mp-cart-count">{cartItems.length}</span>
-          </button>
-        </div>
-
         <nav className="mp-navigation" aria-label="Marketplace navigation">
           <a href="#marketplace-categories">All Categories</a>
           <a href="#marketplace-featured">Popular</a>
           <a href="#marketplace-products">New Listings</a>
           <button
             type="button"
-            onClick={() => {
-              if (canSell) {
-                setShowSellForm(true);
-                document
-                  .getElementById("marketplace-seller")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              } else if (!userId) {
-                router.push("/login?next=%2Fmarketplace");
-              } else {
-                setNotice(
-                  "Seller access is not enabled for this account. Please contact your tenant administrator.",
-                );
-                setError("");
-              }
-            }}
+            onClick={handleSellerAction}
           >
-            For Sellers <ArrowRight size={15} />
+            For Sellers
           </button>
         </nav>
       </header>
 
       <section className="mp-hero">
         <div className="mp-hero-copy">
-          <span className="mp-eyebrow">
-            <span className="mp-eyebrow-dot" />
-            YOUR COMMUNITY MARKETPLACE
-          </span>
-          <h1>
-            Discover products
-            <br />
-            <span>in one place.</span>
-          </h1>
+          <h1>Discover products in one place</h1>
           <p>
             Explore products across categories and discover sellers.
-            Find your next favorite item in the Apexive community.
           </p>
           <button
             type="button"
@@ -526,12 +501,8 @@ export default function MarketplaceClient() {
                 ?.scrollIntoView({ behavior: "smooth" })
             }
           >
-            Browse All Products <ArrowRight size={18} />
+            Browse All Products <ArrowRight size={13} />
           </button>
-          <div className="mp-hero-trust">
-            <Check size={16} />
-            Browse freely · Connect with sellers · Arrange delivery directly
-          </div>
         </div>
 
         <div className="mp-hero-visual" aria-hidden="true">
@@ -557,9 +528,7 @@ export default function MarketplaceClient() {
       >
         <div className="mp-section-heading">
           <div>
-            <span className="mp-eyebrow">EXPLORE THE STORE</span>
             <h2 id="mp-categories-title">Shop by Category</h2>
-            <p>Find what you are looking for.</p>
           </div>
         </div>
 
@@ -581,9 +550,6 @@ export default function MarketplaceClient() {
                 <span className="mp-category-copy">
                   <strong>{item.name}</strong>
                   <small>{item.description}</small>
-                  <span className="mp-category-link">
-                    View Listings <ArrowRight size={14} />
-                  </span>
                 </span>
               </button>
             );
@@ -598,21 +564,8 @@ export default function MarketplaceClient() {
       >
         <div className="mp-section-heading mp-featured-heading">
           <div>
-            <span className="mp-eyebrow">COMMUNITY PICKS</span>
             <h2 id="mp-featured-title">Featured Products</h2>
-            <p>Explore available products from community sellers.</p>
           </div>
-          <button
-            type="button"
-            className="mp-text-link"
-            onClick={() =>
-              document
-                .getElementById("marketplace-products")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            View all products <ArrowRight size={16} />
-          </button>
         </div>
 
         {loading ? (
@@ -635,20 +588,16 @@ export default function MarketplaceClient() {
                 </button>
 
                 <div className="mp-featured-copy">
-                  <span className="mp-featured-category">{product.category}</span>
                   <h3>{product.name}</h3>
                   <p className="mp-featured-seller">
-                    <Store size={13} /> {product.seller_name}
+                    Seller: {product.seller_name}
                   </p>
                   <div className="mp-featured-footer">
-                    <strong>
-                      {formatMoney(product.price, product.currency)}
-                    </strong>
                     <button
                       type="button"
                       onClick={() => setSelectedProduct(product)}
                     >
-                      View Details <ArrowRight size={14} />
+                      View Details
                     </button>
                   </div>
                 </div>
@@ -662,6 +611,16 @@ export default function MarketplaceClient() {
             <span>Available products will appear here when sellers publish listings.</span>
           </div>
         )}
+      </section>
+
+      <section className="mp-seller-cta" aria-labelledby="mp-seller-title">
+        <div>
+          <h2 id="mp-seller-title">Are you a seller?</h2>
+          <p>Showcase your products and connect with potential customers.</p>
+        </div>
+        <button type="button" onClick={handleSellerAction}>
+          Join as a Seller <ArrowRight size={12} />
+        </button>
       </section>
 
       <div className="marketplace-toolbar mp-toolbar">
@@ -690,6 +649,13 @@ export default function MarketplaceClient() {
         </label>
 
         <div className="marketplace-toolbar-actions">
+          <button
+            className="marketplace-action"
+            type="button"
+            onClick={() => void openOrders()}
+          >
+            <ClipboardList size={16} /> Orders
+          </button>
           {canSell && (
             <button
               className={`marketplace-action${showSellForm ? " is-active" : ""}`}

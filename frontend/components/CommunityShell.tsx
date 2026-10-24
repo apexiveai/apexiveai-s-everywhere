@@ -85,7 +85,11 @@ export default function CommunityShell({
     });
   }, [pathname]);
 
-  if (pathname === "/") {
+  if (
+    pathname === "/" ||
+    pathname === "/marketplace" ||
+    pathname.startsWith("/marketplace/")
+  ) {
     return children;
   }
 
