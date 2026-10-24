@@ -38,15 +38,21 @@ export async function apiRequest<T = unknown>(
     cache: "no-store",
   });
 
+  const data = await response.json().catch(() => null);
+
   if (response.status === 401) {
+    if (path.split("?")[0] === "/auth/login") {
+      const message = data?.detail;
+      throw new Error(
+        typeof message === "string" ? message : "Invalid username or password.",
+      );
+    }
     throw new Error("LOGIN_REQUIRED");
   }
 
   if (response.status === 403) {
     throw new Error("ADMIN_ACCESS_REQUIRED");
   }
-
-  const data = await response.json().catch(() => null);
 
   if (!response.ok) {
     const message =

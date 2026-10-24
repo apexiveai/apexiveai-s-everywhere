@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       const result = await apiRequest<LoginResponse>("/auth/login", {
         method: "POST",
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: username.trim(), password }),
       });
       localStorage.setItem("apexive_token", result.access_token);
       localStorage.setItem("apexive_user", JSON.stringify(result.user));

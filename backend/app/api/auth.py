@@ -21,7 +21,7 @@ def login(
     db: Annotated[Session, Depends(get_db)],
 ):
     user = db.scalar(
-        select(User).where(User.username == data.username)
+        select(User).where(User.username == data.username.strip())
     )
 
     # Keep the response generic to avoid disclosing account existence.
