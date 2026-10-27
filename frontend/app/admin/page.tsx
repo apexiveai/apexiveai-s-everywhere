@@ -231,11 +231,9 @@ export default function AdminPage() {
 
       const message = e instanceof Error ? e.message : "Request failed";
       setError(
-        message === "LOGIN_REQUIRED"
-          ? "Login လုပ်ပြီးမှ Dashboard ကို အသုံးပြုနိုင်ပါတယ်။"
-          : message === "ADMIN_ACCESS_REQUIRED"
-            ? "Super Admin permission မရှိပါ။"
-            : message,
+        message === "ADMIN_ACCESS_REQUIRED"
+          ? "Super Admin permission မရှိပါ။"
+          : message,
       );
     } finally {
       if (currentRequest === requestVersion.current) {

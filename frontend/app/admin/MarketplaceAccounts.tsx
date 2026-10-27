@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { apiRequest, fetchAllPages, getToken } from "@/lib/api";
+import {
+  apiRequest,
+  fetchAllPages,
+  getBearerTokenHeader,
+} from "@/lib/api";
 
 type Tenant = {
   id: number;
@@ -109,8 +113,10 @@ export default function MarketplaceAccounts() {
       );
     }
 
-    const token = getToken();
-    if (!token) throw new Error("LOGIN_REQUIRED");
+    const authorization = getBearerTokenHeader();
+    if (!authorization) {
+      throw new Error("Sign in to create Marketplace accounts.");
+    }
 
     const profile =
       account.user.role === "SELLER"
@@ -134,7 +140,7 @@ export default function MarketplaceAccounts() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: authorization,
       },
       body: JSON.stringify({
         community_tenant_id: String(account.tenant.id),

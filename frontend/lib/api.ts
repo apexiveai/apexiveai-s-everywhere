@@ -1,6 +1,8 @@
 const API_BASE = (
   process.env.NEXT_PUBLIC_API_URL || "https://commu-api.apexiveai.com/api"
 ).replace(/\/+$/, "");
+const TOKEN_STORAGE_KEY = "apexive_token";
+const USER_STORAGE_KEY = "apexive_user";
 
 export type PaginatedResponse<T> = {
   items: T[];
@@ -12,7 +14,33 @@ export type PaginatedResponse<T> = {
 
 export function getToken(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("apexive_token");
+  return localStorage.getItem(TOKEN_STORAGE_KEY);
+}
+
+export function getBearerTokenHeader(token = getToken()): string | null {
+  return token ? `Bearer ${token}` : null;
+}
+
+export function saveAuthSession(
+  accessToken: string,
+  user: Record<string, unknown>,
+) {
+  localStorage.setItem(TOKEN_STORAGE_KEY, accessToken);
+  localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
+}
+
+export function clearAuthSession() {
+  localStorage.removeItem(TOKEN_STORAGE_KEY);
+  localStorage.removeItem(USER_STORAGE_KEY);
+}
+
+function redirectToLogin() {
+  if (typeof window === "undefined") return;
+
+  clearAuthSession();
+  const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const query = next && !next.startsWith("/login") ? `?next=${encodeURIComponent(next)}` : "";
+  window.location.replace(`/login${query}`);
 }
 
 export async function apiRequest<T = unknown>(
@@ -28,9 +56,8 @@ export async function apiRequest<T = unknown>(
     headers.set("Content-Type", "application/json");
   }
 
-  if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
-  }
+  const authorization = getBearerTokenHeader(token);
+  if (authorization) headers.set("Authorization", authorization);
 
   const response = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -41,13 +68,20 @@ export async function apiRequest<T = unknown>(
   const data = await response.json().catch(() => null);
 
   if (response.status === 401) {
-    if (path.split("?")[0] === "/auth/login") {
+    const requestPath = path.split("?")[0].replace(/\/+$/, "");
+    if (requestPath.endsWith("/auth/login")) {
       const message = data?.detail;
       throw new Error(
         typeof message === "string" ? message : "Invalid username or password.",
       );
     }
-    throw new Error("LOGIN_REQUIRED");
+    redirectToLogin();
+    const message = data?.detail;
+    throw new Error(
+      typeof message === "string"
+        ? message
+        : "Your session has expired. Please sign in again.",
+    );
   }
 
   if (response.status === 403) {

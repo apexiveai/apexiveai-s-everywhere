@@ -14,6 +14,7 @@ import {
   BriefcaseBusiness,
   ChevronDown,
 } from "lucide-react";
+import { clearAuthSession, getToken } from "../lib/api";
 
 type NavLinkItem = {
   label: string;
@@ -71,7 +72,7 @@ export default function CommunityShell({
 
   useEffect(() => {
     void Promise.resolve().then(() => {
-      const token = localStorage.getItem("apexive_token");
+      const token = getToken();
       const userText = localStorage.getItem("apexive_user");
       setSignedIn(Boolean(token));
       if (userText) {
@@ -165,8 +166,7 @@ export default function CommunityShell({
               type="button"
               className="ac-header-action"
               onClick={() => {
-                localStorage.removeItem("apexive_token");
-                localStorage.removeItem("apexive_user");
+                clearAuthSession();
                 setSignedIn(false);
                 setSuperAdmin(false);
                 router.replace("/");

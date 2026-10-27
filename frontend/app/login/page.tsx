@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { apiRequest } from "@/lib/api";
+import { apiRequest, saveAuthSession } from "@/lib/api";
 
 type LoginResponse = {
   access_token: string;
@@ -32,8 +32,7 @@ export default function LoginPage() {
         method: "POST",
         body: JSON.stringify({ username: username.trim(), password }),
       });
-      localStorage.setItem("apexive_token", result.access_token);
-      localStorage.setItem("apexive_user", JSON.stringify(result.user));
+      saveAuthSession(result.access_token, result.user);
       const requestedPath = new URLSearchParams(window.location.search).get("next");
       const requestedUrl = requestedPath
         ? new URL(requestedPath, window.location.origin)

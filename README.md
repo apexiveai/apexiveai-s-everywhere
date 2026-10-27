@@ -2,6 +2,7 @@
 # node .\node_modules\next\dist\bin\next dev
 https://cyclone-rpa.vercel.app/
 https://ais-ware-rpq.vercel.app/
+python -c "import secrets; print(secrets.token_urlsafe(48))"
 ## Backend database migrations
 
 The backend Procfile applies pending SQL migrations before starting the API.
@@ -47,10 +48,27 @@ temporarily unavailable, retry profile setup from the same screen.
 
 Set Marketplace `COMMUNITY_JWT_SECRET` to the same strong secret as Community
 `JWT_SECRET_KEY`, and keep `COMMUNITY_JWT_ISSUER` aligned with Community
-`JWT_ISSUER` (`ApexiveAI` by default). Add the deployed Marketplace frontend
-origin to Community's `CORS_ORIGINS` and Marketplace's `CORS_ORIGINS`. Seller
-and buyer credentials are Community credentials and are used on the
-Marketplace sign-in page.
+`JWT_ISSUER` (`ApexiveAI` by default). Marketplace must also validate the
+Community access-token audience `apexiveai-solutions` (or the value configured
+as Community `JWT_AUDIENCE`). The Community frontend sends the login response's
+`access_token` as a Bearer token to both Community and Marketplace APIs. Add the
+deployed Marketplace frontend origin to Community's `CORS_ORIGINS` and
+Marketplace's `CORS_ORIGINS`. Seller and buyer credentials are Community
+credentials and are used on the Marketplace sign-in page.
+
+## Recovering a Super Admin login
+
+An HTTP `401` from `POST /api/auth/login` means the submitted username/password
+did not match an account; successful migrations do not create or reset login
+credentials. In the Railway backend service environment, run
+`python -m app.recover_super_admin` from the backend application directory.
+Enter the exact username of an existing, active `SUPER_ADMIN` account and set a
+new password when prompted. The command changes only that account's password;
+it will not create an account or promote another role.
+
+After resetting, sign in with that username and the new password. If an
+authenticated API request returns `401`, the frontend clears the expired
+session and redirects to sign in again.
 
 ## Vercel frontend and Railway API
 

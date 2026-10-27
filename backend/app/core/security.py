@@ -20,6 +20,7 @@ def create_access_token(
         "role": role,
         "tenant_id": tenant_id,
         "iss": settings.JWT_ISSUER,
+        "aud": settings.JWT_AUDIENCE,
         "iat": now,
         "exp": now + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
@@ -37,6 +38,8 @@ def decode_access_token(token: str) -> dict:
             token,
             settings.JWT_SECRET_KEY,
             algorithms=[settings.JWT_ALGORITHM],
+            audience=settings.JWT_AUDIENCE,
+            issuer=settings.JWT_ISSUER,
         )
         if payload.get("type") != "access":
             raise ValueError("Invalid token type.")

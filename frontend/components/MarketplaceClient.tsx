@@ -27,7 +27,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { apiRequest, type PaginatedResponse } from "../lib/api";
+import { apiRequest, getToken, type PaginatedResponse } from "../lib/api";
 
 type Currency = "USD" | "MMK";
 
@@ -133,7 +133,7 @@ function subscribeToAccountChanges(onChange: () => void) {
 }
 
 function getStoredUser() {
-  if (!localStorage.getItem("apexive_token")) return null;
+  if (!getToken()) return null;
   const userText = localStorage.getItem("apexive_user");
   if (!userText) return null;
   try {

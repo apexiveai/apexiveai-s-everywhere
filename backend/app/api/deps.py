@@ -29,6 +29,8 @@ def get_current_user(
             token,
             settings.JWT_SECRET_KEY,
             algorithms=[settings.JWT_ALGORITHM],
+            audience=settings.JWT_AUDIENCE,
+            issuer=settings.JWT_ISSUER,
         )
 
         if payload.get("type") != "access":
