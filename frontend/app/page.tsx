@@ -111,6 +111,32 @@ const products = [
     tag: "Marketplace",
     color: "pink",
   },
+  {
+    id: "07",
+    name: "Global Marketplace",
+    subtitle: "Global commerce",
+    description:
+      "Discover products and services from sellers around the world.",
+    href: getExternalProductUrl(process.env.NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL),
+    external: true,
+    icon: Store,
+    tag: "Global marketplace",
+    color: "pink",
+  },
+  {
+    id: "08",
+    name: "Enterprise Operations Platform",
+    subtitle: "Enterprise operations",
+    description:
+      "Coordinate enterprise workflows and manage day-to-day operations.",
+    href: getExternalProductUrl(
+      process.env.NEXT_PUBLIC_ENTERPRISE_OPERATIONS_PLATFORM_URL,
+    ),
+    external: true,
+    icon: Activity,
+    tag: "Operations platform",
+    color: "cyan",
+  },
 ];
 
 function EcosystemPreview() {
