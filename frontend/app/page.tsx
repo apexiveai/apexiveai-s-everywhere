@@ -32,6 +32,7 @@ import {
   getExternalProductUrl,
   governmentPublicSectorNavItems,
 } from "@/lib/community";
+import DaiichiPartnerSection from "../components/partners/DaiichiPartnerSection";
 
 const FONT = {
   brand: "Apexive AI",
@@ -472,6 +473,8 @@ export default function HomePage() {
           <LiveClock />
         </div>
       </section>
+
+<DaiichiPartnerSection />
 
       <section className="platform-section">
         <div className="section-heading">
