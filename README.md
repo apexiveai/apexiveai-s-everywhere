@@ -4,7 +4,7 @@ https://cyclone-rpa.vercel.app/
 https://ais-ware-rpq.vercel.app/
 python -c "import secrets; print(secrets.token_urlsafe(48))"
 ## Backend database migrations
-
+9k4Lp2Vm8X3qR7tY
 The backend Procfile applies pending SQL migrations before starting the API.
 This includes the auction tables required by the marketplace. For a one-time
 manual migration or an existing deployment, run:

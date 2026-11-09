@@ -15,6 +15,10 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { clearAuthSession, getToken } from "../lib/api";
+import {
+  getExternalProductUrl,
+  governmentPublicSectorNavItems,
+} from "../lib/community";
 
 type NavLinkItem = {
   label: string;
@@ -41,6 +45,10 @@ const mainNavigation: NavigationItem[] = [
       { label: "Clone Detector", href: "/clone-detector" },
       { label: "Marketplace", href: "/marketplace" },
     ],
+  },
+  {
+    label: "Government & Public Sector",
+    items: governmentPublicSectorNavItems,
   },
   { label: "Resources", href: "/resources" },
   { label: "Search", href: "/search" },
@@ -69,6 +77,9 @@ export default function CommunityShell({
   const [menuOpen, setMenuOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [superAdmin, setSuperAdmin] = useState(false);
+  const storeUrl = getExternalProductUrl(
+    process.env.NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL,
+  );
 
   useEffect(() => {
     void Promise.resolve().then(() => {
@@ -158,6 +169,25 @@ export default function CommunityShell({
               </Link>
             );
           })}
+          {storeUrl ? (
+            <a
+              href={storeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="ac-global-link"
+            >
+              Store
+            </a>
+          ) : (
+            <span
+              className="ac-global-link"
+              aria-disabled="true"
+              title="Configure NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL to enable Store"
+            >
+              Store
+            </span>
+          )}
         </nav>
         <div className="ac-header-account">
           {superAdmin && <Link href="/admin" className="ac-header-action"><BriefcaseBusiness size={15} /> Admin</Link>}

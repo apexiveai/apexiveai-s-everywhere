@@ -274,7 +274,15 @@ export default function CommunitySectionPage({
                     </>
                   );
 
-                  return href ? (
+                  return href?.startsWith("/") ? (
+                    <Link
+                      className="ac-feature-card"
+                      href={href}
+                      key={item.title}
+                    >
+                      {cardContent}
+                    </Link>
+                  ) : href ? (
                     <a
                       className="ac-feature-card"
                       href={href}

@@ -28,7 +28,10 @@ import {
   X,
   Zap,
 } from "lucide-react";
-import { getExternalProductUrl } from "@/lib/community";
+import {
+  getExternalProductUrl,
+  governmentPublicSectorNavItems,
+} from "@/lib/community";
 
 const FONT = {
   brand: "Apexive AI",
@@ -290,6 +293,23 @@ export default function HomePage() {
             </summary>
             <div className="home-nav-menu">
               {exploreNavItems.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="nav-link"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </details>
+          <details className="home-nav-group">
+            <summary className="nav-link">
+              Government &amp; Public Sector <ChevronDown size={13} />
+            </summary>
+            <div className="home-nav-menu">
+              {governmentPublicSectorNavItems.map((item) => (
                 <Link
                   href={item.href}
                   key={item.href}

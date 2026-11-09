@@ -15,6 +15,50 @@ export type CommunitySection = {
   groups: CommunityGroup[];
 };
 
+export const governmentPublicSectorNavItems = [
+  { label: "Public Safety", href: "/public-safety" },
+  { label: "Energy OS", href: "/energy-os" },
+  { label: "Defense Enterprise Suite", href: "/defense-enterprise-suite" },
+  { label: "Municipal OS", href: "/municipal-os" },
+  { label: "Police Citizen Connect", href: "/police-citizen-connect" },
+];
+
+const governmentProductDescriptions: Record<string, string> = {
+  "Public Safety":
+    "Explore ApexiveAI Public Safety within the Government & Public Sector portfolio.",
+  "Energy OS":
+    "Explore ApexiveAI Energy OS within the Government & Public Sector portfolio.",
+  "Defense Enterprise Suite":
+    "Explore ApexiveAI Defense Enterprise Suite within the Government & Public Sector portfolio.",
+  "Municipal OS":
+    "Explore ApexiveAI Municipal OS within the Government & Public Sector portfolio.",
+  "Police Citizen Connect":
+    "Explore ApexiveAI Police Citizen Connect within the Government & Public Sector portfolio.",
+};
+
+function governmentProductSection(
+  title: string,
+  description: string,
+): CommunitySection {
+  return {
+    title,
+    eyebrow: "Government & Public Sector",
+    description,
+    groups: [
+      {
+        title: "Government & Public Sector products",
+        description:
+          "Explore the ApexiveAI products in the Government & Public Sector portfolio.",
+        items: governmentPublicSectorNavItems.map(({ label, href }) => ({
+          title: label,
+          description: governmentProductDescriptions[label],
+          href,
+        })),
+      },
+    ],
+  };
+}
+
 export const externalModules = {
   trademark: {
     label: "Trademark AI",
@@ -515,6 +559,26 @@ export const communitySections = {
       },
     ],
   },
+  "public-safety": governmentProductSection(
+    "Public Safety",
+    governmentProductDescriptions["Public Safety"],
+  ),
+  "energy-os": governmentProductSection(
+    "Energy OS",
+    governmentProductDescriptions["Energy OS"],
+  ),
+  "defense-enterprise-suite": governmentProductSection(
+    "Defense Enterprise Suite",
+    governmentProductDescriptions["Defense Enterprise Suite"],
+  ),
+  "municipal-os": governmentProductSection(
+    "Municipal OS",
+    governmentProductDescriptions["Municipal OS"],
+  ),
+  "police-citizen-connect": governmentProductSection(
+    "Police Citizen Connect",
+    governmentProductDescriptions["Police Citizen Connect"],
+  ),
 } satisfies Record<string, CommunitySection>;
 
 export type CommunitySectionSlug = keyof typeof communitySections;
