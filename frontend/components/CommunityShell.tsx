@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { clearAuthSession, getToken } from "../lib/api";
 import {
-  getExternalProductUrl,
   governmentPublicSectorNavItems,
 } from "../lib/community";
 
@@ -33,7 +32,7 @@ type NavGroupItem = {
 type NavigationItem = NavLinkItem | NavGroupItem;
 
 const mainNavigation: NavigationItem[] = [
-  { label: "Dashboard", href: "/dashboard" },
+  { label: "Home", href: "/" },
   {
     label: "Explore",
     items: [
@@ -43,14 +42,13 @@ const mainNavigation: NavigationItem[] = [
       { label: "Auctions", href: "/auctions" },
       { label: "Security", href: "/security" },
       { label: "Clone Detector", href: "/clone-detector" },
-      { label: "Marketplace", href: "/marketplace" },
+      { label: "Resources", href: "/resources" },
     ],
   },
   {
     label: "Government & Public Sector",
     items: governmentPublicSectorNavItems,
   },
-  { label: "Resources", href: "/resources" },
   { label: "Search", href: "/search" },
   { label: "My Products", href: "/workspace" },
   { label: "Invoices", href: "/billing" },
@@ -77,9 +75,6 @@ export default function CommunityShell({
   const [menuOpen, setMenuOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [superAdmin, setSuperAdmin] = useState(false);
-  const storeUrl = getExternalProductUrl(
-    process.env.NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL,
-  );
 
   useEffect(() => {
     void Promise.resolve().then(() => {
@@ -169,25 +164,6 @@ export default function CommunityShell({
               </Link>
             );
           })}
-          {storeUrl ? (
-            <a
-              href={storeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="ac-global-link"
-            >
-              Store
-            </a>
-          ) : (
-            <span
-              className="ac-global-link"
-              aria-disabled="true"
-              title="Configure NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL to enable Store"
-            >
-              Store
-            </span>
-          )}
         </nav>
         <div className="ac-header-account">
           {superAdmin && <Link href="/admin" className="ac-header-action"><BriefcaseBusiness size={15} /> Admin</Link>}
