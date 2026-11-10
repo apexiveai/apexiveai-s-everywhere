@@ -13,6 +13,7 @@ from app.models.marketplace import (
     MarketplaceOrderItem,
     MarketplaceProduct,
 )
+from app.models.daiichi import DaiichiLead, DaiichiAnalyticsEvent
 
 __all__ = [
     "User",
@@ -32,4 +33,6 @@ __all__ = [
     "MarketplaceProduct",
     "MarketplaceOrder",
     "MarketplaceOrderItem",
+    "DaiichiLead",
+    "DaiichiAnalyticsEvent",
 ]
