@@ -19,6 +19,8 @@ from app.api.admin.history import router as admin_history_router
 from app.api.auctions import router as auctions_router
 from app.api.marketplace import router as marketplace_router
 from fastapi.middleware.cors import CORSMiddleware
+from app.api.daiichi import router as daiichi_router
+from app.api.admin.daiichi import router as admin_daiichi_router
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -72,6 +74,8 @@ app.include_router(history_router, prefix="/api")
 app.include_router(admin_history_router, prefix="/api")
 app.include_router(auctions_router, prefix="/api")
 app.include_router(marketplace_router, prefix="/api")
+app.include_router(daiichi_router, prefix="/api")
+app.include_router(admin_daiichi_router, prefix="/api")
 
 @app.get("/health", include_in_schema=False)
 def health():

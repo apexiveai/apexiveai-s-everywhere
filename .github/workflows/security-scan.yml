@@ -1,0 +1,102 @@
+
+name: APEXIVEAI Community - Security Scan
+
+on:
+
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  schedule:
+    - cron: "0 2 * * 1"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+  dependency-audit:
+
+    name: Python Dependency Audit
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pip-audit
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      - name: Audit Backend Dependencies
+        run: |
+          pip-audit \
+            -r backend/requirements.txt \
+            --strict
+
+  # --------------------------------------------------------
+  # SECRET SCANNING
+  # --------------------------------------------------------
+
+  secret-scan:
+
+    name: Secret Scanning
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # --------------------------------------------------------
+  # CONTAINER SCAN
+  # --------------------------------------------------------
+
+  container-scan:
+
+    name: Container Vulnerability Scan
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Backend Image
+        run: |
+          docker build \
+            -t apexiveai-community-api:scan \
+            .
+
+      - name: Trivy Vulnerability Scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: apexiveai-community-api:scan
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH

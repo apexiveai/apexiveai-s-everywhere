@@ -1,19 +1,61 @@
 
-# Python virtual environments
-backend/.venv/
-backend/.venv312/
-.venv/
-venv/
-
-# Python generated files
-__pycache__/
-*.py[cod]
-
-# Frontend dependencies and builds
-frontend/node_modules/
-frontend/dist/
-
-# Environment secrets
+# Environment
 .env
 .env.*
 !.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite3
+*.db
+
+# Backups
+backups/
+*.dump
+*.sql
+
+# Uploads
+uploads/
+media/
+storage/
+
+# Build
+dist/
+build/
+node_modules/
+
+# Docker
+.docker/
+
+# Certificates and secrets
+*.pem
+*.key
+*.crt
+secrets/

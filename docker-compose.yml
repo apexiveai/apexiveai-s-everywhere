@@ -1,0 +1,142 @@
+
+# ==========================================================
+# APEXIVEAI COMMUNITY
+# Production Docker Compose
+# Backend + Nginx
+# ==========================================================
+
+name: apexiveai-community
+
+services:
+
+  # --------------------------------------------------------
+  # BACKEND API
+  # --------------------------------------------------------
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: apexiveai-community-api
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      APP_ENV: production
+      DEBUG: "false"
+      PORT: 8000
+
+    expose:
+      - "8000"
+
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    networks:
+      - apexiveai-network
+
+    init: true
+
+    security_opt:
+      - no-new-privileges:true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # --------------------------------------------------------
+  # NGINX REVERSE PROXY
+  # --------------------------------------------------------
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+
+    container_name: apexiveai-community-nginx
+
+    restart: unless-stopped
+
+    depends_on:
+      api:
+        condition: service_healthy
+
+    ports:
+      - "${NGINX_PORT:-8080}:8080"
+
+    networks:
+      - apexiveai-network
+
+    init: true
+
+    security_opt:
+      - no-new-privileges:true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # --------------------------------------------------------
+  # OPTIONAL PROMETHEUS MONITORING
+  # --------------------------------------------------------
+
+  prometheus:
+    image: prom/prometheus:v3.2.1
+
+    container_name: apexiveai-community-prometheus
+
+    restart: unless-stopped
+
+    profiles:
+      - monitoring
+
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./infrastructure/monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus-data:/prometheus
+
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=15d"
+
+    expose:
+      - "9090"
+
+    networks:
+      - apexiveai-network
+
+    security_opt:
+      - no-new-privileges:true
+
+# ----------------------------------------------------------
+# NETWORKS
+# ----------------------------------------------------------
+
+networks:
+  apexiveai-network:
+    driver: bridge
+
+# ----------------------------------------------------------
+# VOLUMES
+# ----------------------------------------------------------
+
+volumes:
+  prometheus-data:
+    name: apexiveai-community-prometheus-data

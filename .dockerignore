@@ -1,0 +1,49 @@
+
+# Frontend
+frontend/
+node_modules/
+.next/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Git
+.git/
+.gitignore
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local databases and temporary files
+*.sqlite3
+*.db
+tmp/
+temp/
+
+# Local uploads and generated data
+uploads/
