@@ -1,7 +1,7 @@
 .daiichi-partner {
   width: min(100% - 48px, 1360px);
   margin: 38px auto 54px;
-  color: #17243b;
+  color: #101b30;
   font-family: inherit;
 }
 
@@ -27,15 +27,15 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #078b64;
+  background: #b79b6a;
   display: inline-block;
 }
 
 .daiichi-partner__tag {
   padding: 7px 12px;
   border-radius: 30px;
-  background: #eaf3ff;
-  color: #0879e9;
+  background: #f4efe4;
+  color: #9a7943;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: .8px;
@@ -44,13 +44,13 @@
 .daiichi-partner__content {
   overflow: hidden;
   position: relative;
-  border: 1px solid #e2eaf5;
+  border: 1px solid #e8e2d6;
   border-radius: 22px;
   padding: 28px 32px 0;
   background:
-    radial-gradient(ellipse at 90% 10%, #e2edff 0, transparent 42%),
-    linear-gradient(120deg, #ffffff 0%, #f5f9ff 55%, #edf4ff 100%);
-  box-shadow: 0 12px 40px rgba(30, 70, 130, .065);
+    radial-gradient(ellipse at 90% 10%, #f3ead7 0, transparent 42%),
+    linear-gradient(120deg, #ffffff 0%, #fbfaf7 55%, #f5f1e8 100%);
+  box-shadow: 0 12px 40px rgba(16, 27, 48, .08);
 }
 
 .daiichi-partner__identity {
@@ -69,21 +69,14 @@
   justify-content: center;
   border-radius: 14px;
   background: #fff;
-  border: 1px solid #e2eaf5;
-  box-shadow: 0 4px 14px rgba(30, 70, 130, .06);
+  border: 1px solid #e8e2d6;
+  box-shadow: 0 4px 14px rgba(16, 27, 48, .08);
 }
 
 .daiichi-partner__logo img {
   width: 90%;
   height: 90%;
   object-fit: contain;
-}
-
-.daiichi-partner__logo-fallback {
-  position: absolute;
-  font-size: 9px;
-  font-weight: 800;
-  color: #1765c7;
 }
 
 .daiichi-partner__company span {
@@ -97,7 +90,7 @@
 
 .daiichi-partner__company h2 {
   margin: 0;
-  color: #17243b;
+  color: #101b30;
   font-size: 19px;
   font-weight: 800;
 }
@@ -116,7 +109,7 @@
 
 .daiichi-partner__campaign {
   display: inline-block;
-  color: #1674db;
+  color: #9a7943;
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 1.3px;
@@ -125,7 +118,7 @@
 .daiichi-partner__copy h3 {
   max-width: 550px;
   margin: 15px 0;
-  color: #17243b;
+  color: #101b30;
   font-size: clamp(26px, 3.2vw, 43px);
   line-height: 1.12;
   letter-spacing: -1.6px;
@@ -164,25 +157,25 @@
 }
 
 .daiichi-partner__button {
-  color: white;
-  background: linear-gradient(110deg, #087af1, #2859dd);
-  box-shadow: 0 7px 18px rgba(25, 105, 230, .2);
+  color: #101b30;
+  background: linear-gradient(110deg, #d8b779, #c8a665);
+  box-shadow: 0 7px 18px rgba(154, 121, 67, .2);
 }
 
 .daiichi-partner__button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(25, 105, 230, .3);
+  box-shadow: 0 10px 22px rgba(154, 121, 67, .3);
 }
 
 .daiichi-partner__secondary {
-  border: 1px solid #dce6f2;
+  border: 1px solid #e8e2d6;
   background: white;
   color: #42536b;
 }
 
 .daiichi-partner__secondary:hover {
-  border-color: #1477e8;
-  color: #1477e8;
+  border-color: #b79b6a;
+  color: #9a7943;
 }
 
 .daiichi-partner__visual {
@@ -195,12 +188,12 @@
   border: 1px solid rgba(255,255,255,.9);
   border-radius: 18px;
   background:
-    linear-gradient(145deg, rgba(255,255,255,.9), rgba(224,237,255,.8));
+    linear-gradient(145deg, rgba(255,255,255,.95), rgba(243,234,215,.8));
 }
 
 .daiichi-partner__orb {
   position: absolute;
-  border: 1px solid rgba(47, 117, 218, .13);
+  border: 1px solid rgba(183, 155, 106, .28);
   border-radius: 50%;
 }
 
@@ -225,8 +218,8 @@
   justify-content: center;
   border: 1px solid rgba(255,255,255,.9);
   border-radius: 18px;
-  background: rgba(255,255,255,.84);
-  box-shadow: 0 15px 40px rgba(31, 83, 160, .11);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 15px 40px rgba(16, 27, 48, .12);
   backdrop-filter: blur(12px);
 }
 
@@ -248,8 +241,15 @@
   color: white;
   font-size: 30px;
   font-weight: 800;
-  background: linear-gradient(135deg, #1596f8, #3157d9);
-  box-shadow: 0 10px 25px rgba(37, 108, 219, .25);
+  border: 1px solid rgba(183, 155, 106, .35);
+  background: #fff;
+  box-shadow: 0 10px 25px rgba(16, 27, 48, .12);
+}
+
+.daiichi-partner__visual-mark img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
 }
 
 .daiichi-partner__visual-footer {
@@ -268,7 +268,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  border-top: 1px solid #e3eaf4;
+  border-top: 1px solid #e8e2d6;
   color: #61728b;
   font-size: 9px;
   font-weight: 800;
@@ -282,7 +282,7 @@
 }
 
 .daiichi-partner__footer a {
-  color: #087af1;
+  color: #9a7943;
   text-decoration: none;
 }
 

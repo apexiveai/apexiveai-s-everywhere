@@ -21,6 +21,7 @@ export const governmentPublicSectorNavItems = [
   { label: "Defense Enterprise Suite", href: "/defense-enterprise-suite" },
   { label: "Municipal OS", href: "/municipal-os" },
   { label: "Police Citizen Connect", href: "/police-citizen-connect" },
+  { label: "Security Guards", href: "/security-guards" },
 ];
 
 const governmentProductDescriptions: Record<string, string> = {
@@ -34,6 +35,8 @@ const governmentProductDescriptions: Record<string, string> = {
     "Explore ApexiveAI Municipal OS within the Government & Public Sector portfolio.",
   "Police Citizen Connect":
     "Explore ApexiveAI Police Citizen Connect within the Government & Public Sector portfolio.",
+  "Security Guards":
+    "Explore Paladin Security Services guard levels, monthly rates, and request a service quotation.",
 };
 
 function governmentProductSection(

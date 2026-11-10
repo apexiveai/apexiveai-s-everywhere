@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import DaiichiExperience from "@/components/partners/DaiichiExperience";
 
 export const metadata: Metadata = {
-  title: "Daiichi Life Myanmar | Life Protection & Financial Confidence",
+  title: "ApexiveAI | Daiichi Life Insurance Information",
   description:
-    "Discover life insurance information, protection concepts and customer consultation opportunities through ApexiveAI's Daiichi Life experience.",
+    "An independent ApexiveAI information page for learning about life insurance and submitting an enquiry. Not the official Daiichi Life Myanmar website.",
   keywords: [
     "Daiichi Life Myanmar",
     "Life Insurance Myanmar",
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     "ApexiveAI",
   ],
   openGraph: {
-    title: "Daiichi Life Myanmar | A Future Worth Protecting",
+    title: "ApexiveAI | Daiichi Life Information",
     description:
-      "Explore life protection and financial planning information.",
+      "Independent life insurance information and enquiries by ApexiveAI.",
     type: "website",
   },
   robots: {

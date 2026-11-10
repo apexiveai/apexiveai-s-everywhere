@@ -1,44 +1,44 @@
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import "./DaiichiPartnerSection.css";
 
 const DAIICHI = {
   name: "Daiichi Life Myanmar",
-  subtitle: "DAIICHI LIFE INSURANCE MYANMAR LTD.",
-  headline: "Your Life. Your Future. Our Commitment.",
+  subtitle: "INSURANCE INFORMATION · APEXIVE AI",
+  headline: "A Future Worth Protecting.",
   description:
     "Explore life insurance information and discover ways to plan for a more secure future with Daiichi Life Myanmar.",
-  officialWebsite: "https://www.daiichilife.com.mm/",
-  dailyLabel: "DAILY FEATURE",
-  weeklyLabel: "WEEKLY CAMPAIGN",
+  dailyLabel: "FEATURED INFORMATION",
+  weeklyLabel: "INDEPENDENT INFORMATION PAGE",
 };
 
 export default function DaiichiPartnerSection() {
   return (
-    <section className="daiichi-partner" aria-label="Daiichi Life Myanmar advertising">
+    <section
+      className="daiichi-partner"
+      aria-label="Independent Daiichi Life insurance information by ApexiveAI"
+    >
       <div className="daiichi-partner__top">
         <div className="daiichi-partner__eyebrow">
           <span className="daiichi-partner__dot" />
-          APEXIVE AI ADVERTISING PARTNER
+          APEXIVE AI · INDEPENDENT INFORMATION
         </div>
 
         <span className="daiichi-partner__tag">
-          FEATURED PARTNER
+          INFORMATION PAGE
         </span>
       </div>
 
       <div className="daiichi-partner__content">
         <div className="daiichi-partner__identity">
           <div className="daiichi-partner__logo">
-            <img
-              src="/images/partners/daiichi-life-myanmar-logo.svg"
-              alt="Daiichi Life Myanmar"
-              onError={(event) => {
-                event.currentTarget.style.display = "none";
-              }}
+            <Image
+              src="/images/partners/apexiveai-mark.png"
+              alt="ApexiveAI logo"
+              width={280}
+              height={280}
             />
-            <span className="daiichi-partner__logo-fallback">
-              Daiichi Life
-            </span>
           </div>
 
           <div className="daiichi-partner__company">
@@ -58,22 +58,20 @@ export default function DaiichiPartnerSection() {
             <p>{DAIICHI.description}</p>
 
             <div className="daiichi-partner__actions">
-              <a
-                href={DAIICHI.officialWebsite}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/partners/daiichi"
                 className="daiichi-partner__button"
               >
-                Explore Daiichi Life
+                Explore Information
                 <span aria-hidden="true">↗</span>
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="/partners/daiichi"
                 className="daiichi-partner__secondary"
               >
                 Learn More
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -83,18 +81,23 @@ export default function DaiichiPartnerSection() {
 
             <div className="daiichi-partner__visual-card">
               <span className="daiichi-partner__visual-label">
-                LIFE REIMAGINED
+                INSURANCE INFORMATION
               </span>
               <div className="daiichi-partner__visual-mark">
-                D
+                <Image
+                  src="/images/partners/apexiveai-mark.png"
+                  alt=""
+                  width={280}
+                  height={280}
+                />
               </div>
               <span className="daiichi-partner__visual-caption">
-                BY YOUR SIDE, FOR LIFE
+                BY APEXIVE AI
               </span>
             </div>
 
             <span className="daiichi-partner__visual-footer">
-              APEXIVE AI × DAIICHI LIFE MYANMAR
+              INDEPENDENT INFORMATION · APEXIVE AI
             </span>
           </div>
         </div>
@@ -105,9 +108,9 @@ export default function DaiichiPartnerSection() {
             {DAIICHI.weeklyLabel}
           </div>
 
-          <a href="/partners/daiichi">
-            Discover Campaigns <span aria-hidden="true">→</span>
-          </a>
+          <Link href="/partners/daiichi#solutions">
+            Explore Insurance Information <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </div>
     </section>

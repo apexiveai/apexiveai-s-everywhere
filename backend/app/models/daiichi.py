@@ -54,6 +54,19 @@ class DaiichiLead(Base):
     )
 
 
+class DaiichiLeadStatusHistory(Base):
+    __tablename__ = "daiichi_lead_status_history"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    lead_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
+    actor_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    from_status: Mapped[str] = mapped_column(String(20), nullable=False)
+    to_status: Mapped[str] = mapped_column(String(20), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, default=utc_now, index=True
+    )
+
+
 class DaiichiAnalyticsEvent(Base):
     __tablename__ = "daiichi_analytics_events"
 

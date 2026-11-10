@@ -21,6 +21,16 @@ from app.api.marketplace import router as marketplace_router
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.daiichi import router as daiichi_router
 from app.api.admin.daiichi import router as admin_daiichi_router
+from app.api.admin.security_guards import (
+    router as admin_security_guards_router,
+)
+from app.api.security_guards import router as security_guards_router
+from app.api.daiichi_campaigns import (
+    public_router as daiichi_campaigns_router,
+)
+from app.api.daiichi_campaigns import (
+    admin_router as admin_daiichi_campaigns_router,
+)
 
 logger = logging.getLogger("uvicorn.error")
 
@@ -76,6 +86,10 @@ app.include_router(auctions_router, prefix="/api")
 app.include_router(marketplace_router, prefix="/api")
 app.include_router(daiichi_router, prefix="/api")
 app.include_router(admin_daiichi_router, prefix="/api")
+app.include_router(daiichi_campaigns_router, prefix="/api")
+app.include_router(admin_daiichi_campaigns_router, prefix="/api")
+app.include_router(security_guards_router, prefix="/api")
+app.include_router(admin_security_guards_router, prefix="/api")
 
 @app.get("/health", include_in_schema=False)
 def health():

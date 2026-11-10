@@ -1,11 +1,13 @@
 
 "use client";
 
+import Image from "next/image";
 import {
   useState,
   type FormEvent,
   type ReactNode,
 } from "react";
+import { submitDaiichiLead, trackDaiichiEvent } from "@/lib/daiichi";
 
 const solutions = [
   {
@@ -93,9 +95,6 @@ export default function DaiichiExperience() {
     consent: false,
   });
 
-  const endpoint =
-    process.env.NEXT_PUBLIC_DAIICHI_INQUIRY_ENDPOINT;
-
   async function submitInquiry(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("");
@@ -105,33 +104,24 @@ export default function DaiichiExperience() {
       return;
     }
 
-    if (!endpoint) {
-      setStatus(
-        "The consultation channel has not been configured yet. Please contact the website administrator."
-      );
-      return;
-    }
-
     setSubmitting(true);
 
     try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          phone: form.phone,
-          email: form.email,
-          interest: form.interest,
-          message: form.message,
-          source: "apexiveai-daiichi-landing-page",
-          consent: form.consent,
-        }),
+      await submitDaiichiLead({
+        full_name: form.name.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim() || undefined,
+        inquiry: [
+          `Area of interest: ${form.interest}`,
+          form.message.trim(),
+        ]
+          .filter(Boolean)
+          .join("\n\n"),
+        consent_given: true,
+        consent_text_version: "v1",
       });
 
-      if (!response.ok) {
-        throw new Error("Inquiry submission failed.");
-      }
+      void trackDaiichiEvent("cta_click", "inquiry_submitted");
 
       setStatus(
         "Your enquiry has been submitted successfully. Thank you."
@@ -144,9 +134,11 @@ export default function DaiichiExperience() {
         message: "",
         consent: false,
       });
-    } catch {
+    } catch (error) {
       setStatus(
-        "We could not submit your enquiry. Please try again later."
+        error instanceof Error
+          ? error.message
+          : "We could not submit your enquiry. Please try again later."
       );
     } finally {
       setSubmitting(false);
@@ -160,15 +152,22 @@ export default function DaiichiExperience() {
       <header className="absolute left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#101B30]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-10">
           <a href="#home" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#D8B779]/60 text-xl text-[#D8B779]">
-              ◈
+            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#D8B779]/50 bg-white p-1.5">
+              <Image
+                src="/images/partners/apexiveai-mark.png"
+                alt="ApexiveAI logo"
+                width={280}
+                height={280}
+                className="h-full w-full object-contain"
+                priority
+              />
             </div>
             <div>
               <div className="text-sm font-semibold tracking-[0.16em] text-white">
-                DAIICHI LIFE
+                APEXIVE AI
               </div>
               <div className="mt-1 text-[8px] tracking-[0.22em] text-[#C8B17D]">
-                INSURANCE EXPERIENCE
+                DAIICHI LIFE INFORMATION
               </div>
             </div>
           </a>
@@ -236,7 +235,7 @@ export default function DaiichiExperience() {
             <div className="mb-8 flex items-center gap-3">
               <span className="h-px w-10 bg-[#D8B779]" />
               <span className="text-[10px] font-semibold tracking-[0.3em] text-[#D8B779]">
-                LIFE PROTECTION · FINANCIAL CONFIDENCE
+                INDEPENDENT INSURANCE INFORMATION
               </span>
             </div>
 
@@ -250,6 +249,12 @@ export default function DaiichiExperience() {
               Every life has a story. Every family has dreams.
               Discover the importance of preparing for tomorrow
               with thoughtful life protection and financial planning.
+            </p>
+
+            <p className="mt-5 max-w-lg text-xs leading-6 text-white/55">
+              An ApexiveAI information page, not the official Daiichi Life
+              website. Product information and any sales activity are subject
+              to the insurer&apos;s approval and official terms.
             </p>
 
             <div className="mt-10 flex flex-wrap gap-4">
@@ -320,7 +325,7 @@ export default function DaiichiExperience() {
             </h2>
             <p className="mt-7 text-sm leading-8 text-slate-600">
               Financial protection is about more than today. It is about
-              understanding potential risks, preparing for life's
+              understanding potential risks, preparing for life&apos;s
               uncertainties and making informed decisions for the people
               and goals that matter to you.
             </p>
@@ -345,7 +350,7 @@ export default function DaiichiExperience() {
             <div className="absolute -bottom-7 -left-5 max-w-[260px] bg-[#101B30] p-7 text-white shadow-xl sm:-left-8">
               <div className="text-3xl font-light text-[#D8B779]">1902</div>
               <p className="mt-2 text-xs leading-6 text-white/70">
-                The beginning of Daiichi Life Group's long history in
+                The beginning of Daiichi Life Group&apos;s long history in
                 the life insurance industry.
               </p>
             </div>
@@ -360,7 +365,7 @@ export default function DaiichiExperience() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
             <h2 className="text-4xl font-light leading-tight sm:text-5xl">
               A heritage built around
-              <span className="text-[#D8B779]"> life's possibilities.</span>
+              <span className="text-[#D8B779]"> life&apos;s possibilities.</span>
             </h2>
             <div>
               <p className="text-sm leading-8 text-white/65">
@@ -370,12 +375,10 @@ export default function DaiichiExperience() {
                 financial protection.
               </p>
               <a
-                href="https://www.daiichilife.com.mm/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#consultation"
                 className="mt-7 inline-flex items-center gap-3 border-b border-[#D8B779] pb-2 text-xs tracking-widest text-[#D8B779]"
               >
-                VERIFY OFFICIAL COMPANY INFORMATION <Arrow />
+                ASK FOR MORE INFORMATION <Arrow />
               </a>
             </div>
           </div>
@@ -503,12 +506,10 @@ export default function DaiichiExperience() {
               actual insurance policy.
             </p>
             <a
-              href="https://www.daiichilife.com.mm/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#consultation"
               className="mt-8 inline-flex items-center gap-3 border-b border-[#D8B779] pb-2 text-xs tracking-widest text-[#D8B779]"
             >
-              VISIT OFFICIAL CLAIMS RESOURCES <Arrow />
+              ASK ABOUT CLAIMS INFORMATION <Arrow />
             </a>
           </div>
 
@@ -566,7 +567,7 @@ export default function DaiichiExperience() {
       <section id="consultation" className="bg-[#EDE8DD] px-6 py-24 lg:px-10 lg:py-28">
         <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[.85fr_1.15fr]">
           <div>
-            <SectionLabel>LET'S CONNECT</SectionLabel>
+            <SectionLabel>LET&apos;S CONNECT</SectionLabel>
             <h2 className="text-4xl font-light leading-tight sm:text-5xl">
               Your questions.
               <br />
@@ -712,10 +713,10 @@ export default function DaiichiExperience() {
           <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-3">
             <div>
               <div className="text-lg font-semibold tracking-[0.18em]">
-                DAIICHI LIFE
+                APEXIVE AI
               </div>
               <div className="mt-2 text-[9px] tracking-[0.25em] text-[#D8B779]">
-                LIFE PROTECTION EXPERIENCE
+                DAIICHI LIFE INFORMATION
               </div>
               <p className="mt-6 max-w-xs text-xs leading-7 text-white/45">
                 Discover insurance information and explore the
@@ -737,15 +738,13 @@ export default function DaiichiExperience() {
 
             <div>
               <h4 className="text-xs font-semibold tracking-widest text-[#D8B779]">
-                OFFICIAL RESOURCE
+                THIS INFORMATION PAGE
               </h4>
               <a
-                href="https://www.daiichilife.com.mm/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#about"
                 className="mt-6 inline-flex items-center gap-2 text-xs text-white/60 hover:text-[#D8B779]"
               >
-                Daiichi Life Myanmar <Arrow />
+                Independently operated by ApexiveAI <Arrow />
               </a>
             </div>
           </div>
@@ -758,7 +757,7 @@ export default function DaiichiExperience() {
             <div className="max-w-xl">
               Independent informational and marketing experience.
               Unless separately authorized in writing, ApexiveAI does
-              not represent itself as Daiichi Life's agent or official
+              not represent itself as Daiichi Life&apos;s agent or official
               representative. Product availability, coverage,
               premiums and claims are subject to official insurer
               documentation and policy terms.

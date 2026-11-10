@@ -56,20 +56,33 @@ type LeadResponse = {
   total_pages: number;
 };
 
+type LeadStatusHistory = {
+  id: number;
+  lead_id: number;
+  actor_user_id: number | null;
+  from_status: string;
+  to_status: string;
+  created_at: string;
+};
+
 const STATUSES = [
   "NEW",
   "CONTACTED",
+  "FOLLOW_UP",
   "QUALIFIED",
+  "REFERRED",
   "CONVERTED",
-  "REJECTED",
+  "CLOSED_LOST",
 ] as const;
 
 const statusStyles: Record<string, string> = {
   NEW: "border-cyan-300/20 bg-cyan-300/10 text-cyan-200",
   CONTACTED: "border-blue-300/20 bg-blue-300/10 text-blue-200",
+  FOLLOW_UP: "border-amber-300/20 bg-amber-300/10 text-amber-200",
   QUALIFIED: "border-violet-300/20 bg-violet-300/10 text-violet-200",
+  REFERRED: "border-indigo-300/20 bg-indigo-300/10 text-indigo-200",
   CONVERTED: "border-emerald-300/20 bg-emerald-300/10 text-emerald-200",
-  REJECTED: "border-red-300/20 bg-red-300/10 text-red-200",
+  CLOSED_LOST: "border-red-300/20 bg-red-300/10 text-red-200",
 };
 
 function MetricCard({
@@ -103,6 +116,9 @@ export default function DaiichiAdminDashboard() {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [result, setResult] = useState<LeadResponse | null>(null);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [leadHistory, setLeadHistory] = useState<LeadStatusHistory[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState("");
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
@@ -149,12 +165,31 @@ export default function DaiichiAdminDashboard() {
     void loadDashboard();
   }, [loadDashboard]);
 
-function openLead(lead: Lead) {
-  setSelectedLead(lead);
-  setNote(lead.admin_note || "");
-  setNextStatus(lead.status);
-  setNotice("");
-}
+  async function loadLeadHistory(leadId: number) {
+    setHistoryLoading(true);
+    setHistoryError("");
+    try {
+      const history = await apiRequest<LeadStatusHistory[]>(
+        `/admin/daiichi/leads/${leadId}/history`,
+      );
+      setLeadHistory(history);
+    } catch (e) {
+      setHistoryError(
+        e instanceof Error ? e.message : "Unable to load lead status history.",
+      );
+    } finally {
+      setHistoryLoading(false);
+    }
+  }
+
+  function openLead(lead: Lead) {
+    setSelectedLead(lead);
+    setNote(lead.admin_note || "");
+    setNextStatus(lead.status);
+    setLeadHistory([]);
+    setNotice("");
+    void loadLeadHistory(lead.id);
+  }
 
   async function updateLead() {
     if (!selectedLead) return;
@@ -177,6 +212,7 @@ function openLead(lead: Lead) {
 
       setSelectedLead(updated);
       setNotice("Lead record updated successfully.");
+      await loadLeadHistory(selectedLead.id);
       await loadDashboard();
     } catch (e) {
       setError(
@@ -276,7 +312,7 @@ function openLead(lead: Lead) {
             <h2 className="font-semibold">Lead Pipeline</h2>
           </div>
 
-          <div className="grid gap-3 grid-cols-2 md:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
             {STATUSES.map((item) => (
               <button
                 type="button"
@@ -527,6 +563,42 @@ function openLead(lead: Lead) {
               </p>
               <p>Source: {selectedLead.source}</p>
             </div>
+
+            <section className="mt-4 rounded-xl border border-white/10 bg-black/10 p-4">
+              <h3 className="text-sm font-semibold">Status History</h3>
+              {historyError ? (
+                <p role="alert" className="mt-3 text-xs text-red-200">
+                  {historyError}
+                </p>
+              ) : historyLoading ? (
+                <p className="mt-3 text-xs text-slate-400">
+                  Loading status history...
+                </p>
+              ) : leadHistory.length ? (
+                <ol className="mt-3 space-y-3">
+                  {leadHistory.map((entry) => (
+                    <li
+                      key={entry.id}
+                      className="border-l border-cyan-300/30 pl-3 text-xs"
+                    >
+                      <p className="text-slate-200">
+                        {entry.from_status} → {entry.to_status}
+                      </p>
+                      <p className="mt-1 text-slate-500">
+                        {new Date(entry.created_at).toLocaleString()}
+                        {entry.actor_user_id
+                          ? ` · Admin #${entry.actor_user_id}`
+                          : ""}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="mt-3 text-xs text-slate-400">
+                  No status changes recorded.
+                </p>
+              )}
+            </section>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <label className="grid gap-2 text-sm text-slate-300">

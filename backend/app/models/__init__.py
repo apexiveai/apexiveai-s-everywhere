@@ -13,7 +13,16 @@ from app.models.marketplace import (
     MarketplaceOrderItem,
     MarketplaceProduct,
 )
-from app.models.daiichi import DaiichiLead, DaiichiAnalyticsEvent
+from app.models.daiichi import (
+    DaiichiLead,
+    DaiichiLeadStatusHistory,
+    DaiichiAnalyticsEvent,
+)
+from app.models.daiichi_campaign import (
+    DaiichiCampaign,
+    DaiichiCampaignAudit,
+)
+from app.models.security_guard import SecurityGuardInquiry
 
 __all__ = [
     "User",
@@ -34,5 +43,9 @@ __all__ = [
     "MarketplaceOrder",
     "MarketplaceOrderItem",
     "DaiichiLead",
+    "DaiichiLeadStatusHistory",
     "DaiichiAnalyticsEvent",
+    "DaiichiCampaign",
+    "DaiichiCampaignAudit",
+    "SecurityGuardInquiry",
 ]

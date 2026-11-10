@@ -9,12 +9,24 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import SuperAdmin
 from app.database import get_db
-from app.models.daiichi import DaiichiAnalyticsEvent, DaiichiLead
+from app.models.daiichi import (
+    DaiichiAnalyticsEvent,
+    DaiichiLead,
+    DaiichiLeadStatusHistory,
+)
 
 
 router = APIRouter(prefix="/admin/daiichi", tags=["Admin - Daiichi Life"])
 
-LeadStatus = Literal["NEW", "CONTACTED", "QUALIFIED", "CONVERTED", "REJECTED"]
+LeadStatus = Literal[
+    "NEW",
+    "CONTACTED",
+    "FOLLOW_UP",
+    "QUALIFIED",
+    "REFERRED",
+    "CONVERTED",
+    "CLOSED_LOST",
+]
 
 
 class LeadStatusUpdate(BaseModel):
@@ -110,9 +122,11 @@ def get_daiichi_analytics(
     for item_status in (
         "NEW",
         "CONTACTED",
+        "FOLLOW_UP",
         "QUALIFIED",
+        "REFERRED",
         "CONVERTED",
-        "REJECTED",
+        "CLOSED_LOST",
     ):
         status_counts[item_status] = (
             db.query(func.count(DaiichiLead.id))
@@ -198,10 +212,54 @@ def update_daiichi_lead_status(
     if not lead:
         raise HTTPException(status_code=404, detail="Lead not found.")
 
+    previous_status = lead.status
     lead.status = payload.status
     lead.admin_note = payload.admin_note
     lead.updated_at = datetime.now(timezone.utc)
 
+    if previous_status != payload.status:
+        db.add(
+            DaiichiLeadStatusHistory(
+                lead_id=lead.id,
+                actor_user_id=admin.id,
+                from_status=previous_status,
+                to_status=payload.status,
+            )
+        )
+
     db.commit()
     db.refresh(lead)
     return lead
+
+
+@router.get("/leads/{lead_id}/history")
+def get_daiichi_lead_status_history(
+    lead_id: int,
+    admin: SuperAdmin,
+    db: Session = Depends(get_db),
+):
+    lead_exists = db.query(DaiichiLead.id).filter(DaiichiLead.id == lead_id).first()
+    if not lead_exists:
+        raise HTTPException(status_code=404, detail="Lead not found.")
+
+    rows = (
+        db.query(DaiichiLeadStatusHistory)
+        .filter(DaiichiLeadStatusHistory.lead_id == lead_id)
+        .order_by(
+            DaiichiLeadStatusHistory.created_at.desc(),
+            DaiichiLeadStatusHistory.id.desc(),
+        )
+        .limit(100)
+        .all()
+    )
+    return [
+        {
+            "id": row.id,
+            "lead_id": row.lead_id,
+            "actor_user_id": row.actor_user_id,
+            "from_status": row.from_status,
+            "to_status": row.to_status,
+            "created_at": row.created_at,
+        }
+        for row in rows
+    ]

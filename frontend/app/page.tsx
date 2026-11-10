@@ -141,6 +141,18 @@ const products = [
     tag: "Operations platform",
     color: "cyan",
   },
+  {
+    id: "09",
+    name: "Paladin Security Guard Services",
+    subtitle: "Professional security services",
+    description:
+      "Compare monthly guard rates by level and request a service quotation.",
+    href: "/security-guards",
+    external: false,
+    icon: ShieldCheck,
+    tag: "Security service",
+    color: "cyan",
+  },
 ];
 
 function EcosystemPreview() {
@@ -173,6 +185,17 @@ function EcosystemPreview() {
           <small>Ideas, people, and projects</small>
         </span>
       </div>
+      <Link
+        href="/security-guards"
+        className="preview-module preview-module-security"
+        aria-label="Explore Paladin security guard services"
+      >
+        <ShieldCheck size={17} />
+        <span>
+          <strong>Security guard services</strong>
+          <small>Professional protection · Monthly rates</small>
+        </span>
+      </Link>
       <span className="preview-caption">Technology designed around people</span>
     </div>
   );

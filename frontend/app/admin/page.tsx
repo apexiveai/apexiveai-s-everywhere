@@ -15,6 +15,7 @@ import {
   Users,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { apiRequest, type PaginatedResponse } from "@/lib/api";
 import TenantOperations from "./TenantOperations";
 import AdminInvoices from "./AdminInvoices";
@@ -370,6 +371,12 @@ export default function AdminPage() {
               </button>
             ),
           )}
+          <Link
+            href="/admin/security-guards"
+            className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-slate-400 transition hover:border-cyan-300/30 hover:text-cyan-200"
+          >
+            Security Guard Inquiries
+          </Link>
         </nav>
 
         {error && (

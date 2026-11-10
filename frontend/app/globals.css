@@ -4665,6 +4665,15 @@ button {
   left: 12%;
 }
 
+.preview-module-security {
+  right: 4%;
+  bottom: 15%;
+}
+
+.preview-module-security:hover {
+  box-shadow: 0 14px 34px rgba(0, 122, 255, 0.18);
+}
+
 .preview-caption {
   position: absolute;
   right: 12px;
@@ -4926,6 +4935,11 @@ button {
     bottom: 10%;
     left: 5%;
   }
+
+  .preview-module-security {
+    right: 3%;
+    bottom: 24%;
+  }
 }
 
 @media (max-width: 520px) {
@@ -4960,6 +4974,11 @@ button {
   .preview-module-community {
     bottom: 7%;
     left: 3%;
+  }
+
+  .preview-module-security {
+    right: 3%;
+    bottom: 24%;
   }
 
   .preview-center-mark {
