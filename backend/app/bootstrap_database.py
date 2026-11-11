@@ -8,6 +8,7 @@ import app.models  # noqa: F401 - Register all SQLAlchemy models
 
 
 BASELINE_MIGRATIONS = (
+    "000_reconcile_core_schema.sql",
     "001_create_invoices.sql",
     "002_create_communication_tables.sql",
 )

@@ -4,21 +4,25 @@ https://cyclone-rpa.vercel.app/
 https://ais-ware-rpq.vercel.app/
 python -c "import secrets; print(secrets.token_urlsafe(48))"
 ## Backend database migrations
-9k4Lp2Vm8X3qR7tY
-The backend Procfile applies pending SQL migrations before starting the API.
-This includes the auction tables required by the marketplace. For a one-time
-manual migration or an existing deployment, run:
+
+The backend uses transactional SQL-file migrations recorded in
+`schema_migrations`. For a new, empty database, bootstrap the model schema once:
 
 ```powershell
 Set-Location backend
+python -m app.bootstrap_database
+```
+
+Then apply pending SQL migrations:
+
+```powershell
 python -m app.migrate
 ```
 
-The migration runner records applied SQL files in `schema_migrations` and does
-not reapply them. Back up the database before applying migrations in production.
-Redeploy/restart the backend after updating its start command so the auction
-migration is applied; the live API currently returns HTTP 500 for the auctions
-list endpoint even though its health endpoint is available.
+The bootstrap verifies that existing tables match the application models and
+refuses partial or unexpected schemas. Back up production data before applying
+migrations. The migration runner records applied SQL files and does not reapply
+them.
 
 ## Billing and access workflow
 

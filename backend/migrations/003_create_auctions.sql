@@ -1,4 +1,4 @@
-CREATE TABLE auctions (
+CREATE TABLE IF NOT EXISTS auctions (
     id SERIAL PRIMARY KEY,
     seller_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(120) NOT NULL,
@@ -8,17 +8,17 @@ CREATE TABLE auctions (
     ends_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-CREATE INDEX ix_auctions_seller_id ON auctions(seller_id);
-CREATE INDEX ix_auctions_ends_at ON auctions(ends_at);
-CREATE INDEX ix_auctions_created_at ON auctions(created_at);
+CREATE INDEX IF NOT EXISTS ix_auctions_seller_id ON auctions(seller_id);
+CREATE INDEX IF NOT EXISTS ix_auctions_ends_at ON auctions(ends_at);
+CREATE INDEX IF NOT EXISTS ix_auctions_created_at ON auctions(created_at);
 
-CREATE TABLE auction_bids (
+CREATE TABLE IF NOT EXISTS auction_bids (
     id SERIAL PRIMARY KEY,
     auction_id INTEGER NOT NULL REFERENCES auctions(id) ON DELETE CASCADE,
     bidder_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     amount NUMERIC(14, 2) NOT NULL CHECK (amount > 0),
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-CREATE INDEX ix_auction_bids_auction_id ON auction_bids(auction_id);
-CREATE INDEX ix_auction_bids_auction_amount ON auction_bids(auction_id, amount);
-CREATE INDEX ix_auction_bids_bidder_id ON auction_bids(bidder_id);
+CREATE INDEX IF NOT EXISTS ix_auction_bids_auction_id ON auction_bids(auction_id);
+CREATE INDEX IF NOT EXISTS ix_auction_bids_auction_amount ON auction_bids(auction_id, amount);
+CREATE INDEX IF NOT EXISTS ix_auction_bids_bidder_id ON auction_bids(bidder_id);

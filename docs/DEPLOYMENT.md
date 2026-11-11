@@ -73,14 +73,31 @@ GET /api/
 The actual API endpoint depends on the application
 router configuration.
 
-## 8. Database Migration
+## 8. Database Initialization and Migration
 
 Take a verified backup before applying
 production database migrations.
 
-Run:
+For a new, empty database, run the schema bootstrap once from the backend
+directory. It creates and verifies the SQLAlchemy model tables, then records
+the matching core SQL migrations as baselined:
 
-bash infrastructure/scripts/migrate.sh
+```bash
+cd backend
+python -m app.bootstrap_database
+```
+
+Then apply pending SQL-file migrations:
+
+```bash
+python -m app.migrate
+```
+
+The application tracks these migrations in `schema_migrations`; this
+repository does not currently use Alembic's `alembic_version` history.
+Do not run the legacy core reconciliation SQL manually against a database
+whose tables already match the current models. The bootstrap refuses partial
+or unexpected schemas instead of dropping or replacing application data.
 
 ## 9. Frontend Deployment
 

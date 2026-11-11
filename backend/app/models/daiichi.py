@@ -89,3 +89,5 @@ Index(
     DaiichiAnalyticsEvent.event_type,
     DaiichiAnalyticsEvent.created_at,
 )
+Index("ix_daiichi_events_event_type", DaiichiAnalyticsEvent.event_type)
+Index("ix_daiichi_events_created_at", DaiichiAnalyticsEvent.created_at)

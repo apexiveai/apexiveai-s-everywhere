@@ -55,6 +55,8 @@ class MarketplaceOrder(Base):
         ),
         Index("ix_marketplace_orders_buyer_created", "buyer_id", "created_at"),
         Index("ix_marketplace_orders_seller_created", "seller_id", "created_at"),
+        Index("ix_marketplace_orders_buyer_id", "buyer_id"),
+        Index("ix_marketplace_orders_seller_id", "seller_id"),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -89,6 +91,8 @@ class MarketplaceOrderItem(Base):
         CheckConstraint(
             "currency IN ('USD', 'MMK')", name="ck_marketplace_order_items_currency"
         ),
+        Index("ix_marketplace_order_items_order_id", "order_id"),
+        Index("ix_marketplace_order_items_product_id", "product_id"),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
