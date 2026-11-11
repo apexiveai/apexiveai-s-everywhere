@@ -1,0 +1,36 @@
+# In Render, set the Blueprint Path to infra/render.yaml.
+services:
+  - type: web
+    name: commu-api
+    runtime: docker
+    region: ohio
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    startCommand: python -m app.migrate && python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: "10000"
+      - key: FRONTEND_URL
+        value: https://www.apexiveai.com
+      - key: CORS_ORIGINS
+        value: https://www.apexiveai.com,https://apexiveai.com
+      - key: CORS_ORIGIN_REGEX
+        value: '^https://apexiveai-s-everywhere-[a-z0-9-]+-apexiveais-projects\.vercel\.app$'
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_ISSUER
+        value: ApexiveAI
+      - key: JWT_AUDIENCE
+        value: apexiveai-solutions
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: "30"
