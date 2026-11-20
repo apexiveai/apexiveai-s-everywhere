@@ -10,6 +10,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   BrainCircuit,
+  Building2,
   ChevronDown,
   CircleDot,
   Code2,
@@ -152,6 +153,18 @@ const products = [
     icon: ShieldCheck,
     tag: "Security service",
     color: "cyan",
+  },
+  {
+    id: "10",
+    name: "ApexiveAI CAD & BIM Suite",
+    subtitle: "CAD · BIM · 3D design",
+    description:
+      "Design, model, and coordinate construction projects in one engineering workspace.",
+    href: getExternalProductUrl(process.env.NEXT_PUBLIC_CAD_BIM_SUITE_URL),
+    external: true,
+    icon: Building2,
+    tag: "Design & engineering",
+    color: "purple",
   },
 ];
 

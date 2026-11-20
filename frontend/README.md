@@ -22,15 +22,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 The home page can link to the separately hosted ApexiveAI RPA Platform,
 Cyclone RPA, MultiVendor Marketplace, Global Marketplace, and Enterprise
-Operations Platform. The dashboard also includes links to the Workforce Payroll
-SaaS and MultiVendor Marketplace. Configure these frontend environment variables
-with each app's deployed HTTP or HTTPS URL:
+Operations Platform, and CAD & BIM Suite. The dashboard also includes links to
+the Workforce Payroll SaaS and MultiVendor Marketplace. Configure these frontend
+environment variables with each app's deployed HTTP or HTTPS URL:
 
 - `NEXT_PUBLIC_RPA_PLATFORM_URL`
 - `NEXT_PUBLIC_CYCLONE_RPA_URL`
 - `NEXT_PUBLIC_MULTIVENDOR_MARKETPLACE_URL`
 - `NEXT_PUBLIC_GLOBAL_MARKETPLACE_URL`
 - `NEXT_PUBLIC_ENTERPRISE_OPERATIONS_PLATFORM_URL`
+- `NEXT_PUBLIC_CAD_BIM_SUITE_URL`
 - `NEXT_PUBLIC_WORKFORCE_PAYROLL_URL`
 
 If a URL is missing or invalid, its product card remains visible but cannot be
