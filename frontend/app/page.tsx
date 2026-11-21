@@ -144,7 +144,7 @@ const products = [
   },
   {
     id: "09",
-    name: "Paladin Security Guard Services",
+    name: "Security Guard Services",
     subtitle: "Professional security services",
     description:
       "Compare monthly guard rates by level and request a service quotation.",
