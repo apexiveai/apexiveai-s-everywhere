@@ -20,6 +20,7 @@ export type CommunitySection = {
 export const governmentPublicSectorNavItems = [
   { label: "Public Safety", href: "/public-safety" },
   { label: "Energy OS", href: "/energy-os" },
+  { label: "Space & Satellite OS", href: "/space-satellite-os" },
   {
     label: "Defense Enterprise Suite",
     href:
@@ -36,6 +37,8 @@ const governmentProductDescriptions: Record<string, string> = {
     "Explore ApexiveAI Public Safety within the Government & Public Sector portfolio.",
   "Energy OS":
     "Explore ApexiveAI Energy OS within the Government & Public Sector portfolio.",
+  "Space & Satellite OS":
+    "National space infrastructure, satellite operations, and earth-observation management.",
   "Defense Enterprise Suite":
     "Explore ApexiveAI Defense Enterprise Suite within the Government & Public Sector portfolio.",
   "Municipal OS":
@@ -669,6 +672,107 @@ export const communitySections = {
               "Public reports, electricity statistics, environmental disclosures, and announcements.",
             image:
               "https://images.openai.com/static-rsc-4/K_xMNXw8HcckFjZgikGgEo6BuYPVxDbq8cC_WRRmYibBLUoTdUhDZ3E5HkcWseEdWXJYQmiu57Ia76um9F1NLhczHW-bRE5MLUtqoyKsK9egj3LLgZECEl2-sy3BDLZ4ey7-Iqwt1CgTCtiJ02wsB3T8TLeXiKtuL0MlW93Mhng?purpose=inline",
+          },
+        ],
+      },
+    ],
+  },
+  "space-satellite-os": {
+    title: "ApexiveAI Space & Satellite OS",
+    eyebrow: "National Space Infrastructure",
+    description:
+      "National space infrastructure, satellite operations, and earth-observation management.",
+    heroImage:
+      "https://images.openai.com/static-rsc-4/owUvzza4Se8kNZUm8YlGwft0gh_1I4B5wttL2r_sVFf0ofwejafmyCdref_c-Uih9EygYbTDwWJpIqOiGbCKQuUlIvOn_eMip34XX0TQDwwau1Y4OzHDYEOm2pBcoHOxNqrUwzmTM1eG0DBgL3FswHUiw8g-jL_QTszNkBYjraU?purpose=inline",
+    groups: [
+      {
+        title: "Satellite OS — Core Modules",
+        description:
+          "Core capabilities for satellite operations, earth observation, communications, sustainability, and cooperation.",
+        items: [
+          {
+            title: "Satellite Fleet Management",
+            description:
+              "Satellite inventory, ownership, type, lifecycle, and mission status management.",
+            image:
+              "https://images.openai.com/static-rsc-4/HOxShQYPldjhke5t4tnR9aeW7JaUbU5xPF5uHH0x_d7HyWc1NT4yehCnaah0wntnRnlJLP-XSpHjjcqEo3PrebG3mDvrVon_HdTm74lvubz8Oj4UBZ64YSH3n9U40wIzLY2HwWQYQbvP97hp4SdNkjFNQsmJ4zXgIPA9HlBASk8?purpose=inline",
+          },
+          {
+            title: "Ground Station Management",
+            description:
+              "Ground stations, communications infrastructure, and facility records.",
+            image:
+              "https://images.openai.com/static-rsc-4/8QqvR4IdCdQxe02iFXpdRDkqaHcxu7rmy7SpRZRuyPWCJ02Q4Hlsj1DmFAJTXlSjDaZm1y3Ht7tis4vKYOd8nCyOw06k4UAw9570rPwSzLBQ1fhsxU1b9tHeelNKlliPTVGywKa4woox5Q5-0sOI2R0NrK0XPJtULcFZs_WJ5Xw?purpose=inline",
+          },
+          {
+            title: "Mission Management",
+            description:
+              "Mission lifecycle, project milestones, mission documentation, and status tracking.",
+            image:
+              "https://images.openai.com/static-rsc-4/IWRUEsWUYnxUqc5DD7nFQOGImUw2VjCHwIJn667PWSW4ECbQdDx2qP2OGwqpEyhTQopVMRu1LtWp7zBLvA-q_xNJnrnki6c3dh_W8MKIXHwioZ-aqeDDjXLAI-teUOGnGYEJhNWkirA_0Rphl3Vqee4kbZ84BYlcTVe2u0F2ri0?purpose=inline",
+          },
+          {
+            title: "Earth Observation & Remote Sensing",
+            description:
+              "Agriculture, forestry, flood, land-use, and environmental monitoring.",
+            image:
+              "https://images.openai.com/static-rsc-4/-Oe7B8wbn-GIuOVu-9phFYJDK1twUOq6yqnwHGEZX_jMNysEXAU_Es2gqxbQL9__Xw7Wqb1h1eAZ01ejkEQ6fJITO49_TD-YM24VL5_aD1XPQnn_SC5TEgbmjSGWDiNvbEfWYUA2Vj2_zvdxmoCRmCr-YZ_dpK9QVC_vOZlIdbs?purpose=inline",
+          },
+          {
+            title: "Satellite Telecommunications",
+            description:
+              "Satellite internet, broadband, remote connectivity, and telecom service management.",
+            image:
+              "https://images.openai.com/static-rsc-4/W6TI7khuBK9x0-KILLX6GfEiCcwuO3v_FKX4MtoR8iFubNcqPscJYOq4hQgM812qTjnF4WOqYDkb_jnHCVvyAE_9xpfrP02uZ8vKcUo4dMEwaypfXp6GXcYNXRovQ7RnugVO6ONk3dDw8Z5JcIJc3LUIKfz1wHdeaFs13Dgkv5A?purpose=inline",
+          },
+          {
+            title: "Navigation & Positioning Services",
+            description:
+              "GNSS data services, mapping integration, and positioning service governance.",
+            image:
+              "https://images.openai.com/static-rsc-4/eAF0qjxJBQ2trYwEchWXbamhh2h52DlFH4u7_d-4kzUgF2la0QQdlFujO25Y15bOVWcBDGUsMCmtGayLAIZsCcerspFnMRf0ISv7kEizyms5YJ26ZH4cWfJCDbKmihkZIBolYvlBcpC0Log?purpose=inline",
+          },
+          {
+            title: "Satellite Data Intelligence",
+            description:
+              "Imagery repository, data analytics, AI image classification, and reporting.",
+            image:
+              "https://images.openai.com/static-rsc-4/vR5rb8C5TfmM_TiNS_H6Y7oJs6U5V4f7NL2HpH9moO2p-1kS156EcYDj3eTKiz9o9usw5aDRwhIpPtCOAs8OYRkn3fWuf7YF5j1rf2e7NIu4k875cJRulJJQSiCdiJNUWWqInHPHOszBCp3KAigapjS4HexR01kxp06ZCGBY5HE?purpose=inline",
+          },
+          {
+            title: "Weather & Climate Monitoring",
+            description:
+              "Weather, climate change, storm, and climate-related data monitoring.",
+            image:
+              "https://images.openai.com/static-rsc-4/kzusR-8fNrHtXV8I0Gs8tWY21N6URuhloIlWf3RCgwOWjsTArKjeOJlRkg9tvn7AfzosZIIc9GSzp7pJXkVLYmX6ZC_JM_WPpPr8EIj7s6fmGegMexau2BE0gs-5tn-wccpA_SFr649DK2gkJM0BN7rKiJHZgXKsZgCYdqsgoTE?purpose=inline",
+          },
+          {
+            title: "Disaster Monitoring & Response",
+            description:
+              "Flood, wildfire, landslide, and natural-disaster observation and reporting.",
+            image:
+              "https://images.openai.com/static-rsc-4/c36dYdbSKx460lSu4hCJEAoJ-EuuYtumYpa_lsmo7ZUv8b8tMYPK_AAn413LF2F48fWjmw9TbpJqzGQ-e4wYGELxcbmXMxrne4Be9k3k-2U1yONUROqpPPzx6J39plq75lqaP6oFtqDUSOQabCna5__nU0o27kzvWtlg-6R4hM8?purpose=inline",
+          },
+          {
+            title: "Space Sustainability & Compliance",
+            description:
+              "Space debris awareness, orbital sustainability records, and international compliance.",
+            image:
+              "https://images.openai.com/static-rsc-4/MPIaZH5XDic8NLpjIBx-Ky48XM5SrtYYkhe_vi-1k1znnsotVo53vV5sSRlrrkuvRg0C09TZzYqHgYzcpNf_h5s6zIKo1ngmZfq07vddr9Vo_K3Si1sfCuvFZv3rBwxUoDYCWEcWg4Kwv9q4HkHjKRDNPh590NMheoVCi2FmQF4?purpose=inline",
+          },
+          {
+            title: "Space Research & Education",
+            description:
+              "Research projects, universities, scientific publications, and workforce training.",
+            image:
+              "https://images.openai.com/static-rsc-4/ZW4Kf2LmJX-uTX4LM_AEE7zss6KTHH4xUdK8GU3kSHpTK4zZhUHa0V1WQkCUjVvFEQs8q8tRSMDqTS5LieoPu3qnRuiwdP1wCW8Mb-mBGlFgp9g2uoVj69TpT2chZ9DIBbo5w3ZqVBmA9CSlsvIvdMeDynpj21SWeWsWcyi20e8?purpose=inline",
+          },
+          {
+            title: "International Space Cooperation",
+            description:
+              "International partnerships, satellite data-sharing agreements, and collaboration records.",
+            image:
+              "https://images.openai.com/static-rsc-4/owUvzza4Se8kNZUm8YlGwft0gh_1I4B5wttL2r_sVFf0ofwejafmyCdref_c-Uih9EygYbTDwWJpIqOiGbCKQuUlIvOn_eMip34XX0TQDwwau1Y4OzHDYEOm2pBcoHOxNqrUwzmTM1eG0DBgL3FswHUiw8g-jL_QTszNkBYjraU?purpose=inline",
           },
         ],
       },

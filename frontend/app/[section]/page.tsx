@@ -6,6 +6,8 @@ import {
   type CommunitySectionSlug,
 } from "../../lib/community";
 
+export const instant = false;
+
 function isCommunitySection(
   section: string,
 ): section is CommunitySectionSlug {
