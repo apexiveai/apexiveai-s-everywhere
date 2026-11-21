@@ -18,7 +18,12 @@ export type CommunitySection = {
 export const governmentPublicSectorNavItems = [
   { label: "Public Safety", href: "/public-safety" },
   { label: "Energy OS", href: "/energy-os" },
-  { label: "Defense Enterprise Suite", href: "/defense-enterprise-suite" },
+  {
+    label: "Defense Enterprise Suite",
+    href:
+      process.env.NEXT_PUBLIC_DEFENSE_ENTERPRISE_SUITE_URL ??
+      "http://127.0.0.1:5173",
+  },
   { label: "Municipal OS", href: "/municipal-os" },
   { label: "Police Citizen Connect", href: "/police-citizen-connect" },
   { label: "Security Guards", href: "/security-guards" },
