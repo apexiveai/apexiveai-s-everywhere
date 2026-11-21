@@ -32,6 +32,10 @@ from app.api.daiichi_campaigns import (
     admin_router as admin_daiichi_campaigns_router,
 )
 
+from app.api.ai.conversations import router as ai_conversations_router
+from app.api.ai.chat import router as ai_chat_router
+from app.api.ai.models import router as ai_models_router
+
 logger = logging.getLogger("uvicorn.error")
 
 
@@ -90,6 +94,21 @@ app.include_router(daiichi_campaigns_router, prefix="/api")
 app.include_router(admin_daiichi_campaigns_router, prefix="/api")
 app.include_router(security_guards_router, prefix="/api")
 app.include_router(admin_security_guards_router, prefix="/api")
+app.include_router(
+    ai_conversations_router,
+    prefix=settings.API_PREFIX,
+)
+
+app.include_router(
+    ai_chat_router,
+    prefix=settings.API_PREFIX,
+)
+
+app.include_router(
+    ai_models_router,
+    prefix=settings.API_PREFIX,
+)
+
 
 @app.get("/health", include_in_schema=False)
 def health():

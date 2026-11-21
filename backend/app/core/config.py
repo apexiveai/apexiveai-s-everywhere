@@ -45,6 +45,28 @@ class Settings(BaseSettings):
     LICENSE_SECRET_KEY: str = ""
     LICENSE_ISSUER: str = "ApexiveAI"
 
+        # AI Agent
+    AI_ENABLED: bool = True
+    AI_DEFAULT_PROVIDER: str = "cloud"
+
+    AI_CLOUD_BASE_URL: str = ""
+    AI_CLOUD_API_KEY: str = ""
+    AI_CLOUD_MODEL: str = ""
+
+    AI_LOCAL_BASE_URL: str = "http://127.0.0.1:11434/v1"
+    AI_LOCAL_API_KEY: str = ""
+    AI_LOCAL_MODEL: str = ""
+
+    AI_REQUEST_TIMEOUT: int = 120
+    AI_MAX_TOKENS: int = 4096
+    AI_TEMPERATURE: float = 0.7
+
+    AI_PUBLIC_ACCESS_ENABLED: bool = True
+    AI_TENANT_ACCESS_ENABLED: bool = True
+
+    AI_MAX_MESSAGE_LENGTH: int = 20000
+    AI_MAX_HISTORY_MESSAGES: int = 30
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

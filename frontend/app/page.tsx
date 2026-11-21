@@ -295,7 +295,7 @@ export default function HomePage() {
   ];
 
   const navItemsAfterExplore = [
-    { label: "About us", href: "/#about" },
+    { label: "About us", href: "/about-us" },
     { label: FONT.resources, href: "/resources" },
   ];
 
@@ -512,56 +512,6 @@ export default function HomePage() {
       </section>
 
 <DaiichiPartnerSection />
-
-      <section className="about-section" id="about" aria-labelledby="about-title">
-        <div className="about-heading">
-          <div className="section-kicker">
-            <span>01</span>
-            <span>Who we are</span>
-          </div>
-          <h2 id="about-title">
-            Technology built around
-            <br />
-            real business problems.
-          </h2>
-          <p>
-            APEXIVEAI COMPANY LIMITED is an AI and technology company focused
-            on building practical intelligent systems for organizations that
-            want to work faster, operate smarter, and compete in a rapidly
-            changing digital world.
-          </p>
-        </div>
-
-        <div className="about-grid">
-          <article className="about-card">
-            <span className="about-card-number">01 / Artificial intelligence</span>
-            <h3>AI &amp; Intelligent Agents</h3>
-            <p>
-              Artificial intelligence solutions designed to automate work,
-              process information, support decisions, and create intelligent
-              digital capabilities for organizations.
-            </p>
-          </article>
-
-          <article className="about-card">
-            <span className="about-card-number">02 / Software engineering</span>
-            <h3>Modern Software Systems</h3>
-            <p>
-              Web applications, enterprise platforms, APIs, databases,
-              dashboards, backend systems, and scalable digital architectures.
-            </p>
-          </article>
-
-          <article className="about-card">
-            <span className="about-card-number">03 / Digital transformation</span>
-            <h3>Business Transformation</h3>
-            <p>
-              Transforming manual and disconnected workflows into connected,
-              automated, data-driven, and intelligent business operations.
-            </p>
-          </article>
-        </div>
-      </section>
 
       <section className="platform-section">
         <div className="section-heading">

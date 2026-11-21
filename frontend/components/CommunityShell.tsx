@@ -49,7 +49,7 @@ const mainNavigation: NavigationItem[] = [
     label: "Government & Public Sector",
     items: governmentPublicSectorNavItems,
   },
-  { label: "About us", href: "/#about" },
+  { label: "About us", href: "/about-us" },
   { label: "Search", href: "/search" },
   { label: "My Products", href: "/workspace" },
   { label: "Invoices", href: "/billing" },
@@ -187,7 +187,7 @@ export default function CommunityShell({
         </div>
       </header>
 
-      <div className="ac-main">
+      <div className={`ac-main${pathname === "/about-us" ? " ac-main-about" : ""}`}>
         <div className="ac-page-content">{children}</div>
         <footer className="ac-footer">
           <div className="ac-footer-copy">

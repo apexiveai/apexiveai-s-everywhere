@@ -13,6 +13,11 @@ from app.models.marketplace import (
     MarketplaceOrderItem,
     MarketplaceProduct,
 )
+
+from app.models.ai_conversation import AIConversation
+from app.models.ai_message import AIMessageRecord
+from app.models.ai_usage import AIUsage
+
 from app.models.daiichi import (
     DaiichiLead,
     DaiichiLeadStatusHistory,
@@ -48,4 +53,7 @@ __all__ = [
     "DaiichiCampaign",
     "DaiichiCampaignAudit",
     "SecurityGuardInquiry",
+    "AIConversation",
+    "AIMessageRecord",
+    "AIUsage",
 ]

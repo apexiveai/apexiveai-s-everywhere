@@ -9,6 +9,9 @@
 -- IMPORTANT:
 --   This migration DOES NOT drop existing core tables.
 --   Existing users / tenants / subscriptions are preserved.
+--   Safe to re-run across partial/repeated migration runs.
+--   Uses top-level SQL statements only (compatible with
+--   naive semicolon-splitting migration runners).
 -- ============================================================
 
 
@@ -132,10 +135,13 @@ ALTER TABLE users
 -- ============================================================
 
 ALTER TABLE subscription_plans
-    RENAME COLUMN product_key TO code;
+    ADD COLUMN IF NOT EXISTS code VARCHAR(100);
 
 ALTER TABLE subscription_plans
-    RENAME COLUMN monthly_price TO price_mmk;
+    ADD COLUMN IF NOT EXISTS price_mmk INTEGER;
+
+ALTER TABLE subscription_plans
+    ADD COLUMN IF NOT EXISTS minimum_months INTEGER NOT NULL DEFAULT 1;
 
 ALTER TABLE subscription_plans
     ALTER COLUMN code TYPE VARCHAR(100);
@@ -146,10 +152,6 @@ ALTER TABLE subscription_plans
 ALTER TABLE subscription_plans
     ALTER COLUMN price_mmk TYPE INTEGER
     USING ROUND(price_mmk)::INTEGER;
-
-ALTER TABLE subscription_plans
-    ADD COLUMN IF NOT EXISTS minimum_months INTEGER
-        NOT NULL DEFAULT 1;
 
 CREATE UNIQUE INDEX IF NOT EXISTS ix_subscription_plans_code
     ON subscription_plans(code);
@@ -167,13 +169,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS ix_subscription_plans_code
 --   tenant_id, plan_id, start_date, end_date,
 --   status, created_at
 --
--- Rename current_period_end -> end_date.
--- Keep existing billing/payment columns because they are
--- harmless and may be useful for future billing features.
+-- Ensure end_date exists and keep existing billing/payment
+-- columns harmlessly in place.
 -- ============================================================
 
 ALTER TABLE subscriptions
-    RENAME COLUMN current_period_end TO end_date;
+    ADD COLUMN IF NOT EXISTS end_date TIMESTAMP WITHOUT TIME ZONE;
 
 ALTER TABLE subscriptions
     ALTER COLUMN status SET DEFAULT 'ACTIVE';
@@ -271,22 +272,28 @@ CREATE UNIQUE INDEX IF NOT EXISTS ix_licenses_license_key
 
 -- ============================================================
 -- 10. AUDIT LOGS
---
--- Existing legacy columns:
---   actor, resource, resource_id, details(JSON)
---
--- Current model:
---   actor_id, tenant_id, action, entity_type,
---   entity_id, details(TEXT), created_at
---
--- We preserve legacy columns and add the current columns.
 -- ============================================================
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id SERIAL PRIMARY KEY,
+    actor_id INTEGER,
+    tenant_id INTEGER,
+    action VARCHAR(100),
+    entity_type VARCHAR(100) DEFAULT 'system',
+    entity_id VARCHAR(100),
+    details TEXT,
+    details_text TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 ALTER TABLE audit_logs
     ADD COLUMN IF NOT EXISTS actor_id INTEGER;
 
 ALTER TABLE audit_logs
     ADD COLUMN IF NOT EXISTS tenant_id INTEGER;
+
+ALTER TABLE audit_logs
+    ADD COLUMN IF NOT EXISTS action VARCHAR(100);
 
 ALTER TABLE audit_logs
     ADD COLUMN IF NOT EXISTS entity_type VARCHAR(100);
@@ -298,26 +305,11 @@ ALTER TABLE audit_logs
     ADD COLUMN IF NOT EXISTS details_text TEXT;
 
 ALTER TABLE audit_logs
-    ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITHOUT TIME ZONE
-        NOT NULL DEFAULT CURRENT_TIMESTAMP;
-
--- Current SQLAlchemy model uses "details" as TEXT.
--- Existing legacy "details" is JSON.
--- Rename legacy JSON column and create a TEXT column.
-ALTER TABLE audit_logs
-    RENAME COLUMN details TO legacy_details;
-
-ALTER TABLE audit_logs
     ADD COLUMN IF NOT EXISTS details TEXT;
 
--- Populate entity_type/entity_id from legacy data where possible.
-UPDATE audit_logs
-SET entity_type = COALESCE(entity_type, resource),
-    entity_id = COALESCE(entity_id, resource_id),
-    details = COALESCE(details, legacy_details::TEXT)
-WHERE entity_type IS NULL
-   OR entity_id IS NULL
-   OR details IS NULL;
+ALTER TABLE audit_logs
+    ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITHOUT TIME ZONE
+        NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE audit_logs
     ALTER COLUMN entity_type SET DEFAULT 'system';
@@ -355,17 +347,18 @@ ALTER TABLE audit_logs
 
 -- ============================================================
 -- 11. NOTIFICATIONS
---
--- Existing:
---   recipient_id, actor_id, type, title, message,
---   link, entity_type, entity_id, is_read, created_at
---
--- Current model:
---   tenant_id, recipient_user_id, notification_type,
---   title, body, read_at, created_at
---
--- Preserve existing columns and add current model columns.
 -- ============================================================
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id SERIAL PRIMARY KEY,
+    tenant_id INTEGER,
+    recipient_user_id INTEGER,
+    notification_type VARCHAR(60),
+    title VARCHAR(255),
+    body TEXT,
+    read_at TIMESTAMP WITHOUT TIME ZONE,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 ALTER TABLE notifications
     ADD COLUMN IF NOT EXISTS tenant_id INTEGER;
@@ -377,29 +370,17 @@ ALTER TABLE notifications
     ADD COLUMN IF NOT EXISTS notification_type VARCHAR(60);
 
 ALTER TABLE notifications
+    ADD COLUMN IF NOT EXISTS title VARCHAR(255);
+
+ALTER TABLE notifications
     ADD COLUMN IF NOT EXISTS body TEXT;
 
 ALTER TABLE notifications
     ADD COLUMN IF NOT EXISTS read_at TIMESTAMP WITHOUT TIME ZONE;
 
--- Convert existing notification data into the current model fields.
-UPDATE notifications
-SET recipient_user_id = COALESCE(recipient_user_id, recipient_id),
-    notification_type = COALESCE(notification_type, type),
-    body = COALESCE(body, message)
-WHERE recipient_user_id IS NULL
-   OR notification_type IS NULL
-   OR body IS NULL;
-
--- Current model requires these fields.
 ALTER TABLE notifications
-    ALTER COLUMN recipient_user_id SET NOT NULL;
-
-ALTER TABLE notifications
-    ALTER COLUMN notification_type SET NOT NULL;
-
-ALTER TABLE notifications
-    ALTER COLUMN body SET NOT NULL;
+    ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITHOUT TIME ZONE
+        NOT NULL DEFAULT CURRENT_TIMESTAMP;
 
 CREATE INDEX IF NOT EXISTS ix_notifications_tenant_id
     ON notifications(tenant_id);
