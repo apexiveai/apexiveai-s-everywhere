@@ -49,6 +49,7 @@ const mainNavigation: NavigationItem[] = [
     label: "Government & Public Sector",
     items: governmentPublicSectorNavItems,
   },
+  { label: "About us", href: "/#about" },
   { label: "Search", href: "/search" },
   { label: "My Products", href: "/workspace" },
   { label: "Invoices", href: "/billing" },
