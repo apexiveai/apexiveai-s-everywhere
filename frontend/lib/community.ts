@@ -5,6 +5,7 @@ export type CommunityGroup = {
     title: string;
     description: string;
     href?: string | null;
+    image?: string;
   }[];
 };
 
@@ -12,6 +13,7 @@ export type CommunitySection = {
   title: string;
   eyebrow: string;
   description: string;
+  heroImage?: string;
   groups: CommunityGroup[];
 };
 
@@ -571,10 +573,107 @@ export const communitySections = {
     "Public Safety",
     governmentProductDescriptions["Public Safety"],
   ),
-  "energy-os": governmentProductSection(
-    "Energy OS",
-    governmentProductDescriptions["Energy OS"],
-  ),
+  "energy-os": {
+    title: "Energy OS",
+    eyebrow: "Nuclear Energy Operating System",
+    description:
+      "A unified operating platform for national nuclear energy governance, operations, safety, workforce, and public transparency.",
+    heroImage:
+      "https://images.openai.com/static-rsc-4/K_xMNXw8HcckFjZgikGgEo6BuYPVxDbq8cC_WRRmYibBLUoTdUhDZ3E5HkcWseEdWXJYQmiu57Ia76um9F1NLhczHW-bRE5MLUtqoyKsK9egj3LLgZECEl2-sy3BDLZ4ey7-Iqwt1CgTCtiJ02wsB3T8TLeXiKtuL0MlW93Mhng?purpose=inline",
+    groups: [
+      {
+        title: "Nuclear Management Modules",
+        description:
+          "Connected capabilities for planning, oversight, operations, compliance, and public information.",
+        items: [
+          {
+            title: "Nuclear Energy Dashboard",
+            description:
+              "National energy statistics, project status, and power-generation reports.",
+            image:
+              "https://images.openai.com/static-rsc-4/kNXrbsr-Yw6F1ax8x0GPUAGAbVZ0XsnhJYSrCrxKaASUDIUdftZZ7gCvBBG5Gkm5cOhCDpehCNbRD_N06yJikLQE-fsyHUhdtHmDZv_vusHsQO1XlDZ0MDIiN97CAq5ZDq7t0dTwkZXT6BepYPTRCmwWnh7Upw1YvxKEYh_2AEw?purpose=inline",
+          },
+          {
+            title: "Nuclear Project Management",
+            description:
+              "Project planning, milestones, budgets, contractors, and approvals.",
+            image:
+              "https://images.openai.com/static-rsc-4/nIyRcicL6kridT5_3gAv3Mf4N-ShrQGNGN4PNtS6F8Nl4PQwymtVgeA07UkRPpJU-64iOQTwppMOT9a_Q5f7Uzx5ujVmoxgoapXao0Ak0sxeDSWYH3wlv2GUaL7nqSEdYJtoZPzhxGaUgmAH0rx8kkrnBlM2euIbkCBEhocB6mU?purpose=inline",
+          },
+          {
+            title: "Regulatory & Licensing Management",
+            description:
+              "Government permits, regulatory reviews, inspections, and compliance records.",
+            image:
+              "https://images.openai.com/static-rsc-4/K_xMNXw8HcckFjZgikGgEo6BuYPVxDbq8cC_WRRmYibBLUoTdUhDZ3E5HkcWseEdWXJYQmiu57Ia76um9F1NLhczHW-bRE5MLUtqoyKsK9egj3LLgZECEl2-sy3BDLZ4ey7-Iqwt1CgTCtiJ02wsB3T8TLeXiKtuL0MlW93Mhng?purpose=inline",
+          },
+          {
+            title: "Electricity Generation Management",
+            description:
+              "Generation statistics, grid integration, and electricity supply reporting.",
+            image:
+              "https://images.openai.com/static-rsc-4/o9WybvzgCzsq8UImxVIemWIf4jOrb4bWuwT1w4qOQ_5xFLkuV3fHOGGWR8UtlDgWkCYCIaC86wk3CR5oho374Q9Jl1vEc3QGrKqH4rqe8zAjMKeKj1gsumfmpwxJfFLTYQdsLm2fEELjcbjmPyAGm6W-STMMXLyeDWtvWEKn3To?purpose=inline",
+          },
+          {
+            title: "Nuclear Safety & Compliance",
+            description:
+              "Safety audits, corrective actions, inspection records, and safety indicators.",
+            image:
+              "https://images.openai.com/static-rsc-4/EsXu22g_oBWqp1psSMYwZ93WF8jk-33o1r0PPPmuYdi0nO9yaF5V2fYtuEzzv9LNp8ULk1qs_GIiE0PoLuHs-Wlrc_oG0qkwM3T6dUKoEb7m1sYvOBzlIbDklbJ6v66jsoUB19-wUDHEJ0Y?purpose=inline",
+          },
+          {
+            title: "Radiation & Environmental Monitoring",
+            description:
+              "Authorized monitoring data, environmental reports, and radiation protection records.",
+            image:
+              "https://images.openai.com/static-rsc-4/v-OMt2z72pCS1sNJpnCnLVs-yCWFdP_OyVbqDvqLCjjLXEjnoSeRigdWLzWEHD92HE_-BVJOtFSpKFq6CDRc81yPiswZ0DYZ9ar7iFIMGVTNlt3engHJJXLIKDBng6qiFVJ2WJ9ZHvAlEuiVp0_fLbOXozannzZT7MF78ncbVoo?purpose=inline",
+          },
+          {
+            title: "Emergency Preparedness & Response",
+            description:
+              "Emergency plans, drills, notifications, and incident coordination.",
+            image:
+              "https://images.openai.com/static-rsc-4/SOZ_bdFq2-DPI2V6hxVPl1oOoT9NPQtDgDAMYPY0egCA2uw7Z87bLXpQ07XmboAQGDwd7sKFz7NqA34woINHaEkK0L1ASpAkOR2shKc1052rz6pPXLKroQh4DWMZ4tzLttSnG7-YnPihzgi4zHTe0zm8QCP4rRNVlrvZnFBD6QI?purpose=inline",
+          },
+          {
+            title: "Radioactive Waste Governance",
+            description:
+              "Waste inventory records, licensed facilities, compliance, and disposal documentation.",
+            image:
+              "https://images.openai.com/static-rsc-4/HzMb23sqzu9MBfdqppRQKwlzvTj31ySllUbAEISSMyQZ1odIAFFK8qMOe9UI646y_fHD6Tz5UuSkxVSvLtCWgO1Rn5L_LLSCA5KANbqU791O9OjyvjWsso6Tjy3tdM1bvtvzi8s0x5h1A25EY9XSaeAFf_pgXqHPKyIokY1M5uc?purpose=inline",
+          },
+          {
+            title: "Workforce & Training Management",
+            description:
+              "Staff qualifications, training, certifications, and competency records.",
+            image:
+              "https://images.openai.com/static-rsc-4/nEgIcl008Ik8vbHyMtrv_40aviljFiZ5gr8AMbHCwFLzTLagzo8969H-8ES10E4RxCLRcyBYdrqdmlrNXNEmYBlz1NCK1lLM1zxZNanScbLNgtXy3DT2uTPIEjcMGLZAHlDa3u73TJaopOehbnncNYiSUmEquudqlA8QaxrxsUY?purpose=inline",
+          },
+          {
+            title: "Procurement & Financial Management",
+            description:
+              "Procurement approvals, project finance, supplier contracts, and expenditure tracking.",
+            image:
+              "https://images.openai.com/static-rsc-4/4mr7Szi_tcuJuhi8y0Fl0a5jirhJCRhWknO9UJOY4lG7tIyIV5G8aCiuR-HCK0JnbvUJNZCrfh8i5l6cxsjL4k8NVW0cTuhdxNu1H3TS9CcuuQzq1nSZ3anLzKaJWa_QEU3y0D_ww8I3URpal7ksPyW0U3JuOG7Sh5WTAeXAYgk?purpose=inline",
+          },
+          {
+            title: "Nuclear Research & Knowledge Center",
+            description:
+              "Research publications, approved technical documents, education, and collaboration.",
+            image:
+              "https://images.openai.com/static-rsc-4/MDJja5bqyPVSfilPmenq6y3k5auVtQtlS2rHJ5TtjRy-PRY-gaawhbA_Z4KxkAwsEXVjcKsMyU08ynl_r4gk9uTtDrH_1J8qqC5Tl20ffe1m0gT18Zh6ncH4xYXcEUpxdvNxvScIpvptAbUlMSK1aAgcFIIdu7mbW5BXUOY1-_I?purpose=inline",
+          },
+          {
+            title: "Public Information & Transparency",
+            description:
+              "Public reports, electricity statistics, environmental disclosures, and announcements.",
+            image:
+              "https://images.openai.com/static-rsc-4/K_xMNXw8HcckFjZgikGgEo6BuYPVxDbq8cC_WRRmYibBLUoTdUhDZ3E5HkcWseEdWXJYQmiu57Ia76um9F1NLhczHW-bRE5MLUtqoyKsK9egj3LLgZECEl2-sy3BDLZ4ey7-Iqwt1CgTCtiJ02wsB3T8TLeXiKtuL0MlW93Mhng?purpose=inline",
+          },
+        ],
+      },
+    ],
+  },
   "defense-enterprise-suite": governmentProductSection(
     "Defense Enterprise Suite",
     governmentProductDescriptions["Defense Enterprise Suite"],

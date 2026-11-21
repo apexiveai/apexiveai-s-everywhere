@@ -3667,6 +3667,26 @@ button {
   transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
 }
 
+.ac-feature-card-image {
+  height: 112px;
+  margin: -18px -18px 14px;
+  border-bottom: 1px solid rgba(29, 29, 31, 0.08);
+  border-radius: 17px 17px 0 0;
+  background-position: center;
+  background-size: cover;
+}
+
+.ac-feature-hero.has-image {
+  border-color: transparent;
+  color: #fff;
+}
+
+.ac-feature-hero.has-image .ac-page-title,
+.ac-feature-hero.has-image .ac-page-description,
+.ac-feature-hero.has-image .ac-eyebrow {
+  color: #fff;
+}
+
 .ac-feature-card::before {
   position: absolute;
   top: 0;

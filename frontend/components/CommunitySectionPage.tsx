@@ -32,6 +32,8 @@ export default function CommunitySectionPage({
   section: CommunitySectionSlug;
 }) {
   const content = communitySections[section];
+  const heroImage =
+    "heroImage" in content ? content.heroImage : undefined;
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<SearchCategory>("all");
 
@@ -50,7 +52,18 @@ export default function CommunitySectionPage({
 
   return (
     <div className="ac-feature-page ac-animate-in">
-      <section className="ac-hero ac-feature-hero">
+      <section
+        className={`ac-hero ac-feature-hero${heroImage ? " has-image" : ""}`}
+        style={
+          heroImage
+            ? {
+                backgroundImage: `linear-gradient(90deg, rgba(5, 12, 28, 0.94) 0%, rgba(5, 12, 28, 0.72) 58%, rgba(5, 12, 28, 0.25) 100%), url("${heroImage}")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : undefined
+        }
+      >
         <div className="ac-hero-content">
           <span className="ac-eyebrow">{content.eyebrow}</span>
           <h1 className="ac-page-title">
@@ -229,6 +242,13 @@ export default function CommunitySectionPage({
                   const href = "href" in item ? item.href : null;
                   const cardContent = (
                     <>
+                      {"image" in item && item.image && (
+                        <div
+                          className="ac-feature-card-image"
+                          style={{ backgroundImage: `url("${item.image}")` }}
+                          aria-hidden="true"
+                        />
+                      )}
                       <div className="ac-feature-card-top">
                         <span className="ac-feature-card-icon">
                           {section === "clone-detector" || section === "security" ? (
