@@ -98,7 +98,7 @@ export default function SecurityGuardServicePage() {
             <span className="mt-2 block text-blue-300">Security Guard Services</span>
           </h1>
           <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-            Paladin Security Services Co., Ltd. က သင့်လုပ်ငန်းခွင်လိုအပ်ချက်နှင့်
+            Security Services Co., Ltd. က သင့်လုပ်ငန်းခွင်လိုအပ်ချက်နှင့်
             ကိုက်ညီသော လုံခြုံရေးဝန်ဆောင်မှုများကို ပေးအပ်ရန် အသင့်ရှိပါသည်။
             အောက်ပါအဆင့်နှင့် လစဉ်နှုန်းထားများကို ကြည့်ရှုပြီး quotation
             တောင်းခံနိုင်ပါသည်။
