@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -444,14 +445,18 @@ export default function MarketplaceClient() {
   return (
     <main className="marketplace-page">
       <header className="mp-header">
-        <a className="mp-brand" href="/marketplace" aria-label="Apexive Marketplace home">
+        <Link
+          className="mp-brand"
+          href="/marketplace"
+          aria-label="Apexive Marketplace home"
+        >
           <span className="mp-brand-mark">
             <ShoppingBag size={14} />
           </span>
           <span className="mp-brand-copy">
             <strong>MARKETPLACE</strong>
           </span>
-        </a>
+        </Link>
 
         <label className="mp-header-search">
           <Search size={18} aria-hidden="true" />
@@ -907,9 +912,9 @@ export default function MarketplaceClient() {
       )}
 
       <footer className="mp-footer">
-        <a className="mp-footer-brand" href="/marketplace">
+        <Link className="mp-footer-brand" href="/marketplace">
           <ShoppingBag size={17} /> APEXIVE MARKETPLACE
-        </a>
+        </Link>
         <span>Illustrative homepage layout for the ecommerce platform.</span>
       </footer>
     </main>

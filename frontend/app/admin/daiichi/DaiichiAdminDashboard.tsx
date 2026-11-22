@@ -130,40 +130,78 @@ export default function DaiichiAdminDashboard() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
+
+  const fetchDashboard = useCallback(async () => {
+    const params = new URLSearchParams({
+      page: String(page),
+      page_size: String(pageSize),
+    });
+
+    if (status) params.set("status", status);
+    if (search.trim()) params.set("search", search.trim());
+
+    return Promise.all([
+      apiRequest<Analytics>("/admin/daiichi/analytics"),
+      apiRequest<LeadResponse>(
+        `/admin/daiichi/leads?${params.toString()}`,
+      ),
+    ]);
+  }, [page, pageSize, search, status]);
+
   const loadDashboard = useCallback(async () => {
     setLoading(true);
     setError("");
 
     try {
-      const params = new URLSearchParams({
-        page: String(page),
-        page_size: String(pageSize),
-      });
-
-      if (status) params.set("status", status);
-      if (search.trim()) params.set("search", search.trim());
-
-      const [a, leads] = await Promise.all([
-        apiRequest<Analytics>("/admin/daiichi/analytics"),
-        apiRequest<LeadResponse>(
-          `/admin/daiichi/leads?${params.toString()}`,
-        ),
-      ]);
+      const [a, leads] = await fetchDashboard();
 
       setAnalytics(a);
       setResult(leads);
     } catch (e) {
       setError(
-        e instanceof Error ? e.message : "Unable to load Daiichi dashboard.",
+        e instanceof Error
+          ? e.message
+          : "Unable to load Daiichi dashboard.",
       );
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, search, status]);
+  }, [fetchDashboard]);
 
   useEffect(() => {
-    void loadDashboard();
-  }, [loadDashboard]);
+    let active = true;
+
+    async function refreshDashboard() {
+      try {
+        const [a, leads] = await fetchDashboard();
+
+        if (!active) return;
+
+        setAnalytics(a);
+        setResult(leads);
+        setError("");
+      } catch (e) {
+        if (!active) return;
+
+        setError(
+          e instanceof Error
+            ? e.message
+            : "Unable to load Daiichi dashboard.",
+        );
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void refreshDashboard();
+
+    return () => {
+      active = false;
+    };
+  }, [fetchDashboard]);
+
 
   async function loadLeadHistory(leadId: number) {
     setHistoryLoading(true);
@@ -321,11 +359,10 @@ export default function DaiichiAdminDashboard() {
                   setStatus(item);
                   setPage(1);
                 }}
-                className={`rounded-xl border p-4 text-left transition ${
-                  status === item
+                className={`rounded-xl border p-4 text-left transition ${status === item
                     ? "border-cyan-300/40 bg-cyan-300/10"
                     : "border-white/10 bg-black/10 hover:border-white/20"
-                }`}
+                  }`}
               >
                 <span className="text-[10px] font-bold tracking-wider text-slate-400">
                   {item}
@@ -424,10 +461,9 @@ export default function DaiichiAdminDashboard() {
                         </td>
                         <td className="p-3">
                           <span
-                            className={`rounded-full border px-3 py-1 text-[10px] font-bold ${
-                              statusStyles[lead.status] ||
+                            className={`rounded-full border px-3 py-1 text-[10px] font-bold ${statusStyles[lead.status] ||
                               "border-white/10 text-slate-300"
-                            }`}
+                              }`}
                           >
                             {lead.status}
                           </span>

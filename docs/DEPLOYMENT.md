@@ -99,6 +99,11 @@ Do not run the legacy core reconciliation SQL manually against a database
 whose tables already match the current models. The bootstrap refuses partial
 or unexpected schemas instead of dropping or replacing application data.
 
+On Coolify, configure `DATABASE_URL` with the PostgreSQL service's internal
+connection URL and deploy the backend. The backend applies pending migrations
+at startup; a connection or migration failure stops startup so the deployment
+does not appear healthy with an incomplete schema.
+
 ## 9. Frontend Deployment
 
 Deploy the existing frontend through Vercel.

@@ -8,33 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { submitDaiichiLead, trackDaiichiEvent } from "@/lib/daiichi";
-
-const solutions = [
-  {
-    number: "01",
-    title: "Life Protection",
-    subtitle: "Protect the people who matter most.",
-    description:
-      "Explore how life insurance may help provide financial protection for your loved ones and support long-term family planning.",
-    icon: "◈",
-  },
-  {
-    number: "02",
-    title: "Health Protection",
-    subtitle: "Prepare for life's uncertainties.",
-    description:
-      "Learn about health-related insurance protection and the importance of understanding policy coverage and exclusions.",
-    icon: "✳",
-  },
-  {
-    number: "03",
-    title: "Financial Planning",
-    subtitle: "Build confidence for tomorrow.",
-    description:
-      "Discover how insurance can form part of a broader financial planning strategy based on your individual needs.",
-    icon: "◇",
-  },
-];
+import DaiichiPackages from "./DaiichiPackages";
 
 const faqs = [
   {
@@ -400,32 +374,8 @@ export default function DaiichiExperience() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
-          {solutions.map((item) => (
-            <article
-              key={item.number}
-              className="group border border-[#E6E0D5] bg-white p-8 transition duration-300 hover:-translate-y-2 hover:border-[#D8B779] hover:shadow-xl"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs tracking-widest text-[#A58A5D]">
-                  {item.number}
-                </span>
-                <span className="text-3xl text-[#B79B6A]">{item.icon}</span>
-              </div>
-              <h3 className="mt-12 text-2xl font-medium">{item.title}</h3>
-              <p className="mt-3 text-xs font-semibold text-[#9A7943]">
-                {item.subtitle}
-              </p>
-              <p className="mt-6 min-h-24 text-sm leading-7 text-slate-500">
-                {item.description}
-              </p>
-              <a
-                href="#consultation"
-                className="mt-8 inline-flex items-center gap-3 border-b border-[#D8B779] pb-2 text-[10px] font-bold tracking-widest transition group-hover:text-[#9A7943]"
-              >
-                ASK FOR INFORMATION <Arrow />
-              </a>
-            </article>
-          ))}
+          {/* NINE JAPAN-INSPIRED PACKAGES */}
+          <DaiichiPackages />
         </div>
 
         <p className="mt-8 text-center text-xs leading-6 text-slate-400">
@@ -650,9 +600,15 @@ export default function DaiichiExperience() {
                   onChange={(e) => setForm({ ...form, interest: e.target.value })}
                   className="mt-3 w-full border-b border-slate-200 bg-white px-0 py-3 text-sm font-normal outline-none focus:border-[#B79B6A]"
                 >
-                  <option>Life Protection</option>
-                  <option>Health Protection</option>
-                  <option>Financial Planning</option>
+                  <option>Life & Family Protection</option>
+                  <option>Medical & Hospital Protection</option>
+                  <option>Advanced Medical Care</option>
+                  <option>Critical Illness Protection</option>
+                  <option>Income Protection</option>
+                  <option>Long-Term Care & Dementia</option>
+                  <option>Women&lsquo;s Health Protection</option>
+                  <option>Accident & Injury Protection</option>
+                  <option>Education, Savings & Retirement</option>
                   <option>Claims Information</option>
                   <option>General Enquiry</option>
                 </select>

@@ -1,5 +1,6 @@
 "# apexiveai-s-everywhere
 # node .\node_modules\next\dist\bin\next dev
+# node ./node_modules/next/dist/bin/next build
 https://cyclone-rpa.vercel.app/
 https://ais-ware-rpq.vercel.app/
 python -c "import secrets; print(secrets.token_urlsafe(48))"
