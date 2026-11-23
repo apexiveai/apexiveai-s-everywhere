@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Suspense, useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import {
   Activity,
@@ -15,9 +14,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { clearAuthSession, getToken } from "../lib/api";
-import {
-  governmentPublicSectorNavItems,
-} from "../lib/community";
+import { governmentPublicSectorNavItems } from "../lib/community";
 
 type NavLinkItem = {
   label: string;
@@ -66,11 +63,7 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function CommunityShell({
-  children,
-}: {
-  children: ReactNode;
-}) {
+function CommunityShellContent({ children }: { children: ReactNode }) {
   const pathname = usePathname() || "/";
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -96,7 +89,9 @@ export default function CommunityShell({
   if (
     pathname === "/" ||
     pathname === "/marketplace" ||
-    pathname.startsWith("/marketplace/")
+    pathname.startsWith("/marketplace/") ||
+    pathname === "/space-os" ||
+    pathname.startsWith("/space-os/")
   ) {
     return children;
   }
@@ -104,9 +99,19 @@ export default function CommunityShell({
   return (
     <div className="ac-app">
       <header className="ac-global-header">
-        <Link href="/dashboard" className="ac-global-brand" onClick={() => setMenuOpen(false)}>
-          <span className="ac-brand-mark"><span>A</span><i /></span>
-          <span className="ac-brand-copy"><strong>APEXIVE</strong><small>AI COMMUNITY</small></span>
+        <Link
+          href="/dashboard"
+          className="ac-global-brand"
+          onClick={() => setMenuOpen(false)}
+        >
+          <span className="ac-brand-mark">
+            <span>A</span>
+            <i />
+          </span>
+          <span className="ac-brand-copy">
+            <strong>APEXIVE</strong>
+            <small>AI COMMUNITY</small>
+          </span>
         </Link>
         <button
           className="ac-menu-toggle"
@@ -117,7 +122,10 @@ export default function CommunityShell({
         >
           <span>{menuOpen ? "Close" : "Menu"}</span>
         </button>
-        <nav className={`ac-global-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation">
+        <nav
+          className={`ac-global-nav${menuOpen ? " is-open" : ""}`}
+          aria-label="Main navigation"
+        >
           {mainNavigation.map((item) => {
             if ("items" in item) {
               const active = item.items.some((link) =>
@@ -128,7 +136,9 @@ export default function CommunityShell({
                   className="ac-global-menu"
                   key={`${item.label}-${pathname}`}
                 >
-                  <summary className={`ac-global-link${active ? " is-active" : ""}`}>
+                  <summary
+                    className={`ac-global-link${active ? " is-active" : ""}`}
+                  >
                     {item.label}
                     <ChevronDown size={13} />
                   </summary>
@@ -167,7 +177,11 @@ export default function CommunityShell({
           })}
         </nav>
         <div className="ac-header-account">
-          {superAdmin && <Link href="/admin" className="ac-header-action"><BriefcaseBusiness size={15} /> Admin</Link>}
+          {superAdmin && (
+            <Link href="/admin" className="ac-header-action">
+              <BriefcaseBusiness size={15} /> Admin
+            </Link>
+          )}
           {signedIn ? (
             <button
               type="button"
@@ -182,12 +196,16 @@ export default function CommunityShell({
               <LogOut size={15} /> Sign out
             </button>
           ) : (
-            <Link href="/login" className="ac-header-action"><LogIn size={15} /> Sign in</Link>
+            <Link href="/login" className="ac-header-action">
+              <LogIn size={15} /> Sign in
+            </Link>
           )}
         </div>
       </header>
 
-      <div className={`ac-main${pathname === "/about-us" ? " ac-main-about" : ""}`}>
+      <div
+        className={`ac-main${pathname === "/about-us" ? " ac-main-about" : ""}`}
+      >
         <div className="ac-page-content">{children}</div>
         <footer className="ac-footer">
           <div className="ac-footer-copy">
@@ -201,13 +219,31 @@ export default function CommunityShell({
             <span>© Bhone Htet Naing · All rights reserved</span>
           </div>
           <span>A GLOBAL COMMUNITY FOR BUILDERS</span>
-          <span className="ac-footer-online"><Activity size={12} /> All systems operational</span>
+          <span className="ac-footer-online">
+            <Activity size={12} /> All systems operational
+          </span>
           <span className="ac-footer-links">
-            <Link href="/billing"><CreditCard size={13} /> Billing</Link>
-            <Link href="/workspace"><ShieldCheck size={13} /> My products</Link>
+            <Link href="/billing">
+              <CreditCard size={13} /> Billing
+            </Link>
+            <Link href="/workspace">
+              <ShieldCheck size={13} /> My products
+            </Link>
           </span>
         </footer>
       </div>
     </div>
+  );
+}
+
+export default function CommunityShell({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <Suspense fallback={children}>
+      <CommunityShellContent>{children}</CommunityShellContent>
+    </Suspense>
   );
 }

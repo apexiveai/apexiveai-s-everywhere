@@ -22,6 +22,7 @@ import {
   MessageSquare,
   Network,
   Search,
+  Satellite,
   ShieldCheck,
   Sparkles,
   Store,
@@ -94,7 +95,7 @@ const products = [
   },
   {
     id: "05",
-    name: "ApexiveAI Cyclone RPA",
+    name: "Enterprise Resource Planning (ERP)",
     subtitle: "Cyclone automation studio",
     description:
       "Build and manage automation workflows with the Cyclone RPA studio.",
@@ -130,7 +131,7 @@ const products = [
   },
   {
     id: "08",
-    name: "Enterprise Operations Platform",
+    name: "Enterprise Operations Platform (EOP)",
     subtitle: "Enterprise operations",
     description:
       "Coordinate enterprise workflows and manage day-to-day operations.",
@@ -166,6 +167,18 @@ const products = [
     tag: "Design & engineering",
     color: "purple",
   },
+  {
+    id: "11",
+    name: "ApexiveAI Space OS",
+    subtitle: "Satellite Infrastructure & Space Operations",
+    description:
+      "Manage satellite fleets, ground stations, missions, Earth observation, space intelligence, and international space cooperation in one unified platform.",
+    href: "/space-os",
+    external: false,
+    icon: Satellite,
+    tag: "Space infrastructure",
+    color: "cyan",
+  }
 ];
 
 function EcosystemPreview() {

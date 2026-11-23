@@ -13,7 +13,16 @@ from app.models.marketplace import (
     MarketplaceOrderItem,
     MarketplaceProduct,
 )
-
+from app.models.space import (
+    SpaceOrganization,
+    SpaceSatellite,
+    SpaceGroundStation,
+    SpaceMission,
+    SpaceMissionSatellite,
+    SpaceMissionSchedule,
+    SpaceTelemetry,
+    SpaceAuditLog,
+)
 from app.models.ai_conversation import AIConversation
 from app.models.ai_message import AIMessageRecord
 from app.models.ai_usage import AIUsage
@@ -56,4 +65,15 @@ __all__ = [
     "AIConversation",
     "AIMessageRecord",
     "AIUsage",
+]
+
+__all__ += [
+    "SpaceOrganization",
+    "SpaceSatellite",
+    "SpaceGroundStation",
+    "SpaceMission",
+    "SpaceMissionSatellite",
+    "SpaceMissionSchedule",
+    "SpaceTelemetry",
+    "SpaceAuditLog",
 ]
