@@ -33,10 +33,14 @@ environment variables with each app's deployed HTTP or HTTPS URL:
 - `NEXT_PUBLIC_ENTERPRISE_OPERATIONS_PLATFORM_URL`
 - `NEXT_PUBLIC_CAD_BIM_SUITE_URL`
 - `NEXT_PUBLIC_WORKFORCE_PAYROLL_URL`
+- `NEXT_PUBLIC_SECUREGUARD_URL` (the Security Guard Services page)
 
-If a URL is missing or invalid, its product card remains visible but cannot be
-opened. Set the values in the frontend deployment environment and rebuild the
-site to activate the links.
+If a product-card URL is missing or invalid, its card remains visible but cannot
+be opened. The SecureGuard link is hidden until its URL is configured. Set the
+values in the frontend deployment environment and rebuild the site to activate
+the links. Set `NEXT_PUBLIC_SECUREGUARD_URL` to the deployed ApexiveAI-SecureGuard
+frontend URL in Vercel and redeploy to show its link below the Security Guard
+Services hero.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

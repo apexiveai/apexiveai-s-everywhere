@@ -9,7 +9,12 @@ import {
   LoaderCircle,
   ShieldCheck,
 } from "lucide-react";
+import { getExternalProductUrl } from "@/lib/community";
 import { submitSecurityGuardInquiry } from "@/lib/security-guards";
+
+const secureGuardUrl = getExternalProductUrl(
+  process.env.NEXT_PUBLIC_SECUREGUARD_URL,
+);
 
 const guardLevels = [
   { level: "A", quality: "Higher than B level", price: 5_000_000 },
@@ -109,6 +114,16 @@ export default function SecurityGuardServicePage() {
           >
             ဝန်ဆောင်မှုတောင်းခံရန် <ArrowRight size={16} />
           </a>
+          {secureGuardUrl && (
+            <a
+              href={secureGuardUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-blue-300/50 px-6 py-3 text-sm font-semibold text-blue-100 transition hover:border-blue-200 hover:bg-white/10 hover:text-white"
+            >
+              ApexiveAI SecureGuard ဖွင့်ရန် <ArrowRight size={16} />
+            </a>
+          )}
         </div>
       </section>
 
