@@ -178,7 +178,7 @@ const products = [
     icon: Satellite,
     tag: "Space infrastructure",
     color: "cyan",
-  }
+  },
 ];
 
 function EcosystemPreview() {
