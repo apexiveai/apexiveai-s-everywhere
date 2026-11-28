@@ -61,7 +61,7 @@ export const SPACE_MODULES: SpaceModule[] = [
     columns: ["Dataset", "Sensor", "Coverage", "Acquisition", "Status"],
   },
   {
-    slug: "telecommunications",
+    slug: "satellite-telecommunications",
     name: "Satellite Telecommunications",
     shortName: "Telecommunications",
     description: "Manage satellite communication services, capacity records and service coverage.",
